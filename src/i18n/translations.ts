@@ -30,6 +30,21 @@ export const translations = {
                 title: "Mercado de Créditos",
                 desc: "Plataforma de comercio de activos verificados (Carbon, Circular, Bio) con blockchain.",
                 action: "Ir al Marketplace"
+            },
+            plantOnboarding: {
+                title: "Registro de Plantas",
+                desc: "Únete a la red global LarvaLINK, verifica tu impacto y vende créditos.",
+                action: "Iniciar Onboarding"
+            },
+            viability: {
+                title: "Calculadora Viabilidad",
+                desc: "Herramienta de análisis para nuevos proyectos BSF: clima, mercado y potencial.",
+                action: "Evaluar Proyecto"
+            },
+            investorPortal: {
+                title: "Portal Inversionistas",
+                desc: "Dashboard exclusivo para LPs y Partners: métricas financieras y cumplimiento.",
+                action: "Acceso Seguro"
             }
         },
         actions: {
@@ -69,6 +84,21 @@ export const translations = {
                 title: "Asset Marketplace",
                 desc: "Trading platform for verified assets (Carbon, Circular, Bio) secured by blockchain.",
                 action: "Go to Marketplace"
+            },
+            plantOnboarding: {
+                title: "Plant Onboarding",
+                desc: "Join the LarvaLINK global network, verify your impact, and sell credits.",
+                action: "Start Onboarding"
+            },
+            viability: {
+                title: "Viability Calculator",
+                desc: "Analysis tool for new BSF projects: climate, market and potential assessment.",
+                action: "Evaluate Project"
+            },
+            investorPortal: {
+                title: "Investor Portal",
+                desc: "Exclusive dashboard for LPs and Partners: financial metrics and compliance.",
+                action: "Secure Access"
             }
         },
         actions: {

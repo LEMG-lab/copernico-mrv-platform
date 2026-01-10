@@ -13,6 +13,11 @@ const InvestorDashboard: React.FC = () => {
         window.print();
     };
 
+    if (!t) {
+        console.error('Translation error', { language, translations });
+        return <div className="p-10 text-red-500">Error loading translations for language: {language}</div>;
+    }
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] pb-20 transition-colors duration-300">
             <Navigation />
@@ -34,7 +39,7 @@ const InvestorDashboard: React.FC = () => {
                 </div>
 
                 {/* Modules Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
                     <ModuleCard
                         title={t.modules.terralink.title}
                         description={t.modules.terralink.desc}
@@ -60,12 +65,36 @@ const InvestorDashboard: React.FC = () => {
                         gradient="from-purple-400 to-indigo-600"
                     />
                     <ModuleCard
+                        title={t.modules.plantOnboarding.title}
+                        description={t.modules.plantOnboarding.desc}
+                        actionText={t.modules.plantOnboarding.action}
+                        linkTo="/plant-onboarding"
+                        icon="🏭"
+                        gradient="from-orange-500 to-red-500"
+                    />
+                    <ModuleCard
                         title={t.modules.marketplace.title}
                         description={t.modules.marketplace.desc}
                         actionText={t.modules.marketplace.action}
                         linkTo="/marketplace"
                         icon="🪙"
                         gradient="from-yellow-400 to-orange-600"
+                    />
+                    <ModuleCard
+                        title={t.modules.viability.title}
+                        description={t.modules.viability.desc}
+                        actionText={t.modules.viability.action}
+                        linkTo="/viability"
+                        icon="🧮"
+                        gradient="from-teal-400 to-teal-600"
+                    />
+                    <ModuleCard
+                        title={t.modules.investorPortal.title}
+                        description={t.modules.investorPortal.desc}
+                        actionText={t.modules.investorPortal.action}
+                        linkTo="/investor-portal"
+                        icon="💼"
+                        gradient="from-slate-700 to-slate-900"
                     />
                 </div>
 
