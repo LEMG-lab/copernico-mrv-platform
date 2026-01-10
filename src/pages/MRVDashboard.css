@@ -1,0 +1,239 @@
+/* LarvaLINK Dark Theme */
+:root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #16213e;
+    --accent: #0f3460;
+    --brand: #e94560;
+    --success: #2ECC71;
+    --text: #ffffff;
+    --text-muted: #a0a0a0;
+}
+
+.mrv-dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Header */
+.mrv-header {
+    height: 60px;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.highlight {
+    color: var(--brand);
+    font-weight: 300;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-badge.connected {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--success);
+}
+
+/* Dashboard Layout */
+.dashboard-content {
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+.mrv-sidebar {
+    width: 300px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--accent);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-group label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mrv-select,
+.mrv-input {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.location-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.layer-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.layer-btn {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--accent);
+    color: var(--text-muted);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.layer-btn:hover {
+    border-color: var(--brand);
+}
+
+.layer-btn.active {
+    background-color: var(--brand);
+    color: white;
+    border-color: var(--brand);
+}
+
+.action-btn {
+    background-color: var(--success);
+    color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.action-btn:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* Map */
+.mrv-map-container {
+    flex: 1;
+    position: relative;
+    background-color: #000;
+}
+
+/* Metrics Panel */
+.mrv-metrics {
+    width: 300px;
+    background-color: var(--bg-card);
+    border-left: 1px solid var(--accent);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.metric-card {
+    background-color: var(--bg-dark);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid var(--accent);
+}
+
+.metric-card h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
+
+/* Gauge */
+.gauge-container {
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    position: relative;
+    margin: 15px 0;
+}
+
+.gauge-fill {
+    background-color: var(--success);
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.gauge-value {
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--success);
+}
+
+.metric-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* Hash */
+.hash-display {
+    background-color: #000;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--brand);
+    word-break: break-all;
+    margin-bottom: 5px;
+}
+
+/* Info List */
+.metric-card.info ul {
+    list-style: none;
+    padding: 0;
+    font-size: 13px;
+}
+
+.metric-card.info li {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}

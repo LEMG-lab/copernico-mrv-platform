@@ -1,0 +1,416 @@
+/* HomePage Styles */
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Hero Section */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    min-height: 70vh;
+    padding: var(--spacing-2xl) 0;
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.hero-badge {
+    display: flex;
+}
+
+@media (max-width: 1024px) {
+    .hero-badge {
+        justify-content: center;
+    }
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 500px;
+}
+
+@media (max-width: 1024px) {
+    .hero-description {
+        margin: 0 auto;
+    }
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+    .hero-actions {
+        justify-content: center;
+    }
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 1.05rem;
+}
+
+.status-connected {
+    width: 10px;
+    height: 10px;
+    background: var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-success);
+}
+
+/* Hero Visual - Earth Animation */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .hero-visual {
+        order: -1;
+        height: 300px;
+    }
+}
+
+.earth-container {
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+.earth {
+    width: 280px;
+    height: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d2137 50%, #0a1929 100%);
+    border-radius: 50%;
+    box-shadow:
+        inset -30px -30px 60px rgba(0, 0, 0, 0.5),
+        inset 10px 10px 40px rgba(78, 205, 196, 0.2),
+        0 0 60px rgba(0, 212, 255, 0.3);
+    animation: earthRotate 30s linear infinite;
+    overflow: hidden;
+}
+
+.earth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(78, 205, 196, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(150, 206, 180, 0.2) 0%, transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(69, 183, 209, 0.2) 0%, transparent 35%);
+    border-radius: 50%;
+}
+
+.earth-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes earthRotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.satellite {
+    position: absolute;
+    font-size: 2rem;
+    animation: orbit 8s linear infinite;
+}
+
+.satellite-1 {
+    top: 0;
+    left: 50%;
+    animation-duration: 10s;
+}
+
+.satellite-2 {
+    top: 50%;
+    right: 0;
+    animation-duration: 12s;
+    animation-delay: -4s;
+}
+
+.satellite-3 {
+    bottom: 10%;
+    left: 10%;
+    animation-duration: 15s;
+    animation-delay: -2s;
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg) translateX(180px) rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg) translateX(180px) rotate(-360deg);
+    }
+}
+
+/* Section Headings */
+.section-heading {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Missions Section */
+.missions-section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.mission-card-large {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-card-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--mission-color);
+}
+
+.mission-card-large:hover {
+    border-color: var(--mission-color);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.mission-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.mission-icon {
+    font-size: 1.5rem;
+}
+
+.mission-header h3 {
+    font-size: 1.25rem;
+    color: var(--mission-color);
+}
+
+.mission-description {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.mission-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.mission-tag {
+    background: var(--bg-glass);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+}
+
+.mission-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+/* Features Section */
+.features-section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.feature-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+.feature-card h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+.feature-card p {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Stats Section */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+    padding: var(--spacing-2xl) 0;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.cta-card {
+    background: var(--gradient-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    text-align: center;
+}
+
+.cta-card h2 {
+    color: var(--color-space-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cta-card p {
+    color: var(--color-space-medium);
+    margin-bottom: var(--spacing-lg);
+}
+
+.cta-card .btn {
+    background: var(--color-space-dark);
+    color: var(--color-text-primary);
+}
+
+.cta-card .btn:hover {
+    background: var(--color-space-light);
+}
