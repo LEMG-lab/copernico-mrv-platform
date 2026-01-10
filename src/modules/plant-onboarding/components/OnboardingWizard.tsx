@@ -9,19 +9,30 @@ import { Step4Sensors } from './Step4Sensors';
 import { Step5Verification } from './Step5Verification';
 import { Step6Plan } from './Step6Plan';
 import { SuccessScreen } from './SuccessScreen';
+import { Navigation } from '../../../components/Navigation';
 
 export const OnboardingWizard: React.FC = () => {
     const { current_step, appId, isSuccess, startOnboarding, last_saved_at } = useOnboarding();
 
     if (isSuccess) {
-        return <SuccessScreen />;
+        return (
+            <div className="min-h-screen bg-slate-50 flex flex-col">
+                <Navigation />
+                <SuccessScreen />
+            </div>
+        );
     }
     // Si no hay appId, mostramos bienvenida (excepto si ya completamos y estamos en success screen, 
     // pero success screen suele ser un estado post-submit. Manejémoslo con lógica simple).
     // Asumiremos que si current_step es null o inicial sin appId, mostramos Welcome.
 
     if (!appId && current_step === 'basic_info') { // Simulación simple de inicio
-        return <WelcomeScreen />;
+        return (
+            <div className="min-h-screen bg-slate-50 flex flex-col">
+                <Navigation />
+                <WelcomeScreen />
+            </div>
+        );
     }
 
     // Si ya terminamos (post-submit) o status es 'pending_verification', mostrar Success.
@@ -44,35 +55,34 @@ export const OnboardingWizard: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col items-center py-10 px-4">
+        <div className="min-h-screen bg-slate-50 flex flex-col">
+            <Navigation />
 
-            {/* Header Minimalista */}
-            <div className="w-full max-w-4xl flex justify-between items-center mb-8">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-xs">LL</div>
-                    <span className="font-bold text-slate-700">LarvaLINK <span className="font-normal text-slate-400">| Network Onboarding</span></span>
-                </div>
-                <div className="text-xs text-slate-400 flex items-center gap-2">
-                    {last_saved_at && <span>☁️ Guardado {new Date(last_saved_at).toLocaleTimeString()}</span>}
-                </div>
-            </div>
-
-            <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden min-h-[600px] flex flex-col">
-
-                {/* Progress Bar Container */}
-                <div className="bg-slate-50 border-b border-slate-100 px-8 py-2">
-                    <ProgressStepper currentStep={current_step} />
+            <div className="flex-1 flex flex-col items-center py-10 px-4">
+                {/* Status de guardado */}
+                <div className="w-full max-w-4xl flex justify-end items-center mb-4">
+                    <div className="text-xs text-slate-400 flex items-center gap-2">
+                        {last_saved_at && <span>☁️ Guardado {new Date(last_saved_at).toLocaleTimeString()}</span>}
+                    </div>
                 </div>
 
-                {/* Main Content Area */}
-                <div className="flex-1 p-8 overflow-y-auto">
-                    {renderStep()}
+                <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden min-h-[600px] flex flex-col">
+
+                    {/* Progress Bar Container */}
+                    <div className="bg-slate-50 border-b border-slate-100 px-8 py-2">
+                        <ProgressStepper currentStep={current_step} />
+                    </div>
+
+                    {/* Main Content Area */}
+                    <div className="flex-1 p-8 overflow-y-auto">
+                        {renderStep()}
+                    </div>
+
                 </div>
 
-            </div>
-
-            <div className="mt-8 text-center text-slate-400 text-xs">
-                ¿Necesitas ayuda? <a href="#" className="text-blue-500 hover:underline">Contactar soporte</a> o <a href="#" className="text-blue-500 hover:underline">Ver preguntas frecuentes</a>
+                <div className="mt-8 text-center text-slate-400 text-xs">
+                    ¿Necesitas ayuda? <a href="#" className="text-blue-500 hover:underline">Contactar soporte</a> o <a href="#" className="text-blue-500 hover:underline">Ver preguntas frecuentes</a>
+                </div>
             </div>
         </div>
     );

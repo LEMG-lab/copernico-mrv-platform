@@ -4,6 +4,7 @@ import { NetworkStats } from './components/NetworkStats';
 import { OpportunityCard } from './components/OpportunityCard';
 import { METHANE_HOTSPOTS } from './data/methaneHotspots';
 import { NetworkFilters } from './types/network.types';
+import { Navigation } from '../../components/Navigation';
 
 export const GlobalNetworkDashboard: React.FC = () => {
     const [filters, setFilters] = useState<NetworkFilters>({
@@ -19,7 +20,8 @@ export const GlobalNetworkDashboard: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0F172A] p-6 lg:p-10 font-sans text-slate-200 flex flex-col h-screen overflow-hidden">
+        <div className="min-h-screen bg-[#0F172A] font-sans text-slate-200 flex flex-col h-screen overflow-hidden">
+            <Navigation />
 
             {/* Header Compacto */}
             <header className="flex flex-col md:flex-row justify-between items-center mb-6 shrink-0 gap-4">

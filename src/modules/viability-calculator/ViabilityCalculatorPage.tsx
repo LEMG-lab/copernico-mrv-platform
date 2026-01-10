@@ -4,6 +4,7 @@ import { ParameterForm } from './components/ParameterForm';
 import { ResultsView } from './components/ResultsView';
 import { Location, ProjectParameters, ViabilityResult } from './types/viability.types';
 import { viabilityService } from './services/viabilityService';
+import { Navigation } from '../../components/Navigation';
 
 type WizardStep = 'location' | 'params' | 'analysis' | 'results';
 
@@ -48,6 +49,7 @@ export const ViabilityCalculatorPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#0F172A] pb-20 font-sans text-slate-200">
+            <Navigation />
             {/* Header */}
             <header className="bg-slate-900 border-b border-slate-800 py-6">
                 <div className="max-w-4xl mx-auto px-4 text-center">

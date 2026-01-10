@@ -8,6 +8,7 @@ import { MethaneMapContext } from './components/MethaneMapContext';
 import { BlockchainRegistry } from './components/BlockchainRegistry';
 import { useEmissionsCalculation } from './hooks/useEmissionsCalculation';
 import { LARVALINK_PLANTS, Plant } from './types/emissions.types';
+import { Navigation } from '../../components/Navigation';
 
 export const EmissionsCalculatorDashboard: React.FC = () => {
     const [selectedPlant, setSelectedPlant] = useState<Plant>(LARVALINK_PLANTS[0]); // Default Papalotla
@@ -21,7 +22,8 @@ export const EmissionsCalculatorDashboard: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0F172A] p-6 lg:p-10 font-sans text-slate-200">
+        <div className="min-h-screen bg-[#0F172A] font-sans text-slate-200">
+            <Navigation />
             {/* Header */}
             <header className="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-slate-700 gap-4">
                 <div>

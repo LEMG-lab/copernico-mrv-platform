@@ -2,6 +2,7 @@ import React from 'react';
 import { useNDVIComparison } from './hooks/useNDVIComparison';
 import { ParcelComparison } from './components/ParcelComparison';
 import { DEMO_PARCELS } from './types/parcel.types';
+import { Navigation } from '../../components/Navigation';
 
 export const TerraLinkDashboard: React.FC = () => {
     const { loading, comparison, error } = useNDVIComparison();
@@ -12,7 +13,8 @@ export const TerraLinkDashboard: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0F172A] p-6 lg:p-10 font-sans text-slate-200">
+        <div className="min-h-screen bg-[#0F172A] font-sans text-slate-200">
+            <Navigation />
             {/* HEADer */}
             <header className="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-slate-700 gap-4">
                 <div>

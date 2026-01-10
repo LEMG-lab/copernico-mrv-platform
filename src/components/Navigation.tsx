@@ -1,24 +1,43 @@
 import React from 'react';
 import { useUIStore } from '../stores/uiStore';
 import { translations } from '../i18n/translations';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Navigation: React.FC = () => {
     const { theme, language, toggleTheme, setLanguage } = useUIStore();
     const t = translations[language] || translations['es'] || {};
+    const location = useLocation();
+    const isHome = location.pathname === '/';
 
     return (
         <nav className="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    {/* Logo */}
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold">
-                            LL
-                        </div>
-                        <span className="font-bold text-xl text-slate-800 dark:text-white tracking-tight">
-                            LarvaLINK <span className="text-slate-400 font-normal text-sm">| Investor Portal</span>
-                        </span>
+                    {/* Logo + Home Button */}
+                    <div className="flex items-center gap-4">
+                        {/* Home Button - Always visible except on home page */}
+                        {!isHome && (
+                            <Link
+                                to="/"
+                                className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                                aria-label="Ir al inicio"
+                                title="Ir al inicio"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                </svg>
+                            </Link>
+                        )}
+
+                        {/* LarvaLINK Logo */}
+                        <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                            <img
+                                src="/larvalink-logo.png"
+                                alt="LarvaLINK Logo"
+                                className="h-10 w-auto object-contain"
+                                style={{ filter: theme === 'light' ? 'invert(1) brightness(0.3)' : 'none' }}
+                            />
+                        </Link>
                     </div>
 
                     {/* Controls */}

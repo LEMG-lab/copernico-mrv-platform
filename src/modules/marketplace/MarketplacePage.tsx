@@ -4,12 +4,14 @@ import { Credit } from './types/marketplace.types';
 import { CreditCard } from './components/CreditCard';
 import { FilterSidebar } from './components/FilterSidebar';
 import { CreditDetailModal } from './components/CreditDetailModal';
+import { Navigation } from '../../components/Navigation';
 
 export const MarketplacePage: React.FC = () => {
     const [selectedCredit, setSelectedCredit] = useState<Credit | null>(null);
 
     return (
         <div className="min-h-screen bg-[#0F172A] text-slate-200 font-sans pb-20">
+            <Navigation />
 
             {/* Header / Nav Placeholder (Integrado en App.tsx realmente, pero aqui un titulo local) */}
             <div className="bg-slate-900 border-b border-slate-800 py-6 px-4 md:px-8">
