@@ -96,6 +96,14 @@ const InvestorDashboard: React.FC = () => {
                         icon="💼"
                         gradient="from-slate-700 to-slate-900"
                     />
+                    <ModuleCard
+                        title={t.modules.alerts?.title || "Centro de Alertas"}
+                        description={t.modules.alerts?.desc || "Monitoreo de alertas operativas, compliance y oportunidades en tiempo real"}
+                        actionText={t.modules.alerts?.action || "Ver Alertas"}
+                        linkTo="/alerts"
+                        icon="🔔"
+                        gradient="from-red-500 to-pink-600"
+                    />
                 </div>
 
                 {/* Footer / Data Sources */}

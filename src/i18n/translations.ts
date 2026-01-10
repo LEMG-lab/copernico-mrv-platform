@@ -45,6 +45,11 @@ export const translations = {
                 title: "Portal Inversionistas",
                 desc: "Dashboard exclusivo para LPs y Partners: métricas financieras y cumplimiento.",
                 action: "Acceso Seguro"
+            },
+            alerts: {
+                title: "Centro de Alertas",
+                desc: "Monitoreo de alertas operativas, compliance y oportunidades en tiempo real.",
+                action: "Ver Alertas"
             }
         },
         actions: {
@@ -99,6 +104,11 @@ export const translations = {
                 title: "Investor Portal",
                 desc: "Exclusive dashboard for LPs and Partners: financial metrics and compliance.",
                 action: "Secure Access"
+            },
+            alerts: {
+                title: "Alerts Center",
+                desc: "Real-time monitoring of operational alerts, compliance and opportunities.",
+                action: "View Alerts"
             }
         },
         actions: {

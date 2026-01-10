@@ -8,6 +8,7 @@ import { MarketplacePage, SellerDashboard } from './modules/marketplace';
 import { OnboardingWizard } from './modules/plant-onboarding';
 import { ViabilityCalculatorPage } from './modules/viability-calculator';
 import { InvestorPortalPage } from './modules/investor-portal';
+import { AlertsPage } from './modules/alerts-system/AlertsPage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
                 <Route path="/plant-onboarding" element={<OnboardingWizard />} />
                 <Route path="/viability" element={<ViabilityCalculatorPage />} />
                 <Route path="/investor-portal" element={<InvestorPortalPage />} />
+                <Route path="/alerts" element={<AlertsPage />} />
 
                 {/* Redirecciones de compatibilidad si es necesario */}
                 <Route path="/terralink-impact" element={<TerraLinkDashboard />} />
