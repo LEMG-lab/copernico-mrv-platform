@@ -6,9 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { useCopernicus } from '@/hooks';
 import { useAppStore } from '@/stores';
 import { SENTINEL_MISSIONS } from '@/api/config';
+import { SynapticBackground } from '../../components/SynapticBackground';
 import './HomePage.css';
 
 export const HomePage: React.FC = () => {
+    // ... hooks ...
     const { authenticate, loadCollections, isAuthenticated } = useCopernicus();
     const { collections, isLoading, addNotification } = useAppStore();
     const [initialized, setInitialized] = useState(false);
@@ -32,9 +34,11 @@ export const HomePage: React.FC = () => {
     };
 
     return (
-        <div className="home-page">
+        <div className="home-page relative overflow-hidden">
+            <SynapticBackground />
+
             {/* Hero Section */}
-            <section className="hero">
+            <section className="hero relative z-10">
                 <div className="hero-content">
                     <div className="hero-badge">
                         <span className="badge badge-primary">🛰️ Observación Terrestre</span>

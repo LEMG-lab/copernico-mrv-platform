@@ -29,7 +29,7 @@ export const useNetworkStore = create<NetworkState>()(
             resetPlants: () => set({ plants: GLOBAL_PLANTS }),
         }),
         {
-            name: 'larvalink-network-storage', // Save changes to localStorage so they persist on refresh
+            name: 'larvalink-network-storage-v3', // Save changes to localStorage so they persist on refresh
         }
     )
 );

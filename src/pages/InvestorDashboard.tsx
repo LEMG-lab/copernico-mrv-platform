@@ -4,6 +4,7 @@ import { ExecutiveSummary } from '../components/ExecutiveSummary';
 import { ModuleCard } from '../components/ModuleCard';
 import { useUIStore } from '../stores/uiStore';
 import { translations } from '../i18n/translations';
+import { SynapticBackground } from '../components/SynapticBackground';
 
 const InvestorDashboard: React.FC = () => {
     const { language } = useUIStore();
@@ -19,10 +20,11 @@ const InvestorDashboard: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] pb-20 transition-colors duration-300">
+        <div className="min-h-screen pb-20 transition-colors duration-300 relative overflow-hidden">
+            <SynapticBackground />
             <Navigation />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 relative z-10">
                 {/* Hero */}
                 <div className="text-center mb-12 fade-in">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">

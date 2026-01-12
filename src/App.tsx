@@ -4,6 +4,7 @@ import InvestorDashboard from './pages/InvestorDashboard';
 import { TerraLinkDashboard } from './modules/terralink-impact';
 import { EmissionsCalculatorDashboard } from './modules/emissions-calculator';
 import { GlobalNetworkDashboard } from './modules/global-network';
+import { PlantDetailPage } from './modules/global-network/pages/PlantDetailPage';
 import { MarketplacePage, SellerDashboard } from './modules/marketplace';
 import { OnboardingWizard } from './modules/plant-onboarding';
 import { ViabilityCalculatorPage } from './modules/viability-calculator';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
                 <Route path="/terralink" element={<TerraLinkDashboard />} />
                 <Route path="/emissions" element={<EmissionsCalculatorDashboard />} />
                 <Route path="/network" element={<GlobalNetworkDashboard />} />
+                <Route path="/network/plant/:id" element={<PlantDetailPage />} />
                 <Route path="/marketplace" element={<MarketplacePage />} />
                 <Route path="/marketplace/seller" element={<SellerDashboard />} />
                 <Route path="/plant-onboarding" element={<OnboardingWizard />} />

@@ -80,7 +80,7 @@ export const BlockchainRegistry: React.FC<BlockchainRegistryProps> = ({
                         )}
 
                         {status === 'verified' && (
-                            <a href="#" className="text-blue-400 hover:text-blue-300 inline-block text-[10px] flex items-center gap-1 justify-end">
+                            <a href="https://dev-explorer.globalforce.io/transaction/e96a86d68d1b1c70deec98f76c9bc1db58c39065402bf2f5986b2ad68389548b" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 inline-block text-[10px] flex items-center gap-1 justify-end">
                                 <span>↗</span> Ver en Explorer
                             </a>
                         )}

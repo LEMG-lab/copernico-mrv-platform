@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalMap } from './components/GlobalMap';
 import { NetworkStats } from './components/NetworkStats';
 import { OpportunityCard } from './components/OpportunityCard';
@@ -9,8 +10,10 @@ import { PlantLocation } from './data/globalPlants';
 import { Navigation } from '../../components/Navigation';
 import { AlertsConfiguration } from './components/AlertsConfiguration';
 import { PlantDetailPanel } from './components/PlantDetailPanel';
+import { SynapticBackground } from '../../components/SynapticBackground';
 
 export const GlobalNetworkDashboard: React.FC = () => {
+    const navigate = useNavigate();
     const [filters, setFilters] = useState<NetworkFilters>({
         showLarvaLink: true,
         showThirdParty: true,
@@ -22,7 +25,7 @@ export const GlobalNetworkDashboard: React.FC = () => {
     const { plants, updatePlant, resetPlants } = useNetworkStore();
     const [isEditMode, setIsEditMode] = useState(false);
     const [editingPlant, setEditingPlant] = useState<PlantLocation | null>(null);
-    const [selectedPlant, setSelectedPlant] = useState<any>(null);
+    // const [selectedPlant, setSelectedPlant] = useState<any>(null); // YA NO SE USA
 
     // Form State (temp)
     const [formState, setFormState] = useState<Partial<PlantLocation>>({});
@@ -32,7 +35,8 @@ export const GlobalNetworkDashboard: React.FC = () => {
             setEditingPlant(plant);
             setFormState(plant);
         } else {
-            setSelectedPlant(plant);
+            console.log("Navegando a detalle de planta:", plant.id);
+            navigate(`/network/plant/${plant.id}`);
         }
     };
 
@@ -93,12 +97,12 @@ export const GlobalNetworkDashboard: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0F172A] font-sans text-slate-200 flex flex-col h-screen overflow-hidden">
+        <div className="min-h-screen bg-transparent font-sans text-slate-200 flex flex-col h-screen overflow-hidden relative">
+            <SynapticBackground />
             <Navigation />
 
             {/* Header Compacto */}
-            {/* Header Compacto */}
-            <header className="flex flex-col gap-3 mb-2 shrink-0 md:flex-row md:items-center md:justify-between md:mb-6 md:gap-4 transition-all">
+            <header className="flex flex-col gap-3 mb-2 shrink-0 md:flex-row md:items-center md:justify-between md:mb-6 md:gap-4 transition-all relative z-10 px-4 md:px-0">
                 <div className="flex justify-between items-center">
                     <h1 className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 flex items-center gap-2 md:gap-3">
                         <span className="text-2xl md:text-3xl">🌏</span> Red Global <span className="hidden sm:inline">de Bioconversión BSF</span>
@@ -109,7 +113,7 @@ export const GlobalNetworkDashboard: React.FC = () => {
 
                 <div className="flex flex-wrap gap-2 items-center justify-between">
                     {/* Controles de Filtros Rápidos - Scrollable on very small screens if needed */}
-                    <div className="flex bg-slate-800 rounded-lg p-1 border border-slate-700 overflow-x-auto max-w-[240px] md:max-w-none custom-scrollbar">
+                    <div className="flex bg-slate-800/80 backdrop-blur rounded-lg p-1 border border-slate-700 overflow-x-auto max-w-[240px] md:max-w-none custom-scrollbar">
                         <button
                             onClick={() => toggleFilter('showLarvaLink')}
                             className={`px-2 py-1 md:px-3 md:py-1.5 rounded text-[10px] md:text-xs font-medium transition-colors flex items-center gap-1.5 md:gap-2 whitespace-nowrap ${filters.showLarvaLink ? 'bg-[#2ECC71]/20 text-[#2ECC71]' : 'text-slate-500 hover:text-slate-300'}`}
@@ -153,7 +157,7 @@ export const GlobalNetworkDashboard: React.FC = () => {
             </header>
 
             {/* Layout Principal: Mapa y Sidebar */}
-            <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-y-auto lg:overflow-hidden pb-20 lg:pb-0">
+            <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-y-auto lg:overflow-hidden pb-20 lg:pb-0 relative z-10 px-4 md:px-0">
 
                 {/* Columna Izquierda: Mapa (Grow) */}
                 <div className="flex-1 flex flex-col min-h-0 gap-4">
@@ -281,59 +285,65 @@ export const GlobalNetworkDashboard: React.FC = () => {
                 {/* Columna Derecha: Detalles (Fijo 350px en Desktop, Full en Mobile) */}
                 <div className="w-full lg:w-[350px] flex flex-col gap-6 shrink-0 lg:overflow-y-auto pr-1 custom-scrollbar">
 
-                    {selectedPlant ? (
-                        <div className="bg-slate-800 rounded-xl border border-slate-700 h-full overflow-hidden">
-                            <PlantDetailPanel
-                                plant={selectedPlant}
-                                onClose={() => setSelectedPlant(null)}
-                            />
+                    <>
+                        {/* DEMO DEBUG: Quick Access Button */}
+                        <div className="bg-slate-800 rounded-xl p-4 border border-blue-500/50 mb-4 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                            <h3 className="text-blue-400 font-bold mb-2 text-sm uppercase tracking-wider">🛠 Modo Desarrollador</h3>
+                            <button
+                                onClick={() => {
+                                    // Navegación directa para debug
+                                    navigate('/network/plant/ll-001');
+                                }}
+                                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2"
+                            >
+                                <span>🚀</span> Simular Selección Papalotla
+                            </button>
                         </div>
-                    ) : (
-                        <>
-                            {/* Contexto de Industria */}
-                            <div className="bg-slate-800 rounded-xl border border-slate-700 p-5">
-                                <h3 className="text-white font-bold mb-3 border-b border-slate-700 pb-2">Industria Global BSF</h3>
-                                <div className="space-y-3 text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-400">Plantas activas (est)</span>
-                                        <span className="text-white font-mono">~45</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-400">Capacidad Global</span>
-                                        <span className="text-white font-mono">~2,500 t/d</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-slate-400">Share LarvaLINK (LatAm)</span>
-                                        <span className="text-green-400 font-bold font-mono">6.7%</span>
-                                    </div>
-                                    <div className="text-xs text-slate-500 mt-2 italic bg-slate-900/50 p-2 rounded">
-                                        "La bioconversión representa la solución más escalable para residuos orgánicos en megaciudades."
-                                        <br />— FAO Report 2024
-                                    </div>
+
+                        {/* Contexto de Industria */}
+                        <div className="bg-slate-800 rounded-xl border border-slate-700 p-5">
+                            <h3 className="text-white font-bold mb-3 border-b border-slate-700 pb-2">Industria Global BSF</h3>
+                            <div className="space-y-3 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Plantas activas (est)</span>
+                                    <span className="text-white font-mono">~45</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Capacidad Global</span>
+                                    <span className="text-white font-mono">~2,500 t/d</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Share LarvaLINK (LatAm)</span>
+                                    <span className="text-green-400 font-bold font-mono">6.7%</span>
+                                </div>
+                                <div className="text-xs text-slate-500 mt-2 italic bg-slate-900/50 p-2 rounded">
+                                    "La bioconversión representa la solución más escalable para residuos orgánicos en megaciudades."
+                                    <br />— FAO Report 2024
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Lista Oportunidades */}
-                            <div className="flex-1 flex flex-col min-h-0 bg-slate-800/50 rounded-xl border border-slate-700 p-5">
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-white font-bold">🎯 Top Oportunidades</h3>
-                                    <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded">Sentinel-5P</span>
-                                </div>
-
-                                <div className="space-y-3 overflow-y-auto pr-1">
-                                    {METHANE_HOTSPOTS.map((hotspot, idx) => (
-                                        <OpportunityCard key={idx} hotspot={hotspot} rank={idx + 1} />
-                                    ))}
-                                </div>
+                        {/* Lista Oportunidades */}
+                        <div className="flex-1 flex flex-col min-h-0 bg-slate-800/50 rounded-xl border border-slate-700 p-5">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-white font-bold">🎯 Top Oportunidades</h3>
+                                <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded">Sentinel-5P</span>
                             </div>
 
-                            {/* Footer Verificación */}
-                            <div className="text-[10px] text-slate-500 text-center px-4">
-                                <p>Datos de red actualizados en tiempo real mediante oráculos de LarvaLINK Chain.</p>
-                                <p className="mt-1">Fuentes de terceros: Informes públicos agregados.</p>
+                            <div className="space-y-3 overflow-y-auto pr-1">
+                                {METHANE_HOTSPOTS.map((hotspot, idx) => (
+                                    <OpportunityCard key={idx} hotspot={hotspot} rank={idx + 1} />
+                                ))}
                             </div>
-                        </>
-                    )}
+                        </div>
+
+                        {/* Footer Verificación */}
+                        <div className="text-[10px] text-slate-500 text-center px-4">
+                            <p>Datos de red actualizados en tiempo real mediante oráculos de LarvaLINK Chain.</p>
+                            <p className="mt-1">Fuentes de terceros: Informes públicos agregados.</p>
+                        </div>
+                    </>
+
 
                 </div>
             </div>

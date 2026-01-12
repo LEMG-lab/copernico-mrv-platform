@@ -1,3 +1,4 @@
+import { LARVALINK_PLANTS } from './larvalinkPlants';
 
 export interface PlantLocation {
     id: string;
@@ -37,10 +38,22 @@ export const generatePlants = (): PlantLocation[] => {
         { city: "London", country: "UK", lat: 51.5074, lng: -0.1278 }
     ];
 
-    const plants: PlantLocation[] = [];
+    // Start with the verified LarvaLINK plants
+    const plants: PlantLocation[] = [...LARVALINK_PLANTS.map(p => ({
+        id: p.id,
+        name: p.name,
+        city: p.city,
+        country: p.country,
+        address: `${p.city}, ${p.country}`,
+        zipCode: '00000',
+        coordinates: [p.coordinates.lat, p.coordinates.lng] as [number, number],
+        type: 'partner' as const,
+        capacity: p.capacity_tons_day,
+        status: p.status === 'operativa' ? 'active' : p.status === 'construccion' ? 'construction' : 'planned'
+    }))];
 
-    // Generar 100 plantas distribuidas alrededor de estos hubs
-    for (let i = 0; i < 100; i++) {
+    // Generar 50 plantas adicionales arbitrarias de competidores/potenciales
+    for (let i = 0; i < 50; i++) {
         const hub = hubs[Math.floor(Math.random() * hubs.length)];
 
         // Añadir "fuzz" (dispersión) aleatoria a las coordenadas para que no estén encimadas
@@ -49,7 +62,8 @@ export const generatePlants = (): PlantLocation[] => {
 
         const typeRoll = Math.random();
         let type: 'partner' | 'competitor' | 'potential' = 'potential';
-        if (typeRoll > 0.8) type = 'partner';
+        // Menos partners random porque ya tenemos los reales
+        if (typeRoll > 0.9) type = 'partner';
         else if (typeRoll > 0.6) type = 'competitor';
 
         const statusRoll = Math.random();
@@ -65,7 +79,7 @@ export const generatePlants = (): PlantLocation[] => {
             coordinates: [hub.lat + latFuzz, hub.lng + lngFuzz],
             type,
             capacity: Math.floor(Math.random() * 50) + 10,
-            status
+            status: status as 'active' | 'construction' | 'planned'
         });
     }
 
