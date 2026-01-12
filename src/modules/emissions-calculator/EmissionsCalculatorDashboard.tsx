@@ -12,7 +12,7 @@ import { Navigation } from '../../components/Navigation';
 
 export const EmissionsCalculatorDashboard: React.FC = () => {
     const [selectedPlant, setSelectedPlant] = useState<Plant>(LARVALINK_PLANTS[0]); // Default Papalotla
-    const { wasteInput, calculation, updateInput } = useEmissionsCalculation();
+    const { wasteInput, calculation, updateInput, verifyBlockchain } = useEmissionsCalculation();
     const [showReport, setShowReport] = useState(false); // Simulación de descarga
 
     const handleDownloadReport = () => {
@@ -90,7 +90,14 @@ export const EmissionsCalculatorDashboard: React.FC = () => {
                 {/* 5. Footer: Blockchain y Legal */}
                 {calculation && (
                     <div className="mt-8">
-                        <BlockchainRegistry hash={calculation.verification.hash} timestamp={calculation.verification.timestamp} />
+                        <BlockchainRegistry
+                            hash={calculation.verification.hash}
+                            timestamp={calculation.verification.timestamp}
+                            status={calculation.verification.status || 'pending'}
+                            txHash={calculation.verification.txHash}
+                            blockNumber={calculation.verification.blockNumber}
+                            onVerify={verifyBlockchain}
+                        />
 
                         <div className="mt-8 text-center border-t border-slate-800 pt-6">
                             <p className="text-[10px] text-slate-500 max-w-3xl mx-auto leading-relaxed">

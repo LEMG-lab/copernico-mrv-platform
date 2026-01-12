@@ -90,6 +90,8 @@ export const viabilityService = {
         // 5. Score Final
         const score = calculateViabilityScore(location, params, climate, waste, market, regulatory, competitors);
 
+        const competitionScore = competitors.length === 0 ? 100 : Math.max(0, 100 - (competitors.length * 20));
+
         // 6. Proyecciones Financieras Básicas
         const capexTotal = params.capacity_tons_day * 15000; // $15k USD por ton instalada aprox (economía escala)
         const revenueYear1 = params.capacity_tons_day * 300 * 0.8 * 800; // 300 dias, 80% eficiencia, $800 avg revenue/ton input (muy simplificado)

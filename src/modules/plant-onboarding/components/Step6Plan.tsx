@@ -4,7 +4,7 @@ import { SUBSCRIPTION_PLANS } from '../data/onboardingConfig';
 import { SubscriptionPlan } from '../types/onboarding.types';
 
 export const Step6Plan: React.FC = () => {
-    const { subscription, updateSubscription, submitApplication, operations } = useOnboarding();
+    const { subscription, updateSubscription, submitApplication, operations, setStep } = useOnboarding();
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('annual');
     const [isSubmitting, setIsSubmitting] = useState(false);
 

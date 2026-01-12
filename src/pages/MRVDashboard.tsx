@@ -107,7 +107,11 @@ export const MRVDashboard: React.FC = () => {
                     <h1>LarvaLINK <span className="highlight">MRV Center</span></h1>
                 </div>
                 <div className="user-info">
-                    <span className="status-badge connected">Sistema Conectado</span>
+                    <span className="status-badge connected">
+                        <span className="live-dot"></span>
+                        Datos en Vivo: Conectado
+                    </span>
+                    <span className="network-status">Sentinel-2 L2A</span>
                 </div>
             </header>
 

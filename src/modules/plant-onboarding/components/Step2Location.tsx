@@ -9,7 +9,6 @@ export const Step2Location: React.FC = () => {
         updateLocation({
             coordinates: { lat, lng },
             country: 'Mexico', // Autodetect mock
-            website: 'Americas/Mexico_City' // timezone mock field reuse or add timezone to type if needed. Type has timezone.
         });
         // Also update address fields with mock reverse geocode if needed
     };

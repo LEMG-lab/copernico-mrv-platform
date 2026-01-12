@@ -50,6 +50,9 @@ export interface EmissionsCalculation {
         hash: string;
         timestamp: string;
         factors_source: string;
+        txHash?: string;
+        blockNumber?: number;
+        status?: 'pending' | 'verifying' | 'verified';
     };
 }
 

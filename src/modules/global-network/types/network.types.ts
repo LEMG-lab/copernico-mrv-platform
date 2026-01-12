@@ -8,6 +8,7 @@ export interface Coordinates {
 export interface BaseEntity {
     name: string;
     country: string;
+    city?: string;
     coordinates: Coordinates;
 }
 
@@ -29,6 +30,13 @@ export interface ThirdPartyPlant extends BaseEntity {
 export interface MethaneHotspot extends BaseEntity {
     ch4_anomaly: string;
     opportunity: string;
+    live_data?: {
+        min: number;
+        max: number;
+        mean: number;
+        stDev: number;
+        last_updated: string;
+    };
 }
 
 export interface NetworkFilters {

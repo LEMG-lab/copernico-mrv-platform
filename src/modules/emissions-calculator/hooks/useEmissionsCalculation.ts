@@ -27,10 +27,33 @@ export const useEmissionsCalculation = () => {
         setWasteInput(prev => ({ ...prev, [field]: value }));
     };
 
+    const verifyBlockchain = async () => {
+        if (!calculation) return;
+
+        // Optimistic update to 'verifying'
+        setCalculation(prev => prev ? ({
+            ...prev,
+            verification: { ...prev.verification, status: 'verifying' }
+        }) : null);
+
+        try {
+            const verifiedCalc = await emissionsService.verifyOnChain(calculation);
+            setCalculation(verifiedCalc);
+        } catch (e) {
+            console.error("Error verifying on chain", e);
+            // Revert state if error (ideal, but for simplicity just staying in pending might be fine or verify failed)
+            setCalculation(prev => prev ? ({
+                ...prev,
+                verification: { ...prev.verification, status: 'pending' }
+            }) : null);
+        }
+    };
+
     return {
         wasteInput,
         calculation,
         updateInput,
+        verifyBlockchain,
         wasteTypes: IPCC_FACTORS.wasteTypes,
         landfillTypes: IPCC_FACTORS.capture_efficiency
     };

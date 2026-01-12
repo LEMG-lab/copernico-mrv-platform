@@ -76,14 +76,14 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ filters, onFilterCha
                                 key={severity}
                                 onClick={() => toggleSeverity(severity)}
                                 className={`px-3 py-1 text-xs font-medium rounded-full transition-all ${isActive
-                                        ? 'ring-2 ring-offset-1'
-                                        : 'opacity-60 hover:opacity-100'
+                                    ? 'ring-2 ring-offset-1'
+                                    : 'opacity-60 hover:opacity-100'
                                     }`}
                                 style={{
                                     backgroundColor: config.bg,
                                     color: config.color,
-                                    ringColor: isActive ? config.color : undefined
-                                }}
+                                    '--tw-ring-color': isActive ? config.color : undefined
+                                } as React.CSSProperties}
                             >
                                 {config.icon} {config.label}
                             </button>
@@ -103,8 +103,8 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ filters, onFilterCha
                                 key={value}
                                 onClick={() => toggleStatus(value)}
                                 className={`px-3 py-1 text-xs font-medium rounded-full transition-all border ${isActive
-                                        ? 'bg-slate-800 text-white border-slate-800'
-                                        : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+                                    ? 'bg-slate-800 text-white border-slate-800'
+                                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
                                     }`}
                             >
                                 {label}
@@ -125,8 +125,8 @@ export const AlertFilters: React.FC<AlertFiltersProps> = ({ filters, onFilterCha
                                 key={type}
                                 onClick={() => toggleType(type)}
                                 className={`px-3 py-1 text-xs font-medium rounded-full transition-all border ${isActive
-                                        ? 'bg-blue-600 text-white border-blue-600'
-                                        : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+                                    ? 'bg-blue-600 text-white border-blue-600'
+                                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
                                     }`}
                             >
                                 {ALERT_TYPE_LABELS[type]}

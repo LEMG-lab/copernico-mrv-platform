@@ -71,13 +71,35 @@ export class EmissionsService {
             verification: {
                 hash,
                 timestamp: new Date().toISOString(),
-                factors_source: "IPCC 2019 Refinement + IPCC AR6 2021"
+                factors_source: "IPCC 2019 Refinement + IPCC AR6 2021",
+                status: 'pending'
             }
         };
     }
 
     generateHash(data: any): string {
         return CryptoJS.SHA256(JSON.stringify(data)).toString();
+    }
+
+    async verifyOnChain(calculation: EmissionsCalculation): Promise<EmissionsCalculation> {
+        // Simular latencia de blockchain (2-4 segundos)
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        // Generar Transaction Hash simulado (0x...)
+        const txHash = "0x" + CryptoJS.SHA256(calculation.verification.hash + Date.now()).toString();
+
+        // Simular Block Number
+        const blockNumber = 18450000 + Math.floor(Math.random() * 1000);
+
+        return {
+            ...calculation,
+            verification: {
+                ...calculation.verification,
+                status: 'verified',
+                txHash,
+                blockNumber
+            }
+        };
     }
 }
 
