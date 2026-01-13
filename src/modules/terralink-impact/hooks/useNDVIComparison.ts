@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Parcel, ParcelComparison, DEMO_PARCELS } from '../types/parcel.types';
+import { Parcel, ParcelComparison } from '../types/parcel.types';
 import { parcelAnalysisService } from '../services/parcelAnalysisService';
+import { terralinkService } from '../services/terralinkService';
 
 export const useNDVIComparison = () => {
     const [loading, setLoading] = useState(false);
@@ -8,16 +9,23 @@ export const useNDVIComparison = () => {
     const [error, setError] = useState<string | null>(null);
 
     const [dateRange, setDateRange] = useState({
-        from: '2025-06-01', // 6 meses atrás aproximado desde demo date
-        to: '2025-12-22'    // Fecha del prompt simulada
+        from: '2025-06-01', // 6 meses atrás aproximado
+        to: '2025-12-22'
     });
 
     const runAnalysis = async () => {
         setLoading(true);
         setError(null);
         try {
-            const terralinkParcel = DEMO_PARCELS.find(p => p.type === 'terralink')!;
-            const controlParcel = DEMO_PARCELS.find(p => p.type === 'control')!;
+            // 1. Obtener parcelas reales de Supabase
+            const parcels = await terralinkService.getParcels();
+
+            if (!parcels || parcels.length < 2) {
+                throw new Error("No se encontraron suficientes parcelas (TerraLINK + Control) en la base de datos.");
+            }
+
+            const terralinkParcel = parcels.find(p => p.type === 'terralink') || parcels[0];
+            const controlParcel = parcels.find(p => p.type === 'control') || parcels[1];
 
             // Obtener imágenes (opcional, se puede cargar on-demand, aquí pre-cargamos URLs si el servicio es rápido)
             // Por simplicidad, el componente las pedirá, aquí solo pedimos datos numéricos.
@@ -47,7 +55,6 @@ export const useNDVIComparison = () => {
         loading,
         comparison,
         error,
-        runAnalysis,
-        demoParcels: DEMO_PARCELS
+        runAnalysis
     };
 };

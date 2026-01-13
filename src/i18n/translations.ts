@@ -34,7 +34,189 @@ export const translations = {
             plantOnboarding: {
                 title: "Registro de Plantas",
                 desc: "Únete a la red global LarvaLINK, verifica tu impacto y vende créditos.",
-                action: "Iniciar Onboarding"
+                action: "Iniciar Onboarding",
+                wizard: {
+                    steps: {
+                        basic: "Info Básica",
+                        location: "Ubicación",
+                        operations: "Operaciones",
+                        sensors: "Sensores",
+                        verification: "Verificación",
+                        plan: "Plan"
+                    },
+                    common: {
+                        next: "Siguiente",
+                        prev: "Anterior",
+                        save: "Guardado",
+                        contactSupport: "Contactar soporte",
+                        faq: "Ver preguntas frecuentes",
+                        help: "¿Necesitas ayuda?"
+                    },
+                    step1: {
+                        title: "Información de la Empresa",
+                        corpData: "Datos Corporativos",
+                        companyName: "Nombre de la Empresa",
+                        plantName: "Nombre de la Planta",
+                        plantNameDesc: "Si tienes múltiples plantas, registra cada una por separado.",
+                        taxId: "RFC / Tax ID",
+                        founded: "Año Fundación",
+                        website: "Sitio Web (Opcional)",
+                        contactData: "Contacto Principal",
+                        contactName: "Nombre Completo",
+                        contactRole: "Cargo / Rol",
+                        contactEmail: "Email",
+                        contactPhone: "Teléfono",
+                        roles: {
+                            owner: "Dueño / Fundador",
+                            manager: "Gerente de Planta",
+                            ops: "Director de Operaciones",
+                            admin: "Administrador"
+                        },
+                        placeholders: {
+                            companyName: "Ej. BioCycle Solutions S.A.",
+                            plantName: "Ej. Planta Norte - QRO",
+                            selectRole: "Selecciona..."
+                        },
+                        validation: "Por favor completa los campos obligatorios (*)"
+                    },
+                    step2: {
+                        title: "Ubicación de la Planta",
+                        subtitle: "Necesitamos la ubicación exacta para la verificación satelital.",
+                        pinpoint: "Pinpoint Exacto",
+                        satelliteNote: "Usaremos estas coordenadas para obtener imágenes satelitales históricas de Sentinel-2 y verificar la existencia de la infraestructura.",
+                        address: "Dirección Calle y Número",
+                        city: "Ciudad",
+                        state: "Estado / Provincia",
+                        zip: "Código Postal",
+                        country: "País",
+                        placeholders: {
+                            address: "Ej. Carretera Federal 45 Km 10"
+                        },
+                        validation: "Por favor completa la dirección y ubicación en el mapa."
+                    },
+                    step3: {
+                        title: "Datos de Operación",
+                        capacity: "Capacidad de Procesamiento",
+                        utilization: "Utilización Actual",
+                        operatingSince: "Operando desde",
+                        wasteTypes: "Tipos de Residuo (Insumos)",
+                        products: "Productos Generados",
+                        validation: "Por favor completa la capacidad y selecciona al menos un residuo y un producto."
+                    },
+                    step4: {
+                        title: "Configuración IoT",
+                        question: "¿Tu planta tiene sensores IoT instalados?",
+                        yesSensors: "Sí, tengo sensores",
+                        yesSensorsDesc: "Puedo conectar mis dispositivos para monitoreo en tiempo real.",
+                        noSensors: "No, o prefiero reportar manualmente",
+                        noSensorsDesc: "Subiré reportes diarios o semanales via CSV/Web.",
+                        sensorsList: "Sensores Instalados",
+                        addSensor: "Agregar Sensor",
+                        noSensorsAdded: "No has agregado sensores.",
+                        sensorType: "Tipo",
+                        sensorLocation: "Ubicación",
+                        sensorSerial: "Serial (Opcional)",
+                        frequency: "Frecuencia Envío",
+                        integration: "Integración",
+                        benefitsTitle: "Beneficios de automatizar con sensores",
+                        benefit1: "Verificación 'Nivel Oro' (créditos valen +15%)",
+                        benefit2: "Alertas automáticas de anomalías",
+                        benefit3: "Mayor confianza ante compradores internacionales",
+                        viewKits: "Ver kits de inicio de Global Force IoT",
+                        placeholders: {
+                            sensorLocation: "Ej. Zona Cría",
+                            sensorSerial: "SN-12345"
+                        },
+                        validation: "Si indicaste que tienes sensores, agrega al menos uno."
+                    },
+                    step5: {
+                        title: "Documentos de Verificación",
+                        legalDocs: "Legales y Permisos",
+                        visualEvidence: "Evidencia Visual",
+                        visualEvidenceDesc: "Sube fotos claras de: Recepción de materia prima, Zona de Bio-reactores, Cosecha y Producto final.",
+                        photoPlaceholder: "Foto",
+                        uploadPhotos: "Subir Fotos de Instalación",
+                        uploaded: "subidas",
+                        videoCallTitle: "Videollamada de Verificación",
+                        videoCallDesc: "Recomendamos agendar una llamada rápida de 15 min para mostrar tu planta en vivo. Esto acelera tu aprobación a 24 horas.",
+                        scheduleLater: "Agendar para después",
+                        validation: "Sube tu licencia de operación y al menos 1 foto."
+                    },
+                    step6: {
+                        title: "Selecciona tu Plan de Red",
+                        subtitle: "Basado en tu capacidad ({{capacity}} tons/día), te recomendamos el plan",
+                        recommended: "Recomendado",
+                        monthly: "Mensual",
+                        annual: "Anual",
+                        saveOffer: "Ahorra 17%",
+                        selected: "Seleccionado",
+                        select: "Seleccionar",
+                        summaryTitle: "Resumen y Pago",
+                        selectedPlan: "Plan Seleccionado",
+                        totalToday: "Total a Pagar Hoy",
+                        futureCommission: "Comisión futura",
+                        perCredit: "por crédito vendido",
+                        creditCard: "Tarjeta de Crédito / Débito",
+                        acceptTerms: "Acepto los",
+                        termsConditions: "Términos de Servicio",
+                        completePay: "Completar Registro y Pagar 💳",
+                        processing: "Procesando...",
+                        year: "año",
+                        month: "mes",
+                        commission: "comisión venta créditos"
+                    }
+                },
+                options: {
+                    waste: {
+                        fruit_veg: "Frutas y Verduras",
+                        brewery: "Residuos Cerveceros",
+                        manure: "Estiercol",
+                        slaughter: "Rastro / Matadero",
+                        supermarket: "Mermas Supermercado"
+                    },
+                    products: {
+                        larva: "Larva Viva",
+                        dry_larva: "Larva Seca",
+                        frass: "Frass (Fertilizante)",
+                        oil: "Aceite de Insecto",
+                        chiton: "Quitina"
+                    },
+                    sensorTypes: {
+                        temperature: "Temperatura",
+                        humidity: "Humedad",
+                        weight: "Báscula",
+                        co2: "CO2",
+                        camera: "Cámara / Visión"
+                    },
+                    frequency: {
+                        realtime: "Tiempo Real (recomendado)",
+                        hourly: "Cada Hora",
+                        daily: "Diario"
+                    },
+                    documents: {
+                        license: "Licencia de Operación / Acta",
+                        environmental: "Permiso Ambiental",
+                        sanitary: "Permiso Sanitario"
+                    },
+                    plans: {
+                        starter: {
+                            name: "Starter",
+                            features: ["Registro manual de datos", "Cálculo básico de emisiones", "Acceso a Marketplace (solo venta)"]
+                        },
+                        growth: {
+                            name: "Growth",
+                            features: ["Integración IoT básica (3 sensores)", "Verificación satelital mensual", "Reportes de impacto verificados", "Comisión reducida (15%)"]
+                        },
+                        scale: {
+                            name: "Scale",
+                            features: ["IoT Avanzado (Ilimitado)", "Monitoreo espectral semanal", "API de datos en tiempo real", "Soporte dedicado 24/7"]
+                        },
+                        partner: {
+                            name: "Partner",
+                            features: ["Solución a medida"]
+                        }
+                    }
+                }
             },
             viability: {
                 title: "Calculadora Viabilidad",
@@ -93,7 +275,189 @@ export const translations = {
             plantOnboarding: {
                 title: "Plant Onboarding",
                 desc: "Join the LarvaLINK global network, verify your impact, and sell credits.",
-                action: "Start Onboarding"
+                action: "Start Onboarding",
+                wizard: {
+                    steps: {
+                        basic: "Basic Info",
+                        location: "Location",
+                        operations: "Operations",
+                        sensors: "Sensors",
+                        verification: "Verification",
+                        plan: "Plan"
+                    },
+                    common: {
+                        next: "Next",
+                        prev: "Previous",
+                        save: "Saved",
+                        contactSupport: "Contact support",
+                        faq: "View FAQ",
+                        help: "Need help?"
+                    },
+                    step1: {
+                        title: "Company Information",
+                        corpData: "Corporate Data",
+                        companyName: "Company Name",
+                        plantName: "Plant Name",
+                        plantNameDesc: "If you have multiple plants, register each one separately.",
+                        taxId: "Tax ID / VAT",
+                        founded: "Year Founded",
+                        website: "Website (Optional)",
+                        contactData: "Primary Contact",
+                        contactName: "Full Name",
+                        contactRole: "Role / Position",
+                        contactEmail: "Email",
+                        contactPhone: "Phone",
+                        roles: {
+                            owner: "Owner / Founder",
+                            manager: "Plant Manager",
+                            ops: "Operations Director",
+                            admin: "Administrator"
+                        },
+                        placeholders: {
+                            companyName: "e.g. BioCycle Solutions Inc.",
+                            plantName: "e.g. North Plant - QRO",
+                            selectRole: "Select..."
+                        },
+                        validation: "Please complete mandatory fields (*)"
+                    },
+                    step2: {
+                        title: "Plant Location",
+                        subtitle: "We need the exact location for satellite verification.",
+                        pinpoint: "Exact Pinpoint",
+                        satelliteNote: "We will use these coordinates to retrieve historical Sentinel-2 satellite imagery and verify infrastructure existence.",
+                        address: "Street Address",
+                        city: "City",
+                        state: "State / Province",
+                        zip: "Postal Code",
+                        country: "Country",
+                        placeholders: {
+                            address: "e.g. Federal Highway 45 Km 10"
+                        },
+                        validation: "Please complete the address and map location."
+                    },
+                    step3: {
+                        title: "Operations Data",
+                        capacity: "Processing Capacity",
+                        utilization: "Current Utilization",
+                        operatingSince: "Operating Since",
+                        wasteTypes: "Waste Types (Inputs)",
+                        products: "Generated Products",
+                        validation: "Please complete capacity and select at least one waste type and product."
+                    },
+                    step4: {
+                        title: "IoT Configuration",
+                        question: "Do you have IoT sensors installed?",
+                        yesSensors: "Yes, I have sensors",
+                        yesSensorsDesc: "I can connect my devices for real-time monitoring.",
+                        noSensors: "No, or I prefer manual reporting",
+                        noSensorsDesc: "I will upload daily or weekly reports via CSV/Web.",
+                        sensorsList: "Installed Sensors",
+                        addSensor: "Add Sensor",
+                        noSensorsAdded: "No sensors added.",
+                        sensorType: "Type",
+                        sensorLocation: "Location",
+                        sensorSerial: "Serial (Optional)",
+                        frequency: "Data Frequency",
+                        integration: "Integration",
+                        benefitsTitle: "Benefits of automated sensors",
+                        benefit1: "'Gold Level' Verification (credits worth +15%)",
+                        benefit2: "Automatic anomaly alerts",
+                        benefit3: "Higher trust from international buyers",
+                        viewKits: "View Global Force IoT starter kits",
+                        placeholders: {
+                            sensorLocation: "e.g. Breeding Zone",
+                            sensorSerial: "SN-12345"
+                        },
+                        validation: "If you indicated you have sensors, please add at least one."
+                    },
+                    step5: {
+                        title: "Verification Documents",
+                        legalDocs: "Legal & Permits",
+                        visualEvidence: "Visual Evidence",
+                        visualEvidenceDesc: "Upload clear photos of: Raw material reception, Bio-reactor zone, Harvest, and Final product.",
+                        photoPlaceholder: "Photo",
+                        uploadPhotos: "Upload Facility Photos",
+                        uploaded: "uploaded",
+                        videoCallTitle: "Verification Call",
+                        videoCallDesc: "We recommend scheduling a quick 15-min call to show your plant live. This speeds up approval to 24 hours.",
+                        scheduleLater: "Schedule later",
+                        validation: "Upload your operating license and at least 1 photo."
+                    },
+                    step6: {
+                        title: "Select your Network Plan",
+                        subtitle: "Based on your capacity ({{capacity}} tons/day), we recommend the plan",
+                        recommended: "Recommended",
+                        monthly: "Monthly",
+                        annual: "Annual",
+                        saveOffer: "Save 17%",
+                        selected: "Selected",
+                        select: "Select",
+                        summaryTitle: "Summary & Payment",
+                        selectedPlan: "Selected Plan",
+                        totalToday: "Total Due Today",
+                        futureCommission: "Future commission",
+                        perCredit: "per credit sold",
+                        creditCard: "Credit / Debit Card",
+                        acceptTerms: "I accept the",
+                        termsConditions: "Terms of Service",
+                        completePay: "Complete Registration & Pay 💳",
+                        processing: "Processing...",
+                        year: "year",
+                        month: "month",
+                        commission: "credit sales commission"
+                    }
+                },
+                options: {
+                    waste: {
+                        fruit_veg: "Fruits & Vegetables",
+                        brewery: "Brewery Waste",
+                        manure: "Manure",
+                        slaughter: "Slaughterhouse",
+                        supermarket: "Supermarket Waste"
+                    },
+                    products: {
+                        larva: "Live Larvae",
+                        dry_larva: "Dried Larvae",
+                        frass: "Frass (Fertilizer)",
+                        oil: "Insect Oil",
+                        chiton: "Chitin"
+                    },
+                    sensorTypes: {
+                        temperature: "Temperature",
+                        humidity: "Humidity",
+                        weight: "Weight/Scale",
+                        co2: "CO2",
+                        camera: "Camera / Vision"
+                    },
+                    frequency: {
+                        realtime: "Real-time (Recommended)",
+                        hourly: "Hourly",
+                        daily: "Daily"
+                    },
+                    documents: {
+                        license: "Operating License / Deed",
+                        environmental: "Environmental Permit",
+                        sanitary: "Sanitary Permit"
+                    },
+                    plans: {
+                        starter: {
+                            name: "Starter",
+                            features: ["Manual data entry", "Basic emissions calc", "Marketplace access (sales only)"]
+                        },
+                        growth: {
+                            name: "Growth",
+                            features: ["Basic IoT integration (3 sensors)", "Monthly satellite verification", "Verified impact reports", "Reduced commission (15%)"]
+                        },
+                        scale: {
+                            name: "Scale",
+                            features: ["Advanced IoT (Unlimited)", "Weekly spectral monitoring", "Real-time Data API", "24/7 Dedicated Support"]
+                        },
+                        partner: {
+                            name: "Partner",
+                            features: ["Custom solution"]
+                        }
+                    }
+                }
             },
             viability: {
                 title: "Viability Calculator",

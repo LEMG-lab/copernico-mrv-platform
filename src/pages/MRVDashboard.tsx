@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { LARVALINK_LOCATIONS, LarvaLinkLocation } from '@/constants/locations';
-import { copernicusService } from '@/services/copernicusService';
+import { mrvService } from '@/services/mrvService';
 import { EvalScriptType } from '@/constants/evalscripts';
 import { format } from 'date-fns';
 import 'leaflet/dist/leaflet.css';
@@ -56,7 +56,7 @@ export const MRVDashboard: React.FC = () => {
             const { bbox } = selectedLocation;
 
             // 1. Obtener imagen
-            const { imageUrl, imageBlob } = await copernicusService.getSatelliteImage(
+            const { imageUrl, imageBlob } = await mrvService.getSatelliteImage(
                 bbox,
                 startDate,
                 endDate,
@@ -73,12 +73,12 @@ export const MRVDashboard: React.FC = () => {
             ]);
 
             // 2. Obtener hash de verificación
-            const hash = await copernicusService.generateVerificationHash(imageBlob);
+            const hash = await mrvService.generateVerificationHash(imageBlob);
             setVerificationHash(hash);
 
             // 3. Obtener stats (simulado para demo)
             if (selectedLayer === 'ndvi') {
-                const stats = await copernicusService.getNDVIStats(bbox, startDate, endDate);
+                const stats = await mrvService.getNDVIStats(bbox, startDate, endDate);
                 setNdviStats(stats);
             } else {
                 // Mock valor base
@@ -212,8 +212,28 @@ export const MRVDashboard: React.FC = () => {
                         {LARVALINK_LOCATIONS.map(loc => (
                             <Marker key={loc.id} position={loc.center}>
                                 <Popup>
-                                    <strong>{loc.name}</strong><br />
-                                    {loc.status}
+                                    <div className="popup-content">
+                                        <strong>{loc.name}</strong>
+                                        <p className="popup-status">{loc.status.replace('_', ' ')}</p>
+
+                                        <div className="popup-actions">
+                                            <button
+                                                className="btn-details"
+                                                onClick={() => setSelectedLocation(loc)}
+                                            >
+                                                🔬 Analizar MRV
+                                            </button>
+
+                                            <a
+                                                className="btn-streetview"
+                                                href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${loc.center[0]},${loc.center[1]}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                📍 Google Street View
+                                            </a>
+                                        </div>
+                                    </div>
                                 </Popup>
                             </Marker>
                         ))}

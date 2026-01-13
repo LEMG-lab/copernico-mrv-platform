@@ -1,5 +1,5 @@
 /**
- * Store global de la aplicación Copernico
+ * Store global de la aplicación LarvaLINK MRV
  */
 
 import { create } from 'zustand';

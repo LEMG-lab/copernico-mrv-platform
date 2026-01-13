@@ -27,15 +27,17 @@ export const StreetViewViewer: React.FC<StreetViewViewerProps> = ({ lat, lng, on
 
                     const service = new StreetViewService();
 
-                    service.getPanorama({ location: { lat, lng }, radius: 1000 }, (data, status) => {
+                    service.getPanorama({ location: { lat, lng }, radius: 5000 }, (data, status) => {
                         if (status === 'OK' && data && data.location) {
                             renderPanorama(data.location.latLng!);
                         } else {
-                            // Fallback logic
-                            const fallbackLoc = { lat: 37.4220, lng: -122.0841 };
+                            // Fallback logic - If no street view nearby, show Demo location but don't block UI
+                            console.warn("No Street View found nearby. Falling back to Demo.");
+                            const fallbackLoc = { lat: 37.4220, lng: -122.0841 }; // Googleplex
+
                             service.getPanorama({ location: fallbackLoc, radius: 100 }, (d2, s2) => {
                                 if (s2 === 'OK' && d2 && d2.location) {
-                                    setError("Ubicación sin cobertura. Mostrando Google HQ (Demo).");
+                                    // Don't set error, just render. Maybe add a small label later.
                                     renderPanorama(d2.location.latLng!);
                                 } else {
                                     setError("Error crítico: Imposible cargar Street View.");

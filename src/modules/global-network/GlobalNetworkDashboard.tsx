@@ -22,7 +22,13 @@ export const GlobalNetworkDashboard: React.FC = () => {
     });
 
     // Store y Estado de Edición
-    const { plants, updatePlant, resetPlants } = useNetworkStore();
+    const { plants, updatePlant, fetchPlants } = useNetworkStore();
+
+    // Cargar datos reales al montar
+    React.useEffect(() => {
+        fetchPlants();
+    }, [fetchPlants]);
+
     const [isEditMode, setIsEditMode] = useState(false);
     const [editingPlant, setEditingPlant] = useState<PlantLocation | null>(null);
     // const [selectedPlant, setSelectedPlant] = useState<any>(null); // YA NO SE USA
@@ -296,7 +302,7 @@ export const GlobalNetworkDashboard: React.FC = () => {
                                 }}
                                 className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2"
                             >
-                                <span>🚀</span> Simular Selección Papalotla
+                                <span>🚀</span> Simular Selección Tepetloztoc
                             </button>
                         </div>
 

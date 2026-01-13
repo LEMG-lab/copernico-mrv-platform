@@ -1,5 +1,5 @@
 /**
- * Header Component - Copernico
+ * Header Component - LarvaLINK MRV Center
  */
 
 import React from 'react';
@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
 
                 <div className="header-title">
                     <span className="header-icon">🛰️</span>
-                    <h1 className="header-logo">Copernico</h1>
+                    <h1 className="header-logo">LarvaLINK MRV</h1>
                 </div>
             </div>
 

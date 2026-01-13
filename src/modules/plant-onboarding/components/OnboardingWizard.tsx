@@ -10,9 +10,11 @@ import { Step5Verification } from './Step5Verification';
 import { Step6Plan } from './Step6Plan';
 import { SuccessScreen } from './SuccessScreen';
 import { Navigation } from '../../../components/Navigation';
+import { useTranslation } from '../hooks/useTranslations';
 
 export const OnboardingWizard: React.FC = () => {
     const { current_step, appId, isSuccess, startOnboarding, last_saved_at } = useOnboarding();
+    const { t } = useTranslation();
 
     if (isSuccess) {
         return (
@@ -62,7 +64,7 @@ export const OnboardingWizard: React.FC = () => {
                 {/* Status de guardado */}
                 <div className="w-full max-w-4xl flex justify-end items-center mb-4">
                     <div className="text-xs text-slate-400 flex items-center gap-2">
-                        {last_saved_at && <span>☁️ Guardado {new Date(last_saved_at).toLocaleTimeString()}</span>}
+                        {last_saved_at && <span>☁️ {t('modules.plantOnboarding.wizard.common.save')} {new Date(last_saved_at).toLocaleTimeString()}</span>}
                     </div>
                 </div>
 
@@ -81,7 +83,7 @@ export const OnboardingWizard: React.FC = () => {
                 </div>
 
                 <div className="mt-8 text-center text-slate-400 text-xs">
-                    ¿Necesitas ayuda? <a href="#" className="text-blue-500 hover:underline">Contactar soporte</a> o <a href="#" className="text-blue-500 hover:underline">Ver preguntas frecuentes</a>
+                    {t('modules.plantOnboarding.wizard.common.help')} <a href="#" className="text-blue-500 hover:underline">{t('modules.plantOnboarding.wizard.common.contactSupport')}</a> o <a href="#" className="text-blue-500 hover:underline">{t('modules.plantOnboarding.wizard.common.faq')}</a>
                 </div>
             </div>
         </div>

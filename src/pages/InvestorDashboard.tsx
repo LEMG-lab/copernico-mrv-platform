@@ -48,7 +48,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.terralink.action}
                         linkTo="/terralink"
                         icon="🌱"
-                        gradient="from-green-400 to-emerald-600"
+                        gradient="from-emerald-500 to-green-700"
                     />
                     <ModuleCard
                         title={t.modules.emissions.title}
@@ -56,7 +56,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.emissions.action}
                         linkTo="/emissions"
                         icon="💨"
-                        gradient="from-blue-400 to-cyan-600"
+                        gradient="from-teal-500 to-emerald-600"
                     />
                     <ModuleCard
                         title={t.modules.network.title}
@@ -64,7 +64,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.network.action}
                         linkTo="/network"
                         icon="🌍"
-                        gradient="from-purple-400 to-indigo-600"
+                        gradient="from-lime-600 to-green-800"
                     />
                     <ModuleCard
                         title={t.modules.plantOnboarding.title}
@@ -72,7 +72,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.plantOnboarding.action}
                         linkTo="/plant-onboarding"
                         icon="🏭"
-                        gradient="from-orange-500 to-red-500"
+                        gradient="from-amber-600 to-yellow-700"
                     />
                     <ModuleCard
                         title={t.modules.marketplace.title}
@@ -80,7 +80,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.marketplace.action}
                         linkTo="/marketplace"
                         icon="🪙"
-                        gradient="from-yellow-400 to-orange-600"
+                        gradient="from-emerald-400 to-teal-500"
                     />
                     <ModuleCard
                         title={t.modules.viability.title}
@@ -88,7 +88,7 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.viability.action}
                         linkTo="/viability"
                         icon="🧮"
-                        gradient="from-teal-400 to-teal-600"
+                        gradient="from-cyan-700 to-teal-800"
                     />
                     <ModuleCard
                         title={t.modules.investorPortal.title}
@@ -104,8 +104,111 @@ const InvestorDashboard: React.FC = () => {
                         actionText={t.modules.alerts?.action || "Ver Alertas"}
                         linkTo="/alerts"
                         icon="🔔"
-                        gradient="from-red-500 to-pink-600"
+                        gradient="from-red-700 to-orange-800"
                     />
+                    <ModuleCard
+                        title="CircularLINK Partners"
+                        description="Red de comercios certificados, consumidores y sistema de recompensas por economía circular"
+                        actionText="Explorar Red →"
+                        linkTo="/partners"
+                        icon="♻️"
+                        gradient="from-green-600 to-emerald-700"
+                    />
+                </div>
+
+                {/* CircularLINK Partners Section */}
+                <div className="mb-16">
+                    <div className="text-center mb-8">
+                        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-2 flex items-center justify-center gap-3">
+                            <span className="bg-gradient-to-r from-green-500 to-emerald-500 p-2 rounded-xl">♻️</span>
+                            CircularLINK Partners
+                        </h2>
+                        <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                            Ecosistema de comercios certificados y consumidores comprometidos con la economía circular
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {/* Partners Map */}
+                        <a
+                            href="/partners"
+                            className="group bg-gradient-to-br from-green-900/80 to-emerald-900/80 border border-green-500/30 rounded-2xl p-5 hover:border-green-400 transition-all hover:scale-[1.02]"
+                        >
+                            <div className="text-3xl mb-3">🗺️</div>
+                            <h3 className="font-bold text-white text-lg mb-1 group-hover:text-green-300 transition-colors">
+                                Mapa de Partners
+                            </h3>
+                            <p className="text-sm text-green-200/70">
+                                127 comercios certificados en todo México
+                            </p>
+                        </a>
+
+                        {/* Mi Impacto (Consumer Portal) */}
+                        <a
+                            href="/mi-impacto"
+                            className="group bg-gradient-to-br from-emerald-900/80 to-teal-900/80 border border-emerald-500/30 rounded-2xl p-5 hover:border-emerald-400 transition-all hover:scale-[1.02]"
+                        >
+                            <div className="text-3xl mb-3">🌱</div>
+                            <h3 className="font-bold text-white text-lg mb-1 group-hover:text-emerald-300 transition-colors">
+                                Mi Impacto
+                            </h3>
+                            <p className="text-sm text-emerald-200/70">
+                                Semillas, logros y recompensas
+                            </p>
+                        </a>
+
+                        {/* Partner Dashboard */}
+                        <a
+                            href="/dashboard/partner"
+                            className="group bg-gradient-to-br from-teal-900/80 to-cyan-900/80 border border-teal-500/30 rounded-2xl p-5 hover:border-teal-400 transition-all hover:scale-[1.02]"
+                        >
+                            <div className="text-3xl mb-3">📊</div>
+                            <h3 className="font-bold text-white text-lg mb-1 group-hover:text-teal-300 transition-colors">
+                                Dashboard Partner
+                            </h3>
+                            <p className="text-sm text-teal-200/70">
+                                Métricas, entregas y QR
+                            </p>
+                        </a>
+
+                        {/* Scan QR */}
+                        <a
+                            href="/scan/BAJIO01"
+                            className="group bg-gradient-to-br from-lime-900/80 to-green-900/80 border border-lime-500/30 rounded-2xl p-5 hover:border-lime-400 transition-all hover:scale-[1.02]"
+                        >
+                            <div className="text-3xl mb-3">📱</div>
+                            <h3 className="font-bold text-white text-lg mb-1 group-hover:text-lime-300 transition-colors">
+                                Demo Escaneo QR
+                            </h3>
+                            <p className="text-sm text-lime-200/70">
+                                Prueba la experiencia del consumidor
+                            </p>
+                        </a>
+                    </div>
+
+                    {/* Stats Banner */}
+                    <div className="mt-6 bg-slate-800/50 border border-slate-700 rounded-xl p-4 flex flex-wrap justify-center gap-8 text-center">
+                        <div>
+                            <div className="text-2xl font-black text-green-400">127</div>
+                            <div className="text-xs text-slate-500">Partners activos</div>
+                        </div>
+                        <div>
+                            <div className="text-2xl font-black text-emerald-400">2.8M</div>
+                            <div className="text-xs text-slate-500">kg trazados</div>
+                        </div>
+                        <div>
+                            <div className="text-2xl font-black text-teal-400">5.1M</div>
+                            <div className="text-xs text-slate-500">kg CO2 evitado</div>
+                        </div>
+                        <div>
+                            <div className="text-2xl font-black text-cyan-400">4,892</div>
+                            <div className="text-xs text-slate-500">Consumidores</div>
+                        </div>
+                        <div>
+                            <div className="text-2xl font-black text-pink-400">$145K</div>
+                            <div className="text-xs text-slate-500">Donado</div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Footer / Data Sources */}

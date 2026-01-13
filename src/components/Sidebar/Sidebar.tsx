@@ -1,5 +1,5 @@
 /**
- * Sidebar Component - Copernico
+ * Sidebar Component - LarvaLINK MRV
  */
 
 import React from 'react';

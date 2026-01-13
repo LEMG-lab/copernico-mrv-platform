@@ -1,5 +1,5 @@
 import { RegionalMethane, Plant } from '../types/emissions.types';
-import { copernicusService } from '../../../services/copernicusService';
+import { mrvService } from '../../../services/mrvService';
 
 // En un entorno de producción, esto llamaría a Sentinel Hub Statistical API
 // Collection: sentinel-5p-l2
@@ -20,7 +20,7 @@ class MethaneService {
                 plant.coordinates.lat + 0.05
             ];
 
-            const stats = await copernicusService.getMethaneStats(bbox, startDate, endDate);
+            const stats = await mrvService.getMethaneStats(bbox, startDate, endDate);
 
             if (stats.mean > 0) {
                 // Anomaly: Comparación con promedio global aproximado (1900 ppb)

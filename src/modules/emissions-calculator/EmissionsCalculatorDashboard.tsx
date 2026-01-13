@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Navigation } from '../../components/Navigation';
 import { PlantSelector } from './components/PlantSelector';
 import { WasteInputForm } from './components/WasteInputForm';
 import { EmissionsGauge } from './components/EmissionsGauge';
@@ -7,13 +9,37 @@ import { EquivalenciesCard } from './components/EquivalenciesCard';
 import { MethaneMapContext } from './components/MethaneMapContext';
 import { BlockchainRegistry } from './components/BlockchainRegistry';
 import { useEmissionsCalculation } from './hooks/useEmissionsCalculation';
-import { LARVALINK_PLANTS, Plant } from './types/emissions.types';
-import { Navigation } from '../../components/Navigation';
+import { emissionsService } from './services/emissionsService';
+import { Plant } from './types/emissions.types';
 
 export const EmissionsCalculatorDashboard: React.FC = () => {
-    const [selectedPlant, setSelectedPlant] = useState<Plant>(LARVALINK_PLANTS[0]); // Default Papalotla
+    const [plants, setPlants] = useState<Plant[]>([]);
+    const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     const { wasteInput, calculation, updateInput, verifyBlockchain } = useEmissionsCalculation();
-    const [showReport, setShowReport] = useState(false); // Simulación de descarga
+    const [showReport, setShowReport] = useState(false);
+
+    React.useEffect(() => {
+        const fetch = async () => {
+            try {
+                const data = await emissionsService.getPlants();
+                setPlants(data);
+                // Predeseleccionar Tepetloztoc
+                const defaultPlant = data.find(p => p.name.includes('Tepetloztoc')) || data[0];
+                setSelectedPlant(defaultPlant);
+            } catch (err) {
+                console.error("Failed to load plants", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetch();
+    }, []);
+
+    if (isLoading || !selectedPlant) {
+        return <div className="min-h-screen bg-[#0F172A] flex items-center justify-center text-slate-400">Cargando datos de emisiones...</div>;
+    }
 
     const handleDownloadReport = () => {
         setShowReport(true);
@@ -41,16 +67,16 @@ export const EmissionsCalculatorDashboard: React.FC = () => {
                     >
                         📄 Descargar Reporte
                     </button>
-                    <a href="/" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium">
+                    <Link to="/" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium">
                         Volver al Inicio
-                    </a>
+                    </Link>
                 </div>
             </header>
 
             <div className="max-w-7xl mx-auto space-y-6">
 
                 {/* 1. Selector de Planta */}
-                <PlantSelector selectedPlant={selectedPlant} onSelect={setSelectedPlant} />
+                <PlantSelector plants={plants} selectedPlant={selectedPlant} onSelect={setSelectedPlant} />
 
                 {/* 2. Área Interactiva Principal */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">

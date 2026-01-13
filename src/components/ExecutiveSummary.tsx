@@ -7,16 +7,16 @@ export const ExecutiveSummary: React.FC = () => {
     const t = translations[language];
 
     const StatItem = ({ value, label, trend }: { value: string, label: string, trend?: string }) => (
-        <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+        <div className="bg-slate-50 dark:bg-emerald-950/40 p-4 rounded-lg border border-slate-200 dark:border-emerald-800/50">
             <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{value}</div>
-            <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">{label}</div>
-            {trend && <div className="text-xs text-green-500 mt-2 font-bold">{trend}</div>}
+            <div className="text-xs text-slate-500 dark:text-emerald-200/70 font-bold uppercase tracking-wider">{label}</div>
+            {trend && <div className="text-xs text-green-500 dark:text-emerald-400 mt-2 font-bold">{trend}</div>}
         </div>
     );
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-lg">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-200 dark:border-slate-700 pb-4">
+        <div className="bg-white dark:bg-[#064e3b]/80 backdrop-blur-md rounded-2xl p-8 border border-slate-200 dark:border-emerald-700/50 shadow-lg shadow-emerald-900/20">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-200 dark:border-emerald-700/50 pb-4">
                 {t.executiveSummary}
             </h2>
 
@@ -26,9 +26,9 @@ export const ExecutiveSummary: React.FC = () => {
                         {t.summaryText}
                     </p>
                     <div className="mt-6 flex flex-wrap gap-2">
-                        <span className="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold border border-blue-200 dark:border-blue-700">BioTech</span>
-                        <span className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold border border-green-200 dark:border-green-700">Regenerative Ag</span>
-                        <span className="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-bold border border-purple-200 dark:border-purple-700">Carbon Credits</span>
+                        <span className="px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 text-xs font-bold border border-teal-200 dark:border-teal-700">BioTech</span>
+                        <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-700">Regenerative Ag</span>
+                        <span className="px-3 py-1 rounded-full bg-lime-100 dark:bg-lime-900/30 text-lime-700 dark:text-lime-300 text-xs font-bold border border-lime-200 dark:border-lime-700">Carbon Credits</span>
                     </div>
                 </div>
 

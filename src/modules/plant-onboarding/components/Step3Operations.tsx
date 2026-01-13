@@ -2,9 +2,11 @@ import React from 'react';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { WASTE_TYPES_INFO, PRODUCT_TYPES_INFO } from '../data/onboardingConfig';
 import { WasteType, ProductType } from '../types/onboarding.types';
+import { useTranslation } from '../hooks/useTranslations';
 
 export const Step3Operations: React.FC = () => {
     const { operations, updateOperations, setStep, saveProgress } = useOnboarding();
+    const { t } = useTranslation();
 
     const toggleWaste = (type: WasteType) => {
         const current = operations.waste_types || [];
@@ -24,7 +26,7 @@ export const Step3Operations: React.FC = () => {
 
     const handleNext = () => {
         if (!operations.capacity_tons_day || !operations.current_utilization || (operations.waste_types?.length === 0) || (operations.products?.length === 0)) {
-            alert("Por favor completa la capacidad y selecciona al menos un residuo y un producto.");
+            alert(t('modules.plantOnboarding.wizard.step3.validation'));
             return;
         }
         saveProgress();
@@ -33,14 +35,14 @@ export const Step3Operations: React.FC = () => {
 
     return (
         <div className="animate-fade-in-right">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Datos de Operación</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-6">{t('modules.plantOnboarding.wizard.step3.title')}</h2>
 
             {/* Metrics Sliders */}
             <div className="mb-10 bg-slate-50 p-6 rounded-xl border border-slate-100">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <label className="flex justify-between text-sm font-bold text-slate-700 mb-4">
-                            <span>Capacidad de Procesamiento</span>
+                            <span>{t('modules.plantOnboarding.wizard.step3.capacity')}</span>
                             <span className="text-blue-600">{operations.capacity_tons_day || 0} tons/día</span>
                         </label>
                         <input
@@ -58,7 +60,7 @@ export const Step3Operations: React.FC = () => {
 
                     <div>
                         <label className="flex justify-between text-sm font-bold text-slate-700 mb-4">
-                            <span>Utilización Actual</span>
+                            <span>{t('modules.plantOnboarding.wizard.step3.utilization')}</span>
                             <span className="text-blue-600">{operations.current_utilization || 0}%</span>
                         </label>
                         <input
@@ -75,7 +77,7 @@ export const Step3Operations: React.FC = () => {
                     </div>
                 </div>
                 <div className="mt-6 md:w-1/2">
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Operando desde</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">{t('modules.plantOnboarding.wizard.step3.operatingSince')}</label>
                     <input
                         type="date"
                         className="w-full rounded-lg border-slate-300 shadow-sm"
@@ -87,12 +89,12 @@ export const Step3Operations: React.FC = () => {
 
             {/* Waste Types */}
             <div className="mb-8">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">Tipos de Residuo (Insumos) *</h3>
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">{t('modules.plantOnboarding.wizard.step3.wasteTypes')} *</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {(Object.entries(WASTE_TYPES_INFO) as [WasteType, { label: string }][]).map(([key, info]) => (
+                    {(Object.keys(WASTE_TYPES_INFO) as WasteType[]).map((key) => (
                         <label key={key} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${operations.waste_types?.includes(key)
-                                ? 'bg-green-50 border-green-200 shadow-sm'
-                                : 'bg-white border-slate-200 hover:border-slate-300'
+                            ? 'bg-green-50 border-green-200 shadow-sm'
+                            : 'bg-white border-slate-200 hover:border-slate-300'
                             }`}>
                             <input
                                 type="checkbox"
@@ -101,7 +103,7 @@ export const Step3Operations: React.FC = () => {
                                 onChange={() => toggleWaste(key)}
                             />
                             <span className={`text-sm ${operations.waste_types?.includes(key) ? 'font-bold text-green-800' : 'text-slate-600'}`}>
-                                {info.label}
+                                {t(`modules.plantOnboarding.options.waste.${key}`)}
                             </span>
                         </label>
                     ))}
@@ -110,12 +112,12 @@ export const Step3Operations: React.FC = () => {
 
             {/* Products */}
             <div className="mb-8">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">Productos Generados *</h3>
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">{t('modules.plantOnboarding.wizard.step3.products')} *</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {(Object.entries(PRODUCT_TYPES_INFO) as [ProductType, { label: string }][]).map(([key, info]) => (
+                    {(Object.keys(PRODUCT_TYPES_INFO) as ProductType[]).map((key) => (
                         <label key={key} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${operations.products?.includes(key)
-                                ? 'bg-blue-50 border-blue-200 shadow-sm'
-                                : 'bg-white border-slate-200 hover:border-slate-300'
+                            ? 'bg-blue-50 border-blue-200 shadow-sm'
+                            : 'bg-white border-slate-200 hover:border-slate-300'
                             }`}>
                             <input
                                 type="checkbox"
@@ -124,7 +126,7 @@ export const Step3Operations: React.FC = () => {
                                 onChange={() => toggleProduct(key)}
                             />
                             <span className={`text-sm ${operations.products?.includes(key) ? 'font-bold text-blue-800' : 'text-slate-600'}`}>
-                                {info.label}
+                                {t(`modules.plantOnboarding.options.product.${key}`)}
                             </span>
                         </label>
                     ))}
@@ -136,13 +138,13 @@ export const Step3Operations: React.FC = () => {
                     onClick={() => setStep('location')}
                     className="text-slate-500 hover:text-slate-800 font-medium px-4 py-2"
                 >
-                    ← Anterior
+                    ← {t('modules.plantOnboarding.wizard.common.prev')}
                 </button>
                 <button
                     onClick={handleNext}
                     className="bg-[#1E3A5F] hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center gap-2 shadow-lg"
                 >
-                    Siguiente: Sensores →
+                    {t('modules.plantOnboarding.wizard.common.next')} →
                 </button>
             </div>
         </div>

@@ -1,20 +1,23 @@
 import React from 'react';
 import { OnboardingStep } from '../types/onboarding.types';
+import { useTranslation } from '../hooks/useTranslations';
 
 interface ProgressStepperProps {
     currentStep: OnboardingStep;
 }
 
-const STEPS: { id: OnboardingStep; label: string; number: number }[] = [
-    { id: 'basic_info', label: 'Info', number: 1 },
-    { id: 'location', label: 'Ubicación', number: 2 },
-    { id: 'operations', label: 'Operaciones', number: 3 },
-    { id: 'sensors', label: 'Sensores', number: 4 },
-    { id: 'verification', label: 'Docs', number: 5 },
-    { id: 'plan', label: 'Plan', number: 6 },
-];
-
 export const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep }) => {
+    const { t } = useTranslation();
+
+    const STEPS: { id: OnboardingStep; label: string; number: number }[] = [
+        { id: 'basic_info', label: t('modules.plantOnboarding.wizard.steps.basic'), number: 1 },
+        { id: 'location', label: t('modules.plantOnboarding.wizard.steps.location'), number: 2 },
+        { id: 'operations', label: t('modules.plantOnboarding.wizard.steps.operations'), number: 3 },
+        { id: 'sensors', label: t('modules.plantOnboarding.wizard.steps.sensors'), number: 4 },
+        { id: 'verification', label: t('modules.plantOnboarding.wizard.steps.verification'), number: 5 },
+        { id: 'plan', label: t('modules.plantOnboarding.wizard.steps.plan'), number: 6 },
+    ];
+
     const currentStepIndex = STEPS.findIndex(s => s.id === currentStep);
 
     return (
@@ -37,8 +40,8 @@ export const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep })
                         <div key={step.id} className="flex flex-col items-center gap-2">
                             <div
                                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${isCompleted ? 'bg-green-500 text-white border-green-500' :
-                                        isCurrent ? 'bg-white text-green-600 border-2 border-green-500 scale-110 shadow-lg' :
-                                            'bg-white text-slate-400 border border-slate-300'
+                                    isCurrent ? 'bg-white text-green-600 border-2 border-green-500 scale-110 shadow-lg' :
+                                        'bg-white text-slate-400 border border-slate-300'
                                     }`}
                             >
                                 {isCompleted ? '✓' : step.number}

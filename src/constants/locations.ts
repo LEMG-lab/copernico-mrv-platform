@@ -13,11 +13,11 @@ export interface LarvaLinkLocation {
 
 export const LARVALINK_LOCATIONS: LarvaLinkLocation[] = [
     {
-        id: "papalotla",
-        name: "Planta Papalotla",
+        id: "tepetloztoc",
+        name: "Planta Tepetloztoc",
         description: "Planta piloto operativa desde octubre 2025",
-        bbox: [-98.87, 19.55, -98.82, 19.60],
-        center: [19.575, -98.845], // Leaflet format [lat, lon]
+        bbox: [-98.87, 19.55, -98.82, 19.60], // Keeping same bbox for now or should update? Assuming same region
+        center: [19.575, -98.845],
         status: "operativa"
     },
     {

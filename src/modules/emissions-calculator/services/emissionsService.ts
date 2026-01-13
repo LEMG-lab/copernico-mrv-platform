@@ -1,106 +1,64 @@
-import { IPCC_FACTORS, EQUIVALENCIES } from '../constants/ipccFactors';
-import { WasteInput, EmissionsCalculation } from '../types/emissions.types';
-import CryptoJS from 'crypto-js';
+import { supabase } from '../../../lib/supabase';
+import { Plant } from '../types/emissions.types';
 
-export class EmissionsService {
+export const emissionsService = {
+    async getPlants(): Promise<Plant[]> {
+        const { data: plantsData, error } = await supabase
+            .from('plants')
+            .select('*');
 
-    calculateEmissions(input: WasteInput): EmissionsCalculation {
-        const factor = IPCC_FACTORS.wasteTypes[input.wasteType];
-        const gwp = IPCC_FACTORS.gwp.ch4_20yr; // Usar 20 años para impacto a corto plazo (más impactante y urgente)
+        if (error) {
+            console.error('Error fetching emission plants:', error);
+            throw error;
+        }
 
-        // Obtener eficiencia de captura según el tipo seleccionado, default a 0 si no existe
-        // @ts-ignore - acceso dinámico seguro dado el tipo WasteInput
-        const capture = IPCC_FACTORS.capture_efficiency[input.landfillType] || 0;
+        // Map DB plants to Emissions Plant type
+        return plantsData.map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            location: `${p.city || 'Desconocido'}, ${p.country || ''}`,
+            coordinates: {
+                lat: p.latitude || 0,
+                lng: p.longitude || 0,
+                // Generate a rough bbox around the point if not available
+                bbox: [
+                    (p.longitude || 0) - 0.05,
+                    (p.latitude || 0) - 0.05,
+                    (p.longitude || 0) + 0.05,
+                    (p.latitude || 0) + 0.05
+                ]
+            },
+            capacity_tons_day: p.capacity_tons_day || 0,
+            status: mapStatus(p.status),
 
-        const oxidation = IPCC_FACTORS.oxidation_factor;
+            // Fields required by type but not currently in DB main table
+            country: p.country || 'Unknown',
+            operations_start_date: '2025-01-01', // Mock default
+            waste_processed_ytd: 0 // Will fetch from MRV later or kept 0
+        }));
+    },
 
-        // Normalizar a tons/año para el reporte
-        let tons_year = input.tons;
-        if (input.period === 'day') tons_year = input.tons * 365;
-        if (input.period === 'month') tons_year = input.tons * 12;
-
-        // BASELINE: Emisiones en relleno sanitario
-        // Fórmula: Waste * CH4_Generation * (1 - Oxidation) * (1 - Capture)
-        const baseline_ch4_kg = tons_year * factor.ch4_kg_per_ton * (1 - oxidation) * (1 - capture);
-        const baseline_co2eq = (baseline_ch4_kg / 1000) * gwp;
-
-        // PROYECTO: Emisiones en planta BSF
-        const project_ch4_kg = tons_year * IPCC_FACTORS.bsf_plant.ch4_kg_per_ton;
-        const project_co2eq = (project_ch4_kg / 1000) * gwp;
-
-        // EVITADO
-        const avoided_ch4_kg = baseline_ch4_kg - project_ch4_kg;
-        const avoided_co2eq = baseline_co2eq - project_co2eq;
-        const avoided_percentage = baseline_ch4_kg > 0 ? (avoided_ch4_kg / baseline_ch4_kg) * 100 : 0;
-
-        // EQUIVALENCIAS
-        const equivalencies = {
-            trees: Math.round(avoided_co2eq * EQUIVALENCIES.trees_per_tco2),
-            car_km: Math.round(avoided_co2eq * EQUIVALENCIES.km_car_per_tco2),
-            homes: Math.round((avoided_co2eq * EQUIVALENCIES.homes_energy_per_tco2) * 10) / 10,
-            flights: Math.round((avoided_co2eq * EQUIVALENCIES.flights_mx_ny_per_tco2) * 10) / 10
-        };
-
-        // HASH DE VERIFICACION
-        const dataToHash = {
-            input,
-            baseline_co2eq,
-            avoided_co2eq,
-            timestamp: new Date().toISOString(),
-            methodology: "IPCC 2019 + AR6 GWP20"
-        };
-        const hash = this.generateHash(dataToHash);
+    async getPlantStats(plantId: string) {
+        // Fetch latest emissions record
+        const { data: mrvData } = await supabase
+            .from('mrv_records')
+            .select('*')
+            .eq('plant_id', plantId)
+            .eq('type', 'satellite_methane')
+            .order('record_date', { ascending: false })
+            .limit(1)
+            .single();
 
         return {
-            input,
-            baseline: {
-                ch4_kg: Math.round(baseline_ch4_kg),
-                co2eq_tons: Math.round(baseline_co2eq * 100) / 100,
-                methodology: `${factor.source}, GWP20=${gwp}`
-            },
-            project: {
-                ch4_kg: Math.round(project_ch4_kg),
-                co2eq_tons: Math.round(project_co2eq * 100) / 100
-            },
-            avoided: {
-                ch4_kg: Math.round(avoided_ch4_kg),
-                co2eq_tons: Math.round(avoided_co2eq * 100) / 100,
-                percentage: Math.round(avoided_percentage * 10) / 10
-            },
-            equivalencies,
-            verification: {
-                hash,
-                timestamp: new Date().toISOString(),
-                factors_source: "IPCC 2019 Refinement + IPCC AR6 2021",
-                status: 'pending'
-            }
+            lastMethaneReading: mrvData?.data?.methane_ppb || null,
+            lastRecordDate: mrvData?.record_date || null
         };
     }
+};
 
-    generateHash(data: any): string {
-        return CryptoJS.SHA256(JSON.stringify(data)).toString();
-    }
-
-    async verifyOnChain(calculation: EmissionsCalculation): Promise<EmissionsCalculation> {
-        // Simular latencia de blockchain (2-4 segundos)
-        await new Promise(resolve => setTimeout(resolve, 3000));
-
-        // Generar Transaction Hash simulado (0x...)
-        const txHash = "0x" + CryptoJS.SHA256(calculation.verification.hash + Date.now()).toString();
-
-        // Simular Block Number
-        const blockNumber = 18450000 + Math.floor(Math.random() * 1000);
-
-        return {
-            ...calculation,
-            verification: {
-                ...calculation.verification,
-                status: 'verified',
-                txHash,
-                blockNumber
-            }
-        };
-    }
+function mapStatus(status: string): 'operativa' | 'construccion' | 'planeada' {
+    const s = status?.toLowerCase();
+    if (s === 'active' || s === 'operativa') return 'operativa';
+    if (s === 'construction' || s === 'pending_verification') return 'construccion';
+    return 'planeada';
 }
-
-export const emissionsService = new EmissionsService();

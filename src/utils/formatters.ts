@@ -1,5 +1,5 @@
 /**
- * Utilidades de formateo para Copernico
+ * Utilidades de formateo para LarvaLINK MRV
  */
 
 import { format, parseISO, formatDistanceToNow } from 'date-fns';
@@ -94,4 +94,14 @@ export function getMissionColor(mission: string): string {
         'SENTINEL-6': '#FFEAA7',
     };
     return colors[mission] || '#888888';
+}
+
+/**
+ * Formatea un número con separadores de miles
+ */
+export function formatNumber(num: number, decimals = 0): string {
+    return new Intl.NumberFormat('es-MX', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+    }).format(num);
 }

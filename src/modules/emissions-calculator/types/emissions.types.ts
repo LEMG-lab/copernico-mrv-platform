@@ -66,10 +66,10 @@ export interface RegionalMethane {
 export const LARVALINK_PLANTS: Plant[] = [
     {
         id: "papalotla",
-        name: "Planta Papalotla",
+        name: "Planta Tepetloztoc",
         location: "Tlaxcala, México",
         coordinates: {
-            lat: 19.16, // Coordenadas ajustadas a zona real Papalotla
+            lat: 19.16,
             lng: -98.20,
             bbox: [-98.22, 19.14, -98.18, 19.18]
         },

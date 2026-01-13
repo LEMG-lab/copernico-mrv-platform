@@ -1,17 +1,19 @@
 import React from 'react';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { SensorType } from '../types/onboarding.types';
-
-const SENSOR_TYPES: { id: SensorType; label: string }[] = [
-    { id: 'temperature', label: 'Temperatura' },
-    { id: 'humidity', label: 'Humedad' },
-    { id: 'weight_scale', label: 'Báscula' },
-    { id: 'co2', label: 'CO2' },
-    { id: 'camera', label: 'Cámara / Visión' },
-];
+import { useTranslation } from '../hooks/useTranslations';
 
 export const Step4Sensors: React.FC = () => {
     const { sensors, updateSensors, setStep, saveProgress } = useOnboarding();
+    const { t } = useTranslation();
+
+    const SENSOR_TYPES: { id: SensorType; label: string }[] = [
+        { id: 'temperature', label: t('modules.plantOnboarding.options.sensorTypes.temperature') },
+        { id: 'humidity', label: t('modules.plantOnboarding.options.sensorTypes.humidity') },
+        { id: 'weight_scale', label: t('modules.plantOnboarding.options.sensorTypes.weight') },
+        { id: 'co2', label: t('modules.plantOnboarding.options.sensorTypes.co2') },
+        { id: 'camera', label: t('modules.plantOnboarding.options.sensorTypes.camera') },
+    ];
 
     const handleAddSensor = () => {
         const current = sensors.sensors || [];
@@ -40,7 +42,7 @@ export const Step4Sensors: React.FC = () => {
     const handleNext = () => {
         // Validate sensors if has_sensors is true
         if (sensors.has_sensors && (sensors.sensors?.length === 0)) {
-            alert("Si indicaste que tienes sensores, agrega al menos uno.");
+            alert(t('modules.plantOnboarding.wizard.step4.validation'));
             return;
         }
         saveProgress();
@@ -49,10 +51,10 @@ export const Step4Sensors: React.FC = () => {
 
     return (
         <div className="animate-fade-in-right">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Configuración IoT</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-6">{t('modules.plantOnboarding.wizard.step4.title')}</h2>
 
             <div className="mb-8">
-                <label className="block text-sm font-bold text-slate-700 mb-3">¿Tu planta tiene sensores IoT instalados?</label>
+                <label className="block text-sm font-bold text-slate-700 mb-3">{t('modules.plantOnboarding.wizard.step4.question')}</label>
                 <div className="space-y-3">
                     <label className="flex items-center gap-3 p-4 border rounded-xl cursor-pointer hover:bg-slate-50">
                         <input
@@ -63,8 +65,8 @@ export const Step4Sensors: React.FC = () => {
                             onChange={() => updateSensors({ has_sensors: true })}
                         />
                         <div>
-                            <div className="font-bold text-slate-800">Sí, tengo sensores</div>
-                            <div className="text-xs text-slate-500">Puedo conectar mis dispositivos para monitoreo en tiempo real.</div>
+                            <div className="font-bold text-slate-800">{t('modules.plantOnboarding.wizard.step4.yesSensors')}</div>
+                            <div className="text-xs text-slate-500">{t('modules.plantOnboarding.wizard.step4.yesSensorsDesc')}</div>
                         </div>
                     </label>
                     <label className="flex items-center gap-3 p-4 border rounded-xl cursor-pointer hover:bg-slate-50">
@@ -76,8 +78,8 @@ export const Step4Sensors: React.FC = () => {
                             onChange={() => updateSensors({ has_sensors: false, sensors: [] })}
                         />
                         <div>
-                            <div className="font-bold text-slate-800">No, o prefiero reportar manualmente</div>
-                            <div className="text-xs text-slate-500">Subiré reportes diarios o semanales via CSV/Web.</div>
+                            <div className="font-bold text-slate-800">{t('modules.plantOnboarding.wizard.step4.noSensors')}</div>
+                            <div className="text-xs text-slate-500">{t('modules.plantOnboarding.wizard.step4.noSensorsDesc')}</div>
                         </div>
                     </label>
                 </div>
@@ -86,23 +88,23 @@ export const Step4Sensors: React.FC = () => {
             {sensors.has_sensors && (
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-8 animate-fade-in-up">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="font-bold text-slate-700">Sensores Instalados</h3>
+                        <h3 className="font-bold text-slate-700">{t('modules.plantOnboarding.wizard.step4.sensorsList')}</h3>
                         <button
                             onClick={handleAddSensor}
                             className="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1.5 rounded hover:bg-blue-200"
                         >
-                            + Agregar Sensor
+                            + {t('modules.plantOnboarding.wizard.step4.addSensor')}
                         </button>
                     </div>
 
                     {(!sensors.sensors || sensors.sensors.length === 0) ? (
-                        <p className="text-center text-slate-400 text-sm py-4 italic">No has agregado sensores.</p>
+                        <p className="text-center text-slate-400 text-sm py-4 italic">{t('modules.plantOnboarding.wizard.step4.noSensorsAdded')}</p>
                     ) : (
                         <div className="space-y-3">
                             {sensors.sensors.map((sensor, idx) => (
                                 <div key={idx} className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-end md:items-center">
                                     <div className="flex-1 w-full">
-                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Tipo</label>
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">{t('modules.plantOnboarding.wizard.step4.sensorType')}</label>
                                         <select
                                             className="w-full text-sm rounded border-slate-300 py-1.5"
                                             value={sensor.type}
@@ -112,21 +114,21 @@ export const Step4Sensors: React.FC = () => {
                                         </select>
                                     </div>
                                     <div className="flex-1 w-full">
-                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Ubicación</label>
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">{t('modules.plantOnboarding.wizard.step4.sensorLocation')}</label>
                                         <input
                                             type="text"
                                             className="w-full text-sm rounded border-slate-300 py-1.5"
-                                            placeholder="Ej. Zona Cría"
+                                            placeholder={t('modules.plantOnboarding.wizard.step4.placeholders.sensorLocation')}
                                             value={sensor.location_in_plant}
                                             onChange={(e) => updateSensorField(idx, 'location_in_plant', e.target.value)}
                                         />
                                     </div>
                                     <div className="flex-1 w-full">
-                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Serial (Opcional)</label>
+                                        <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">{t('modules.plantOnboarding.wizard.step4.sensorSerial')}</label>
                                         <input
                                             type="text"
                                             className="w-full text-sm rounded border-slate-300 py-1.5"
-                                            placeholder="SN-12345"
+                                            placeholder={t('modules.plantOnboarding.wizard.step4.placeholders.sensorSerial')}
                                             value={sensor.serial_number || ''}
                                             onChange={(e) => updateSensorField(idx, 'serial_number', e.target.value)}
                                         />
@@ -145,19 +147,19 @@ export const Step4Sensors: React.FC = () => {
                     <div className="mt-6 border-t border-slate-200 pt-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 mb-1">Frecuencia Envío</label>
+                                <label className="block text-xs font-bold text-slate-500 mb-1">{t('modules.plantOnboarding.wizard.step4.frequency')}</label>
                                 <select
                                     className="w-full text-sm rounded border-slate-300"
                                     value={sensors.data_frequency}
                                     onChange={(e) => updateSensors({ data_frequency: e.target.value as any })}
                                 >
-                                    <option value="realtime">Tiempo Real (recomendado)</option>
-                                    <option value="hourly">Cada Hora</option>
-                                    <option value="daily">Diario</option>
+                                    <option value="realtime">{t('modules.plantOnboarding.options.frequency.realtime')}</option>
+                                    <option value="hourly">{t('modules.plantOnboarding.options.frequency.hourly')}</option>
+                                    <option value="daily">{t('modules.plantOnboarding.options.frequency.daily')}</option>
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 mb-1">Integración</label>
+                                <label className="block text-xs font-bold text-slate-500 mb-1">{t('modules.plantOnboarding.wizard.step4.integration')}</label>
                                 <select
                                     className="w-full text-sm rounded border-slate-300"
                                     value={sensors.integration_method}
@@ -177,14 +179,14 @@ export const Step4Sensors: React.FC = () => {
                 <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl flex items-start gap-3 mb-8">
                     <span className="text-2xl">💡</span>
                     <div>
-                        <h4 className="font-bold text-blue-900 text-sm">Beneficios de automatizar con sensores</h4>
+                        <h4 className="font-bold text-blue-900 text-sm">{t('modules.plantOnboarding.wizard.step4.benefitsTitle')}</h4>
                         <ul className="text-xs text-blue-800 mt-1 space-y-1 list-disc pl-4">
-                            <li>Verificación "Nivel Oro" (créditos valen +15%)</li>
-                            <li>Alertas automáticas de anomalías</li>
-                            <li>Mayor confianza ante compradores internacionales</li>
+                            <li>{t('modules.plantOnboarding.wizard.step4.benefit1')}</li>
+                            <li>{t('modules.plantOnboarding.wizard.step4.benefit2')}</li>
+                            <li>{t('modules.plantOnboarding.wizard.step4.benefit3')}</li>
                         </ul>
                         <button className="text-xs font-bold text-blue-600 underline mt-2">
-                            Ver kits de inicio de Global Force IoT
+                            {t('modules.plantOnboarding.wizard.step4.viewKits')}
                         </button>
                     </div>
                 </div>
@@ -196,13 +198,13 @@ export const Step4Sensors: React.FC = () => {
                     onClick={() => setStep('operations')}
                     className="text-slate-500 hover:text-slate-800 font-medium px-4 py-2"
                 >
-                    ← Anterior
+                    ← {t('modules.plantOnboarding.wizard.common.prev')}
                 </button>
                 <button
                     onClick={handleNext}
                     className="bg-[#1E3A5F] hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center gap-2 shadow-lg"
                 >
-                    Siguiente: Docs →
+                    {t('modules.plantOnboarding.wizard.common.next')} →
                 </button>
             </div>
         </div>

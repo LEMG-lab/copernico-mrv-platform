@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PortfolioSummary } from './components/PortfolioSummary';
 import { MandateCompliance } from './components/MandateCompliance';
 import { ImpactMetrics } from './components/ImpactMetrics';
@@ -45,9 +46,9 @@ export const InvestorPortalPage: React.FC = () => {
                                 <div className="text-xs font-bold text-slate-500 uppercase">Última actualización</div>
                                 <div className="text-sm font-bold text-slate-800">10 Ene 2026 • 14:30 GMT-6</div>
                             </div>
-                            <button className="bg-[#1E3A5F] hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg shadow-blue-900/20">
+                            <Link to="/data-room" className="bg-[#1E3A5F] hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg shadow-blue-900/20">
                                 Ir al Data Room
-                            </button>
+                            </Link>
                         </div>
                     </header>
 

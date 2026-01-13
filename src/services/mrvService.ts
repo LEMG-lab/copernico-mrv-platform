@@ -327,4 +327,4 @@ class CopernicusService {
     }
 }
 
-export const copernicusService = new CopernicusService();
+export const mrvService = new CopernicusService();

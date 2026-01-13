@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useNDVIComparison } from './hooks/useNDVIComparison';
 import { ParcelComparison } from './components/ParcelComparison';
-import { DEMO_PARCELS } from './types/parcel.types';
 import { Navigation } from '../../components/Navigation';
 
 export const TerraLinkDashboard: React.FC = () => {
@@ -32,9 +32,9 @@ export const TerraLinkDashboard: React.FC = () => {
                     >
                         📄 Exportar Reporte PDF
                     </button>
-                    <a href="/" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium">
+                    <Link to="/" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium">
                         Volver al Inicio
-                    </a>
+                    </Link>
                 </div>
             </header>
 

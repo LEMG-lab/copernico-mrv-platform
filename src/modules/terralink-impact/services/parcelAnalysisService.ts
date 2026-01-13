@@ -1,5 +1,5 @@
 import { Parcel, NDVIReading, ParcelComparison } from '../types/parcel.types';
-import { copernicusService } from '@/services/copernicusService';
+import { mrvService } from '@/services/mrvService';
 import { AGRICULTURE_EVALSCRIPTS } from '@/constants/agricultureEvalscripts';
 import CryptoJS from 'crypto-js';
 
@@ -13,7 +13,7 @@ class ParcelAnalysisService {
     async getParcelNDVI(parcel: Parcel, dateFrom: string, dateTo: string): Promise<NDVIReading[]> {
         try {
             // Intentamos obtener una estadística real actual para 'anclar' la simulación
-            const currentStats = await copernicusService.getNDVIStats(parcel.coordinates.bbox, dateFrom, dateTo);
+            const currentStats = await mrvService.getNDVIStats(parcel.coordinates.bbox, dateFrom, dateTo);
             const baseNDVI = currentStats.mean;
 
             // Generar serie temporal simulada hacia atrás (6 meses)
@@ -54,7 +54,7 @@ class ParcelAnalysisService {
      */
     async getParcelImage(parcel: Parcel, date: string): Promise<string> { // Retorna blob URL
         try {
-            const result = await copernicusService.getSatelliteImage(
+            const result = await mrvService.getSatelliteImage(
                 parcel.coordinates.bbox,
                 date, // day
                 date, // day
@@ -63,7 +63,7 @@ class ParcelAnalysisService {
                 256
                 // @ts-ignore - Forzamos el uso del script custom si fuera necesario pasando 'custom' y el script string
                 // pero mantendremos simple usando el type existente por ahora o extendiendolo.
-                // Para este demo, usarmos el 'ndvi' standard de copernicusService que es suficiente visualmente.
+                // Para este demo, usarmos el 'ndvi' standard de mrvService que es suficiente visualmente.
             );
             return result.imageUrl;
         } catch (error) {

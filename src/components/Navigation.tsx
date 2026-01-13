@@ -10,7 +10,7 @@ export const Navigation: React.FC = () => {
     const isHome = location.pathname === '/';
 
     return (
-        <nav className="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <nav className="border-b border-slate-200 dark:border-emerald-800/50 bg-white/90 dark:bg-[#022c22]/90 backdrop-blur-md sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo + Home Button */}
@@ -44,22 +44,22 @@ export const Navigation: React.FC = () => {
                     <div className="flex items-center gap-4">
                         <Link
                             to="/investor-portal"
-                            className="hidden md:flex items-center gap-2 bg-[#1E3A5F] hover:bg-blue-900 text-white text-xs font-bold px-3 py-1.5 rounded transition-colors"
+                            className="hidden md:flex items-center gap-2 bg-[#065f46] hover:bg-[#064e3b] text-white text-xs font-bold px-3 py-1.5 rounded transition-colors"
                         >
                             <span>🔒</span> Acceso Partners
                         </Link>
 
                         {/* Language Toggle */}
-                        <div className="flex bg-slate-100 dark:bg-slate-800 rounded p-1">
+                        <div className="flex bg-slate-100 dark:bg-emerald-900/50 rounded p-1">
                             <button
                                 onClick={() => setLanguage('es')}
-                                className={`px-2 py-1 text-xs font-bold rounded ${language === 'es' ? 'bg-white dark:bg-slate-700 shadow text-slate-900 dark:text-white' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
+                                className={`px-2 py-1 text-xs font-bold rounded ${language === 'es' ? 'bg-white dark:bg-emerald-700 shadow text-slate-900 dark:text-white' : 'text-slate-400 hover:text-slate-600 dark:hover:text-emerald-200'}`}
                             >
                                 ES
                             </button>
                             <button
                                 onClick={() => setLanguage('en')}
-                                className={`px-2 py-1 text-xs font-bold rounded ${language === 'en' ? 'bg-white dark:bg-slate-700 shadow text-slate-900 dark:text-white' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
+                                className={`px-2 py-1 text-xs font-bold rounded ${language === 'en' ? 'bg-white dark:bg-emerald-700 shadow text-slate-900 dark:text-white' : 'text-slate-400 hover:text-slate-600 dark:hover:text-emerald-200'}`}
                             >
                                 EN
                             </button>

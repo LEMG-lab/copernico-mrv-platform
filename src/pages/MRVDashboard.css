@@ -237,3 +237,76 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* Popup Styles */
+.leaflet-popup-content-wrapper {
+    background-color: var(--bg-card);
+    color: var(--text);
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+}
+
+.leaflet-popup-tip {
+    background-color: var(--bg-card);
+}
+
+.leaflet-popup-content {
+    margin: 12px;
+}
+
+.popup-content strong {
+    color: var(--brand);
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.popup-status {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-transform: capitalize;
+}
+
+.popup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-details, .btn-streetview {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-details {
+    background-color: var(--brand);
+    color: white;
+}
+
+.btn-details:hover {
+    background-color: #d63d56;
+}
+
+.btn-streetview {
+    background-color: var(--accent);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn-streetview:hover {
+    background-color: #1a4b8c;
+    border-color: rgba(255,255,255,0.2);
+}

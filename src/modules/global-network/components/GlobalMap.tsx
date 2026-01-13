@@ -8,7 +8,7 @@ import { THIRD_PARTY_BSF_PLANTS } from '../data/thirdPartyPlants';
 import { METHANE_HOTSPOTS } from '../data/methaneHotspots';
 import { GLOBAL_PLANTS } from '../data/globalPlants';
 import { StreetViewViewer } from './StreetViewViewer';
-import { copernicusService } from '../../../services/copernicusService';
+import { mrvService } from '../../../services/mrvService';
 import { notificationService } from '../../../services/notificationService';
 
 // Fix Leaflet icons
@@ -72,7 +72,7 @@ export const GlobalMap: React.FC<GlobalMapProps> = ({ filters, plants, onPlantCl
                     hotspot.coordinates.lat + offset
                 ];
 
-                const stats = await copernicusService.getMethaneStats(bbox, startDate, endDate);
+                const stats = await mrvService.getMethaneStats(bbox, startDate, endDate);
 
                 // Solo añadir si encontramos datos válidos (mean > 0)
                 if (stats.mean > 0) {
@@ -193,16 +193,6 @@ export const GlobalMap: React.FC<GlobalMapProps> = ({ filters, plants, onPlantCl
                         key={plant.id}
                         position={[plant.coordinates.lat, plant.coordinates.lng]}
                         icon={larvaLinkIcon}
-                        eventHandlers={{
-                            click: () => onPlantClick && onPlantClick({
-                                ...plant,
-                                type: 'partner',
-                                coordinates: [plant.coordinates.lat, plant.coordinates.lng],
-                                capacity: plant.capacity_tons_day,
-                                // @ts-ignore
-                                status: plant.status === 'operativa' ? 'operating' : plant.status === 'construccion' ? 'construction' : 'planned'
-                            } as any)
-                        }}
                     >
                         <Popup className="custom-popup">
                             <div className="p-2 min-w-[200px]">
@@ -230,6 +220,22 @@ export const GlobalMap: React.FC<GlobalMapProps> = ({ filters, plants, onPlantCl
                                 >
                                     <span>📍</span> Ver en Street View
                                 </button>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onPlantClick && onPlantClick({
+                                            ...plant,
+                                            type: 'partner',
+                                            coordinates: [plant.coordinates.lat, plant.coordinates.lng],
+                                            capacity: plant.capacity_tons_day,
+                                            // @ts-ignore
+                                            status: plant.status === 'operativa' ? 'operating' : plant.status === 'construccion' ? 'construction' : 'planned'
+                                        } as any);
+                                    }}
+                                    className="mt-2 text-[10px] w-full bg-emerald-600 hover:bg-emerald-500 text-white py-1 rounded transition-colors flex items-center justify-center gap-1 font-bold"
+                                >
+                                    <span>🏭</span> Ver Planta
+                                </button>
                             </div>
                         </Popup>
                     </Marker>
@@ -241,9 +247,6 @@ export const GlobalMap: React.FC<GlobalMapProps> = ({ filters, plants, onPlantCl
                         key={plant.id}
                         position={[plant.coordinates[0], plant.coordinates[1]]}
                         icon={plant.type === 'partner' ? larvaLinkIcon : thirdPartyIcon}
-                        eventHandlers={{
-                            click: () => onPlantClick && onPlantClick(plant)
-                        }}
                     >
                         <Popup className="custom-popup">
                             <div className="p-2 min-w-[180px]">
@@ -266,6 +269,15 @@ export const GlobalMap: React.FC<GlobalMapProps> = ({ filters, plants, onPlantCl
                                         className="mt-2 text-[10px] w-full bg-slate-700 hover:bg-slate-600 text-white py-1 rounded transition-colors flex items-center justify-center gap-1"
                                     >
                                         <span>📍</span> Street View
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onPlantClick && onPlantClick(plant);
+                                        }}
+                                        className="mt-2 text-[10px] w-full bg-emerald-600 hover:bg-emerald-500 text-white py-1 rounded transition-colors flex items-center justify-center gap-1 font-bold"
+                                    >
+                                        <span>🏭</span> Ver Detalles
                                     </button>
                                 </div>
                             </div>
