@@ -7,6 +7,9 @@ import { PlantEnvironment } from './components/PlantEnvironment';
 import { PlantInventory } from './components/PlantInventory';
 import { PlantStaffing } from './components/PlantStaffing';
 import { PlantGallery } from './components/PlantGallery';
+import { BlockchainVerification } from './components/BlockchainVerification';
+import { SDGSection } from './components/SDGSection';
+import { MOCK_PLANT_TEPETLOZTOC } from './data/mockPlantData';
 
 const PlantDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
