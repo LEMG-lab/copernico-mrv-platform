@@ -1020,3 +1020,685 @@ git push origin main
 ---
 
 *This walkthrough was generated on 2026-01-13 and reflects the current state of the LarvaLINK-MRV ecosystem as deployed to production.*
+
+---
+
+# 📊 APPENDIX A: DATABASE SCHEMA ACTUAL
+
+## Supabase Tables - Full Ecosystem
+
+### Core & Auth Tables
+
+| Table | Purpose | Key Columns | Status | Rows (Est.) |
+|-------|---------|-------------|--------|-------------|
+| **profiles** | User profiles (extends auth.users) | `id`, `full_name`, `avatar_url`, `role`, `company_id`, `seeds_balance`, `total_kg_diverted`, `co2_avoided_kg` | 🟡 Partial | ~50 |
+| **companies** | Organizations/businesses | `id`, `name`, `tax_id`, `website`, `country`, `wallet_address` | ⚪ Vacía | 0 |
+
+### Plant Network Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **plants** | Registered bioconversion plants | `id`, `company_id`, `name`, `status`, `address`, `city`, `country`, `latitude`, `longitude`, `location` (PostGIS), `capacity_tons_day`, `waste_types`, `products` | companies(id) | 🟡 Partial | ~5 |
+| **plant_applications** | Onboarding wizard state | `id`, `user_id`, `status`, `current_step`, `form_state` (JSONB), `submitted_at` | auth.users(id) | ⚪ Vacía | 0 |
+| **plant_documents** | Licenses, permits, photos | `id`, `plant_id`, `application_id`, `type`, `url`, `status` | plants(id), plant_applications(id) | ⚪ Vacía | 0 |
+
+### MRV & Impact Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **mrv_records** | Satellite + IoT monitoring data | `id`, `plant_id`, `record_date`, `type`, `data` (JSONB), `blockchain_hash`, `verified_at` | plants(id) | ⚪ Vacía | 0 |
+| **carbon_credits** | Generated carbon credits | `id`, `plant_id`, `vintage_year`, `amount_tons`, `status`, `token_id`, `certificate_url` | plants(id) | ⚪ Vacía | 0 |
+
+### TerraLINK Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **parcels** | Agricultural test parcels | `id`, `plant_id`, `owner_name`, `crop_type`, `area_hectares`, `boundaries` (PostGIS POLYGON), `is_control` | plants(id) | ⚪ Vacía | 0 (uses DEMO_PARCELS fallback) |
+| **soil_samples** | Soil analysis data | `id`, `parcel_id`, `sample_date`, `nitrogen`, `phosphorus`, `potassium`, `organic_matter`, `ph_level` | parcels(id) | ⚪ Vacía | 0 |
+
+### Marketplace Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **market_listings** | Products/credits for sale | `id`, `plant_id`, `product_type`, `title`, `price_per_unit`, `currency`, `available_quantity`, `unit`, `status` | plants(id) | ⚪ Vacía | 0 |
+| **market_orders** | Purchase orders | `id`, `buyer_id`, `listing_id`, `quantity`, `total_price`, `status` | profiles(id), market_listings(id) | ⚪ Vacía | 0 |
+
+### Investor Portal Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **investment_projects** | Funding opportunities | `id`, `title`, `description`, `target_amount`, `raised_amount`, `min_investment`, `apy_percentage`, `status` | plants(id) | ⚪ Vacía | 0 |
+| **user_investments** | Individual investments | `id`, `user_id`, `project_id`, `amount`, `invested_at`, `status` | profiles(id), investment_projects(id) | ⚪ Vacía | 0 |
+
+### Alerts & Notifications
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **alerts** | System notifications | `id`, `user_id`, `type`, `severity`, `message`, `is_read`, `metadata` (JSONB) | profiles(id) | ⚪ Vacía | 0 |
+
+### CircularLINK Partners Tables
+
+| Table | Purpose | Key Columns | FK Relations | Status | Rows |
+|-------|---------|-------------|--------------|--------|------|
+| **partner_categories** | Category lookup (restaurant, hotel, etc.) | `id`, `label`, `icon_name`, `color_hex` | - | ⚪ Vacía | 0 (uses frontend config) |
+| **partner_tiers** | Tier lookup (bronze→champion) | `id`, `label`, `min_monthly_kg`, `multiplier`, `color_hex` | - | ⚪ Vacía | 0 (uses frontend config) |
+| **circular_partners** | Partner businesses | `id`, `slug`, `name`, `category_id`, `tier_id`, `logo_url`, `description`, `is_verified`, `status`, `address`, `city`, `latitude`, `longitude`, `total_collected_kg`, `wallet_address` | partner_categories(id), partner_tiers(id) | ⚪ Vacía | 0 (uses MOCK_PARTNERS) |
+| **seeds_transactions** | Points ledger | `id`, `user_id`, `partner_id`, `amount`, `type`, `description`, `balance_after`, `metadata` | profiles(id), circular_partners(id) | ⚪ Vacía | 0 |
+| **achievements** | Badge definitions | `id`, `title`, `description`, `icon_url`, `rarity`, `target_value`, `metric_type`, `reward_xp`, `reward_seeds` | - | ⚪ Vacía | 0 (uses frontend config) |
+| **user_achievements** | Unlocked badges | `id`, `user_id`, `achievement_id`, `unlocked_at`, `progress_value`, `is_viewed` | profiles(id), achievements(id) | ⚪ Vacía | 0 |
+| **redeemable_items** | Rewards catalog | `id`, `title`, `description`, `image_url`, `cost_seeds`, `type`, `provider_name`, `is_active`, `stock_quantity` | - | ⚪ Vacía | 0 |
+| **redemptions** | Reward claims | `id`, `user_id`, `item_id`, `cost_seeds`, `status`, `redemption_code`, `verified_at` | profiles(id), redeemable_items(id) | ⚪ Vacía | 0 |
+| **qr_scans** | QR scan records | `id`, `user_id`, `partner_id`, `qr_code_id`, `location_lat`, `location_lng`, `device_info`, `is_valid`, `seeds_awarded` | profiles(id), circular_partners(id) | ⚪ Vacía | 0 |
+
+### Database Summary
+
+- **Total Tables Defined:** 22
+- **Tables with Data:** 2 (profiles, plants - partial)
+- **Tables using Mock Data:** 3 (parcels, circular_partners, all gamification)
+- **PostGIS Extension:** ✅ Enabled (GEOGRAPHY columns in plants, parcels)
+- **Row Level Security:** ✅ Enabled on all tables
+
+---
+
+# 📈 APPENDIX B: MODULE STATUS REPORT
+
+## Module Completion Matrix
+
+| # | Module | Completion | Frontend | Backend | Data | Notes |
+|---|--------|------------|----------|---------|------|-------|
+| 1 | **Home/Dashboard** | 95% | ✅ | N/A | ✅ Static | Missing: Live stats from DB |
+| 2 | **TerraLINK** | 85% | ✅ | 🟡 | 🟡 Demo | Sentinel Hub works but stats API returns 400 |
+| 3 | **Emissions Calculator** | 90% | ✅ | ✅ | ✅ Static | Calculations work, no DB persistence |
+| 4 | **Global Network** | 85% | ✅ | 🟡 | ✅ Static | Map works, click → detail works |
+| 5 | **Plant Detail** | 80% | ✅ | 🟡 | ✅ Mock | Fixed today, uses MOCK_PLANT_TEPETLOZTOC |
+| 6 | **Marketplace** | 70% | ✅ | ⚪ | ✅ Mock | No checkout, no real listings |
+| 7 | **Plant Onboarding** | 90% | ✅ | 🟡 | ⚪ | 6 steps work, no DB save |
+| 8 | **Viability Calculator** | 75% | ✅ | ⚪ | ✅ Static | Scoring logic works, no API |
+| 9 | **Investor Portal** | 70% | ✅ | ⚪ | ✅ Mock | Dashboard renders, no real auth |
+| 10 | **Alerts Center** | 75% | ✅ | ⚪ | ✅ Mock | Uses mock alerts, no live data |
+| 11 | **CircularLINK Partners** | 80% | ✅ | 🟡 | ✅ Mock | 5 partners mock, gamification UI done |
+
+### Detailed Module Status
+
+#### 1. Home/Dashboard (95%)
+
+**Implemented:**
+
+- Hero section with animated background
+- Executive summary for investors
+- 9 module cards with navigation
+- Language toggle (ES/EN)
+- Theme toggle (dark/light)
+
+**Pending:**
+
+- [ ] Live metrics from Supabase aggregation
+- [ ] User authentication state
+
+**Blockers:** None
+
+---
+
+#### 2. TerraLINK (85%)
+
+**Implemented:**
+
+- Parcel comparison map (Leaflet)
+- NDVI calculation display
+- Time series chart (6 months)
+- Improvement metrics
+- Blockchain hash display
+- Demo parcels fallback
+
+**Pending:**
+
+- [ ] Fix Sentinel Hub Statistics API 400 error
+- [ ] Real parcel data from Supabase
+- [ ] Multi-parcel comparison
+
+**Blockers:** Sentinel Hub API returning 400 for statistics endpoint
+
+---
+
+#### 3. Emissions Calculator (90%)
+
+**Implemented:**
+
+- Plant selector dropdown
+- Waste type configuration
+- IPCC 2019 methodology calculations
+- CH4 avoidance display
+- Carbon credit estimation
+
+**Pending:**
+
+- [ ] Save calculations to DB
+- [ ] Historical comparison
+- [ ] PDF report export
+
+**Blockers:** None
+
+---
+
+#### 4. Global Network Map (85%)
+
+**Implemented:**
+
+- Interactive Leaflet map
+- 75 LarvaLINK plants hardcoded
+- Marker clustering
+- Filter by status/region
+- Click → navigates to plant detail
+- Global stats display
+
+**Pending:**
+
+- [ ] Load plants from Supabase
+- [ ] Real-time capacity updates
+- [ ] Methane hotspot layer
+
+**Blockers:** No plant data in DB
+
+---
+
+#### 5. Plant Detail View (80%) - FIXED TODAY
+
+**Implemented:**
+
+- Plant header with status
+- Location section with map
+- Corporate info display
+- Control center (temp/humidity gauges)
+- Inventory & staffing
+- Photo gallery
+- Blockchain verification
+- SDG section (15 of 17)
+
+**Pending:**
+
+- [ ] Fetch plant by ID from Supabase
+- [ ] Real-time IoT data
+- [ ] Multiple plant support
+
+**Blockers:** Only one mock plant (Tepetloztoc)
+
+---
+
+#### 6. Marketplace (70%)
+
+**Implemented:**
+
+- Credit listing cards
+- Filter sidebar
+- Price display
+- Seller dashboard (basic)
+
+**Pending:**
+
+- [ ] Real listing from DB
+- [ ] Checkout/payment flow
+- [ ] Blockchain token minting
+- [ ] Order management
+
+**Blockers:** No payment integration
+
+---
+
+#### 7. Plant Onboarding (90%) - FIXED TODAY
+
+**Implemented:**
+
+- 6-step wizard flow
+- Progress stepper
+- Form validation
+- Location picker with map
+- Document upload UI
+- Plan selection
+- Auto-save to localStorage
+- Custom translation hook
+
+**Pending:**
+
+- [ ] Save to Supabase plant_applications table
+- [ ] Document upload to Supabase Storage
+- [ ] Email notifications
+- [ ] Admin approval flow
+
+**Blockers:** None
+
+---
+
+#### 8. Viability Calculator (75%)
+
+**Implemented:**
+
+- Location input step
+- Capacity step
+- Climate scoring
+- Competition analysis (from static DB)
+- ROI projection
+
+**Pending:**
+
+- [ ] API integration for real competition data
+- [ ] Regulatory database
+- [ ] PDF report generation
+
+**Blockers:** None
+
+---
+
+#### 9. Investor Portal (70%)
+
+**Implemented:**
+
+- Dashboard layout
+- Portfolio cards
+- Performance charts
+- Data room document browser
+- Mandate compliance tracker
+
+**Pending:**
+
+- [ ] Real authentication
+- [ ] Actual documents in Storage
+- [ ] Investment transaction history
+- [ ] Investor onboarding
+
+**Blockers:** No investor auth
+
+---
+
+#### 10. Alerts Center (75%)
+
+**Implemented:**
+
+- Alert dashboard
+- Alert cards with severity
+- Filter by type/severity
+- Compliance status section
+
+**Pending:**
+
+- [ ] Real alerts from IoT/monitoring
+- [ ] Push notifications
+- [ ] Email alerts
+- [ ] Escalation rules
+
+**Blockers:** None
+
+---
+
+#### 11. CircularLINK Partners (80%)
+
+**Implemented:**
+
+- Partners map page (Leaflet)
+- 5 mock partners with full data
+- Partner detail page
+- Consumer portal (mi-impacto)
+- QR scan page (UI only)
+- Partner dashboard page
+- Gamification components (Seeds, Leaderboard, Achievements, Tier badges)
+- Tier system (Bronze→Champion)
+- Full type definitions
+
+**Pending:**
+
+- [ ] Connect to Supabase tables
+- [ ] Real QR code scanning with camera
+- [ ] Seed redemption flow
+- [ ] Partner registration form
+- [ ] Consumer mobile app
+
+**Blockers:** Google Maps API key for Street View (falls back to placeholder)
+
+---
+
+# 🤝 APPENDIX C: CIRCULARLINK PARTNERS - DEEP DIVE
+
+## Current State Summary
+
+| Component | Exists | Status | Data Source |
+|-----------|--------|--------|-------------|
+| **PartnersMapPage** | ✅ | Functional | MOCK_PARTNERS |
+| **PartnerDetailPage** | ✅ | Functional | MOCK_PARTNERS |
+| **ConsumerScanPage** | ✅ | UI Only | No camera integration |
+| **ConsumerPortalPage** | ✅ | Functional | MOCK_PARTNERS |
+| **PartnerDashboardPage** | ✅ | Functional | MOCK_PARTNERS |
+
+### Map System
+
+- **Library:** Leaflet + React-Leaflet (NOT Google Maps)
+- **Tiles:** CARTO Dark theme
+- **Markers:** Custom SVG markers colored by tier
+- **Legend:** Tier colors displayed
+- **Popups:** Show partner name, city, tier, kg collected
+- **Navigation:** Click popup → PartnerDetailPage
+
+### Seeds/Gamification System
+
+- **Exists:** Yes, frontend components and types
+- **Backend:** Schema defined, tables empty
+- **Earning:** Defined in `seedsConfig.ts`
+  - Scan at partner: 50 seeds
+  - Referral: 500 seeds
+  - Achievement unlock: varies
+- **Spending:** Defined in redeemable_items schema
+- **Transactions:** seeds_transactions table (empty)
+- **Display:** SeedsBalance component shows balance
+
+### Partners Data
+
+- **Real Partners:** 0 (database empty)
+- **Mock Partners:** 5 (El Bajío, Casa Oaxaca, CEDA Tlaxcala, Starbucks, Hospital Ángeles)
+- **Total in Stats:** 127 (simulated for UI)
+- **Categories:** 15 defined (restaurant, hotel, hospital, etc.)
+- **Tiers:** 5 (bronze, silver, gold, platinum, champion)
+
+### QR Scanning
+
+- **Page exists:** `/scan/:code`
+- **Camera integration:** NOT implemented
+- **Current behavior:** Parses code from URL, shows partner info
+- **Validation:** UI matches partner by qr_short_code
+
+### Consumer Flow (Design)
+
+```
+1. Consumer visits partner restaurant
+2. Scans QR code on table/receipt
+3. App shows partner profile + impact
+4. Consumer earns Seeds for scan
+5. Consumer can donate or redeem Seeds
+6. Impact accumulates in profile
+```
+
+### Component Tree
+
+```
+circular-partners/
+├── components/
+│   ├── Cards/           # Partner cards, stat cards
+│   ├── ConsumerView/    # Impact display, history
+│   ├── Gamification/    # Seeds, Achievements, Leaderboard, TierBadge
+│   ├── Map/             # Partner map markers, popups
+│   └── PartnerDetail/   # Profile sections
+├── data/
+│   ├── mockPartners.ts      # 5 full partner objects + NETWORK_STATS
+│   ├── partnerCategories.ts # Category config (colors, icons)
+│   ├── tierConfig.ts        # Tier thresholds + multipliers
+│   ├── seedsConfig.ts       # Earn rates
+│   └── achievementsConfig.ts # Badge definitions
+├── pages/
+│   ├── PartnersMapPage.tsx      # Main browse page
+│   ├── PartnerDetailPage.tsx    # Individual partner
+│   ├── ConsumerScanPage.tsx     # QR scan handler
+│   ├── ConsumerPortalPage.tsx   # "Mi Impacto"
+│   └── PartnerDashboardPage.tsx # Partner admin
+├── services/
+│   ├── partnerService.ts       # CRUD operations
+│   ├── consumerService.ts      # Consumer operations
+│   └── gamificationService.ts  # Seeds/achievements
+├── stores/
+│   └── partnerStore.ts         # Zustand state
+└── types/
+    └── partners.types.ts       # Full type definitions
+```
+
+---
+
+# 🔄 APPENDIX D: DATA FLOWS
+
+## Flow 1: Onboarding → Plants → Network Map
+
+```
+┌─────────────────────┐
+│  Plant Onboarding   │
+│  (6-step wizard)    │
+└──────────┬──────────┘
+           │ submitApplication()
+           ▼
+┌─────────────────────┐
+│ plant_applications  │ (Status: draft → pending)
+│ [Supabase table]    │
+└──────────┬──────────┘
+           │ Admin approves (manual)
+           ▼
+┌─────────────────────┐
+│      plants         │ (Status: verified → active)
+│ [Supabase table]    │
+└──────────┬──────────┘
+           │ networkService.getPlants()
+           ▼
+┌─────────────────────┐
+│  Global Network     │
+│  (Leaflet Map)      │
+└─────────────────────┘
+```
+
+**Current Reality:** Flow is incomplete - onboarding saves to localStorage only, plants come from hardcoded LARVALINK_PLANTS array.
+
+---
+
+## Flow 2: Waste Delivery → Emissions → Credits
+
+```
+┌─────────────────────┐
+│ Partner makes waste │
+│ delivery to plant   │
+└──────────┬──────────┘
+           │ Record delivery (manual/IoT)
+           ▼
+┌─────────────────────┐
+│   mrv_records       │ (type: 'iot_sensor')
+│ [Supabase table]    │
+└──────────┬──────────┘
+           │ emissionsService.calculate()
+           ▼
+┌─────────────────────┐
+│ Emissions Calculator│
+│ CH4 = kg × DOC × MCF│
+└──────────┬──────────┘
+           │ verifyOnChain() [simulated]
+           ▼
+┌─────────────────────┐
+│   carbon_credits    │ (status: issued)
+│ [Supabase table]    │
+└──────────┬──────────┘
+           │ List in marketplace
+           ▼
+┌─────────────────────┐
+│    Marketplace      │
+│ (CarbonLINK tokens) │
+└─────────────────────┘
+```
+
+**Current Reality:** Calculations work, but no data flows to DB. Credits are mock.
+
+---
+
+## Flow 3: Consumer Scan → Seeds → Redemption
+
+```
+┌─────────────────────┐
+│ Consumer at Partner │
+│ scans QR code       │
+└──────────┬──────────┘
+           │ /scan/:code route
+           ▼
+┌─────────────────────┐
+│   ConsumerScanPage  │
+│ (validate, display) │
+└──────────┬──────────┘
+           │ gamificationService.awardSeeds()
+           ▼
+┌─────────────────────┐
+│ seeds_transactions  │ (+50 seeds)
+│ [Supabase table]    │
+└──────────┬──────────┘
+           │ UPDATE profiles SET seeds_balance
+           ▼
+┌─────────────────────┐
+│  Consumer Portal    │
+│  (Mi Impacto)       │
+└──────────┬──────────┘
+           │ User chooses reward
+           ▼
+┌─────────────────────┐
+│ redeemable_items    │
+│ (catalog)           │
+└──────────┬──────────┘
+           │ consumerService.redeemItem()
+           ▼
+┌─────────────────────┐
+│    redemptions      │ (code generated)
+│ [Supabase table]    │
+└─────────────────────┘
+```
+
+**Current Reality:** UI exists, but no real camera scan, no DB transactions.
+
+---
+
+# 🔐 APPENDIX E: CREDENTIALS & LIMITS
+
+## API Tier Summary
+
+| Service | Plan | Limits | Notes |
+|---------|------|--------|-------|
+| **Sentinel Hub** | Trial/Free | 1000 PU/month | Statistics API returns 400 errors |
+| **Supabase** | Free | 500MB DB, 1GB Storage, 2GB bandwidth | Sufficient for demo |
+| **Netlify** | Free | 100GB bandwidth, 300 build min/month | Deployed successfully |
+| **Google Maps** | Not configured | N/A | Using Leaflet instead |
+
+### Sentinel Hub Details
+
+- **Client ID:** Configured in `.env.local`
+- **Status:** Authenticated successfully
+- **Working:** Process API (NDVI imagery)
+- **Failing:** Statistics API (returns 400)
+- **Rate Limit:** ~30 requests/minute
+
+### Supabase Details
+
+- **Project Region:** (check dashboard)
+- **Database:** PostgreSQL 15 with PostGIS
+- **Storage Buckets:** Not created
+- **Auth:** Enabled but not used
+- **RLS Policies:** Open for dev (needs hardening for prod)
+
+### Environment Variables Required
+
+```bash
+# .env.local (DO NOT COMMIT)
+VITE_SUPABASE_URL=https://xxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbG...
+
+VITE_COPERNICUS_CLIENT_ID=xxx
+VITE_COPERNICUS_CLIENT_SECRET=xxx
+
+# Optional
+VITE_GOOGLE_MAPS_API_KEY=xxx
+```
+
+---
+
+# 📅 APPENDIX F: Q1 2026 PRIORITIES
+
+## Top 5 Features to Implement
+
+### 1. 🔐 Real Authentication (Priority: CRITICAL)
+
+**Why:** All modules assume anonymous access. No data persistence per user.
+**Scope:**
+
+- Supabase Auth integration (email + social)
+- Protected routes
+- User profile page
+- Role-based access (admin, plant_owner, investor, partner, consumer)
+
+**Effort:** 2-3 days
+**Dependencies:** None
+
+---
+
+### 2. 💾 Onboarding → Supabase (Priority: HIGH)
+
+**Why:** Plants can register but data disappears on refresh.
+**Scope:**
+
+- Save form state to plant_applications table
+- Upload documents to Supabase Storage
+- Admin approval interface
+- Auto-create plant record on approval
+
+**Effort:** 2 days
+**Dependencies:** Authentication
+
+---
+
+### 3. 🛰️ Fix Sentinel Hub Statistics (Priority: HIGH)
+
+**Why:** TerraLINK shows demo data only.
+**Scope:**
+
+- Debug 400 error (likely auth or bbox format)
+- Implement proper token refresh
+- Add caching layer
+- Fallback to Process API for basic stats
+
+**Effort:** 1 day
+**Dependencies:** None
+
+---
+
+### 4. 🤝 CircularLINK Real Partners (Priority: MEDIUM)
+
+**Why:** Consumer-facing launch depends on real partner data.
+**Scope:**
+
+- Seed partner_categories and partner_tiers
+- Create partner registration form
+- Connect partnerService to Supabase
+- Test with 3-5 real partners
+
+**Effort:** 2 days
+**Dependencies:** Authentication
+
+---
+
+### 5. 📱 QR Camera Scanning (Priority: MEDIUM)
+
+**Why:** Core consumer feature doesn't work.
+**Scope:**
+
+- Integrate html5-qrcode or react-qr-reader
+- Camera permissions handling
+- Validate scans against partner DB
+- Award seeds on successful scan
+
+**Effort:** 1 day
+**Dependencies:** CircularLINK Real Partners
+
+---
+
+## Q1 Roadmap Summary
+
+```
+Week 1-2: Authentication + Onboarding persistence
+Week 3:   Sentinel Hub fix + CircularLINK partners
+Week 4:   QR scanning + Consumer testing
+```
+
+## Out of Scope Q1
+
+- Mobile app (React Native)
+- Blockchain integration (real tokens)
+- Payment processing
+- IoT sensor integration
+- Multi-language beyond ES/EN
+
+---
+
+*End of Appendix - Document Version 1.1 (2026-01-13)*
