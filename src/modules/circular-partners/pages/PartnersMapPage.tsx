@@ -292,6 +292,9 @@ export const PartnersMapPage: React.FC = () => {
                         {/* Header */}
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                             <div>
+                                <Link to="/partners" className="text-sm text-slate-400 hover:text-green-400 flex items-center gap-1 mb-2">
+                                    ← Volver al Hub
+                                </Link>
                                 <h1 className="text-2xl md:text-3xl font-black text-white flex items-center gap-3">
                                     <span className="bg-gradient-to-r from-green-500 to-emerald-500 p-2 rounded-xl">
                                         <Recycle className="w-6 h-6 text-white" />

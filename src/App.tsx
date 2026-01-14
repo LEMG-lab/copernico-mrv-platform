@@ -13,6 +13,7 @@ import { ViabilityCalculatorPage } from './modules/viability-calculator';
 import { InvestorPortalPage, DataRoomPage } from './modules/investor-portal';
 import { AlertsPage } from './modules/alerts-system/AlertsPage';
 import { PartnersMapPage } from './modules/circular-partners/pages/PartnersMapPage';
+import { PartnersHubPage } from './modules/circular-partners/pages/PartnersHubPage';
 import { PartnerDetailPage } from './modules/circular-partners/pages/PartnerDetailPage';
 import { ConsumerScanPage } from './modules/circular-partners/pages/ConsumerScanPage';
 import { PartnerDashboardPage } from './modules/circular-partners/pages/PartnerDashboardPage';
@@ -40,12 +41,18 @@ const App: React.FC = () => {
                 <Route path="/data-room" element={<DataRoomPage />} />
                 <Route path="/alerts" element={<AlertsPage />} />
 
-                {/* CircularLINK Partners */}
-                <Route path="/partners" element={<PartnersMapPage />} />
+                {/* CircularLINK Partners Hub */}
+                <Route path="/partners" element={<PartnersHubPage />} />
+                <Route path="/partners/map" element={<PartnersMapPage />} />
                 <Route path="/partners/:slug" element={<PartnerDetailPage />} />
+                <Route path="/partners/mi-impacto" element={<ConsumerPortalPage />} />
+                <Route path="/partners/dashboard" element={<PartnerDashboardPage />} />
+                <Route path="/partners/scan-demo" element={<ConsumerScanPage />} />
                 <Route path="/scan/:code" element={<ConsumerScanPage />} />
-                <Route path="/dashboard/partner" element={<PartnerDashboardPage />} />
+
+                {/* Legacy routes redirect */}
                 <Route path="/mi-impacto" element={<ConsumerPortalPage />} />
+                <Route path="/dashboard/partner" element={<PartnerDashboardPage />} />
 
                 {/* Redirecciones de compatibilidad si es necesario */}
                 <Route path="/terralink-impact" element={<TerraLinkDashboard />} />
