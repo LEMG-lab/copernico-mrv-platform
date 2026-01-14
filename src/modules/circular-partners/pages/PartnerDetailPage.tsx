@@ -72,8 +72,8 @@ export const PartnerDetailPage: React.FC = () => {
         );
     }
 
-    const categoryConfig = PARTNER_CATEGORIES[partner.category];
-    const tierConfig = TIER_CONFIG[partner.tier];
+    const categoryConfig = PARTNER_CATEGORIES[partner.category] || { color: '#95A5A6', name: 'Otro' };
+    const tierConfig = TIER_CONFIG[partner.tier] || { color: '#CD7F32', name: 'Bronce', gradient: 'linear-gradient(135deg, #CD7F32, #B87333)', benefits: [] };
     const streetViewUrl = getStreetViewUrl(partner.location.coordinates.lat, partner.location.coordinates.lng);
 
     return (

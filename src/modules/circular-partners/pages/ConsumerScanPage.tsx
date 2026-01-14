@@ -58,7 +58,7 @@ const ImpactCard: React.FC<{ icon: React.ElementType; value: string; label: stri
     );
 
 const NearbyPartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => {
-    const categoryConfig = PARTNER_CATEGORIES[partner.category];
+    const categoryConfig = PARTNER_CATEGORIES[partner.category] || { color: '#95A5A6', name: 'Otro' };
     return (
         <Link
             to={`/partners/${partner.slug}`}
@@ -112,8 +112,8 @@ export const ConsumerScanPage: React.FC = () => {
         );
     }
 
-    const categoryConfig = PARTNER_CATEGORIES[partner.category];
-    const tierConfig = TIER_CONFIG[partner.tier];
+    const categoryConfig = PARTNER_CATEGORIES[partner.category] || { color: '#95A5A6', name: 'Otro' };
+    const tierConfig = TIER_CONFIG[partner.tier] || { color: '#CD7F32', name: 'Bronce', gradient: 'linear-gradient(135deg, #CD7F32, #B87333)' };
     const totalSeeds = scanData.seeds_earned + (scanData.is_first_visit ? SEEDS_CONFIG.earning.first_scan_partner.base : 0);
 
     const copyIncentiveCode = () => {

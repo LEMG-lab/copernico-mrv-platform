@@ -8,15 +8,12 @@
  * - achievements
  * - redeemable_items
  * 
- * Usage: npx tsx scripts/testCircularPartnersBackend.ts
+ * Usage: VITE_SUPABASE_URL=xxx VITE_SUPABASE_ANON_KEY=xxx npx tsx scripts/testCircularPartnersBackend.ts
  */
 
 import { createClient } from '@supabase/supabase-js';
-import * as dotenv from 'dotenv';
 
-// Load environment variables
-dotenv.config({ path: '.env.local' });
-
+// Read from environment (set in terminal or .env.local via shell)
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
 

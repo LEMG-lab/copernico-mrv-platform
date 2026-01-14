@@ -2,6 +2,14 @@
 -- SEED DATA: CircularLINK Partners Module
 -- Generated: 2026-01-13
 -- ============================================
+-- CLEAR EXISTING DATA (safe for re-running)
+DELETE FROM circular_partners
+WHERE slug LIKE '%';
+DELETE FROM achievements
+WHERE id LIKE 'ach_%';
+DELETE FROM redeemable_items
+WHERE id LIKE 'item_%';
+-- Categories and tiers use ON CONFLICT so no need to delete
 -- ============================================
 -- 1. PARTNER CATEGORIES (15 registros)
 -- ============================================
@@ -308,7 +316,22 @@ VALUES (
         12800,
         1067,
         '2024-01-20'
-    ) ON CONFLICT (id) DO NOTHING;
+    ) ON CONFLICT (slug) DO
+UPDATE
+SET name = EXCLUDED.name,
+    category_id = EXCLUDED.category_id,
+    tier_id = EXCLUDED.tier_id,
+    description = EXCLUDED.description,
+    logo_url = EXCLUDED.logo_url,
+    address = EXCLUDED.address,
+    city = EXCLUDED.city,
+    state = EXCLUDED.state,
+    latitude = EXCLUDED.latitude,
+    longitude = EXCLUDED.longitude,
+    is_verified = EXCLUDED.is_verified,
+    status = EXCLUDED.status,
+    total_collected_kg = EXCLUDED.total_collected_kg,
+    monthly_average_kg = EXCLUDED.monthly_average_kg;
 -- ============================================
 -- 4. ACHIEVEMENTS (20 registros)
 -- ============================================

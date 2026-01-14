@@ -96,8 +96,11 @@ const TierBadge: React.FC<{ tier: PartnerTier; size?: 'sm' | 'md' }> = ({ tier, 
 };
 
 const PartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => {
-    const CategoryIcon = CATEGORY_ICONS[partner.category];
-    const categoryConfig = PARTNER_CATEGORIES[partner.category];
+    const CategoryIcon = CATEGORY_ICONS[partner.category] || MapPin;
+    const categoryConfig = PARTNER_CATEGORIES[partner.category] || {
+        color: '#95A5A6',
+        name: 'Otro'
+    };
 
     return (
         <Link
@@ -198,9 +201,9 @@ const PartnersMap: React.FC<{ partners: Partner[] }> = ({ partners }) => {
                                 <div className="flex items-center gap-2 mb-2">
                                     <span
                                         className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
-                                        style={{ background: TIER_CONFIG[partner.tier].color }}
+                                        style={{ background: (TIER_CONFIG[partner.tier] || { color: '#CD7F32' }).color }}
                                     >
-                                        {TIER_CONFIG[partner.tier].name}
+                                        {(TIER_CONFIG[partner.tier] || { name: 'Bronce' }).name}
                                     </span>
                                     <span className="text-xs text-slate-600">
                                         {(partner.metrics.lifetime.total_kg / 1000).toFixed(1)}t
