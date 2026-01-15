@@ -62,6 +62,176 @@ const renderContent = (content: string): JSX.Element => {
     let tableRows: string[] = [];
 
     const processLine = (line: string, index: number): JSX.Element | null => {
+        // Facebook Video Embed
+        if (line.trim().startsWith('[FACEBOOK:') && line.trim().endsWith(']')) {
+            const videoId = line.trim().slice(10, -1);
+            return (
+                <div key={index} className="my-8 rounded-2xl overflow-hidden border border-cyan-500/30 bg-black/50 shadow-xl shadow-cyan-500/10">
+                    <div className="relative pb-[56.25%] h-0">
+                        <iframe
+                            src={`https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=${videoId}&show_text=false&width=560`}
+                            className="absolute top-0 left-0 w-full h-full"
+                            style={{ border: 'none', overflow: 'hidden' }}
+                            scrolling="no"
+                            frameBorder="0"
+                            allowFullScreen={true}
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                        />
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-slate-800/80 to-slate-900/80 border-t border-white/10">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                                <span className="text-white font-bold text-sm">f</span>
+                            </div>
+                            <span className="text-slate-400 text-sm">Video de Facebook</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Facebook Post Embed
+        if (line.trim().startsWith('[FBPOST:') && line.trim().endsWith(']')) {
+            const postUrl = line.trim().slice(8, -1);
+            return (
+                <div key={index} className="my-8 rounded-2xl overflow-hidden border border-blue-500/30 bg-slate-900/50 shadow-xl shadow-blue-500/10">
+                    <iframe
+                        src={`https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(postUrl)}&show_text=true&width=500`}
+                        width="100%"
+                        height="600"
+                        style={{ border: 'none', overflow: 'hidden' }}
+                        scrolling="no"
+                        frameBorder="0"
+                        allowFullScreen={true}
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    />
+                    <div className="p-4 bg-gradient-to-r from-slate-800/80 to-slate-900/80 border-t border-white/10">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                                <span className="text-white font-bold text-sm">f</span>
+                            </div>
+                            <span className="text-slate-400 text-sm">Publicación de Facebook</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // YouTube/Vimeo Video Embed
+        if (line.trim().startsWith('[VIDEO:') && line.trim().endsWith(']')) {
+            const videoUrl = line.trim().slice(7, -1);
+            return (
+                <div key={index} className="my-8 rounded-2xl overflow-hidden border border-cyan-500/30 bg-black/50 shadow-xl shadow-cyan-500/10">
+                    <div className="relative pb-[56.25%] h-0">
+                        <iframe
+                            src={videoUrl}
+                            className="absolute top-0 left-0 w-full h-full"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+        // NotebookLM Podcast Link
+        if (line.trim().startsWith('[NOTEBOOKLM:') && line.trim().endsWith(']')) {
+            const notebookUrl = line.trim().slice(12, -1);
+            return (
+                <div key={index} className="my-8">
+                    <a
+                        href={notebookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-2xl overflow-hidden border border-purple-500/30 bg-gradient-to-br from-purple-900/40 to-indigo-900/40 hover:border-purple-400/50 transition-all hover:scale-[1.01] shadow-xl shadow-purple-500/10"
+                    >
+                        <div className="p-6 flex items-center gap-5">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                                <span className="text-3xl">🎙️</span>
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-xs font-bold text-purple-400 uppercase tracking-wider">NotebookLM Podcast</span>
+                                    <span className="text-xs text-slate-500">by Google</span>
+                                </div>
+                                <p className="text-white font-semibold text-lg">Escuchar Podcast Generado por IA →</p>
+                                <p className="text-slate-400 text-sm mt-1">Abre en NotebookLM para reproducir</p>
+                            </div>
+                            <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                <svg className="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            );
+        }
+
+        // Local Image Embed
+        if (line.trim().startsWith('[IMG:') && line.trim().endsWith(']')) {
+            const imagePath = line.trim().slice(5, -1);
+            return (
+                <div key={index} className="my-6 rounded-2xl overflow-hidden border border-white/10 bg-black/30 shadow-xl">
+                    <img
+                        src={imagePath}
+                        alt="Document image"
+                        className="w-full h-auto"
+                    />
+                </div>
+            );
+        }
+
+        // Image Gallery
+        if (line.trim().startsWith('[GALLERY:') && line.trim().endsWith(']')) {
+            const images = line.trim().slice(9, -1).split('|');
+            return (
+                <div key={index} className="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {images.map((img, i) => (
+                        <div key={i} className="rounded-2xl overflow-hidden border border-white/10 bg-black/30 shadow-xl hover:border-cyan-500/30 transition-all hover:scale-[1.02] cursor-pointer group">
+                            <img
+                                src={img.trim()}
+                                alt={`Gallery image ${i + 1}`}
+                                className="w-full h-auto group-hover:opacity-90 transition-opacity"
+                            />
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // External Link Card
+        if (line.trim().startsWith('[LINK:') && line.trim().endsWith(']')) {
+            const parts = line.trim().slice(6, -1).split('|');
+            const url = parts[0];
+            const title = parts[1] || 'Ver Enlace';
+            const description = parts[2] || '';
+            return (
+                <div key={index} className="my-6">
+                    <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-2xl overflow-hidden border border-cyan-500/30 bg-gradient-to-br from-slate-800/80 to-slate-900/80 hover:border-cyan-400/50 transition-all hover:scale-[1.01] shadow-xl shadow-cyan-500/10"
+                    >
+                        <div className="p-6 flex items-center gap-5">
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg flex-shrink-0">
+                                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-white font-semibold text-lg truncate">{title} →</p>
+                                {description && <p className="text-slate-400 text-sm mt-1 truncate">{description}</p>}
+                                <p className="text-cyan-400 text-xs mt-2 truncate">{url}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            );
+        }
+
         // Headers
         if (line.startsWith('## ')) {
             return (

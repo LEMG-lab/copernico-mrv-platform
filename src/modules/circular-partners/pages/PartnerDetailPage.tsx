@@ -397,7 +397,7 @@ export const PartnerDetailPage: React.FC = () => {
                         </div>
                         <div className="mt-4 pt-4 border-t border-slate-700 flex justify-center">
                             <a
-                                href={`https://explorer.globalforce.io/transaction/${partner.blockchain.verification_hash}`}
+                                href="https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-bold"

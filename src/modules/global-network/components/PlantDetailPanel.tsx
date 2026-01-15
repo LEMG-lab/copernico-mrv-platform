@@ -159,7 +159,7 @@ export const PlantDetailPanel: React.FC<PlantDetailPanelProps> = ({ plant, onClo
                             {/*@ts-ignore*/}
                             {plant.blockchain_hash || "0x94c0...a1b2 (Simulado)"}
                         </div>
-                        <a href="https://dev-explorer.globalforce.io/transaction/e96a86d68d1b1c70deec98f76c9bc1db58c39065402bf2f5986b2ad68389548b" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 inline-block text-[10px] flex items-center justify-center gap-1 mt-2">
+                        <a href="https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 inline-block text-[10px] flex items-center justify-center gap-1 mt-2">
                             <span>↗</span> Ver en GlobalForce Explorer
                         </a>
                     </div>

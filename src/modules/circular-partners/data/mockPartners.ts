@@ -397,7 +397,7 @@ export const MOCK_DELIVERIES: Delivery[] = [
         plant_name: "Planta Papalotla",
         photos: {},
         impact: { co2_avoided_kg: 153, methane_avoided_kg: 8.5, protein_potential_kg: 17, frass_potential_kg: 25.5 },
-        blockchain: { tx_hash: "0x123abc456def789", block_number: 12345678, timestamp: "2025-12-22T07:50:00Z", verification_url: "https://explorer.globalforce.io/tx/0x123abc" },
+        blockchain: { tx_hash: "0x123abc456def789", block_number: 12345678, timestamp: "2025-12-22T07:50:00Z", verification_url: "https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3" },
         status: "completed"
     }
 ];

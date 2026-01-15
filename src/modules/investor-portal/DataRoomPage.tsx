@@ -67,6 +67,12 @@ const MOCK_DOCUMENTS: Document[] = [
     { id: '18', name: 'Technical Due Diligence FAQ', category: 'qa', type: 'pdf', size: '1.8 MB', uploadedAt: '2025-12-08', restricted: false, views: 134 },
     { id: '19', name: 'Regulatory Compliance FAQ', category: 'qa', type: 'pdf', size: '980 KB', uploadedAt: '2025-12-05', restricted: false, views: 98 },
     { id: '20', name: 'ESG & Impact Metrics Report', category: 'qa', type: 'pdf', size: '4.5 MB', uploadedAt: '2025-11-28', restricted: false, views: 167 },
+
+    // Roadmap
+    { id: '21', name: 'Roadmap de Ejecución 2025-2027', category: 'pitch', type: 'pdf', size: '2.1 MB', uploadedAt: '2026-01-14', restricted: false, views: 45, description: 'Hoja de ruta de escalabilidad y expansión' },
+
+    // Research Reports
+    { id: '22', name: 'AXA Future Risks Report 2025', category: 'qa', type: 'pdf', size: '8.7 MB', uploadedAt: '2026-01-14', restricted: false, views: 12, description: 'Análisis global de riesgos futuros y relevancia para LarvaLINK' },
 ];
 
 const CATEGORIES = [
@@ -193,7 +199,7 @@ export const DataRoomPage: React.FC = () => {
                                     </div>
                                     <div className="flex items-center gap-2 text-xs text-slate-400">
                                         <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                                        20 documentos disponibles
+                                        22 documentos disponibles
                                     </div>
                                 </div>
                             </div>

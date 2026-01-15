@@ -241,7 +241,7 @@ export const PlantDetailPage: React.FC = () => {
                                         </div>
                                     </div>
                                     <a
-                                        href="https://dev-explorer.globalforce.io/transaction/edecd62439b625b7e9829554ddcebb434733989358a7bb66641c98e72ffcada4"
+                                        href="https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-emerald-400 text-sm font-bold hover:underline px-4 flex items-center gap-1"

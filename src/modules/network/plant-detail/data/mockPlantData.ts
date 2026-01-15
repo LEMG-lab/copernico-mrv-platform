@@ -94,7 +94,7 @@ export const MOCK_PLANT_TEPETLOZTOC: PlantDetail = {
         last_verification: "2025-12-22T08:30:00Z",
         total_transactions: 4847,
         verification_hash: "0xabc123def456789abc123def456789abc123def456789",
-        explorer_url: "https://explorer.globalforce.io/address/0x7f3a8b2c..."
+        explorer_url: "https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3"
     },
 
     environment: {

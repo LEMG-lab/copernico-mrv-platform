@@ -63,7 +63,7 @@ export const CreditDetailModal: React.FC<CreditDetailModalProps> = ({ credit, on
                             )}
 
                             <div className="text-xs text-center pt-2">
-                                <a href="#" className="text-blue-400 hover:text-blue-300 underline decoration-dotted">
+                                <a href="https://explorer.globalforce.io/transaction/a44b8630b7072fd0b1689e781b9e5a786f97bdd3d9a5fdee2a7707e258426cd3" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline decoration-dotted">
                                     Verificar en Global Force Chain ↗
                                 </a>
                             </div>

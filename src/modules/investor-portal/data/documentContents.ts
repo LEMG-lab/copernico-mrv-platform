@@ -506,6 +506,33 @@ export const VIDEO_PITCH_CONTENT: DocumentContent = {
     confidential: false,
     sections: [
         {
+            title: 'VIDEO: GIRA DEMOSTRATIVA BIOCONVERSIÓN',
+            content: `Nuestro municipio participó en una gira demostrativa sobre bioconversión de residuos orgánicos en la planta piloto LarvaLINK.
+
+[FACEBOOK:1488251963302744]
+
+**Descripción:**
+Este video muestra la visita de funcionarios municipales a nuestra planta de bioconversión BSF, donde pudieron observar el proceso completo de transformación de residuos orgánicos.`
+        },
+        {
+            title: '🎙️ PODCAST: LARVALINK & SUSTAINABLE DEVELOPMENT GOALS',
+            content: `**Generado con NotebookLM de Google**
+
+Escucha un análisis profundo sobre cómo LarvaLINK contribuye a los Objetivos de Desarrollo Sostenible (ODS) de la ONU.
+
+[NOTEBOOKLM:https://notebooklm.google.com/notebook/0460aa6e-bc71-4d68-b34d-6f96eae8a011?artifactId=f1b26f4e-1967-4b95-8cba-6ac9ad10b1f3]
+
+Este podcast fue generado automáticamente por la IA de Google NotebookLM, analizando la documentación técnica y de impacto de LarvaLINK.`
+        },
+        {
+            title: '📰 PUBLICACIONES EN FACEBOOK',
+            content: `Nuestras últimas actualizaciones en redes sociales:
+
+[FBPOST:https://www.facebook.com/61571603422059/posts/122150230556720114/]
+
+[FBPOST:https://www.facebook.com/photo?fbid=122142349112720114&set=pcb.122142349586720114]`
+        },
+        {
             title: 'TRANSCRIPCIÓN',
             content: `> "Hola, soy Roberto Rendón, CEO de LarvaLINK. Estamos transformando la gestión de residuos en México..."
 
@@ -516,8 +543,13 @@ El video cubre:
 * Entrevistas con el equipo`
         },
         {
-            title: 'ENLACE',
-            content: `[Ver Video en Alta Resoluciuón](https://vimeo.com/placeholder)`
+            title: 'MÁS RECURSOS',
+            content: `Para ver más contenido multimedia sobre LarvaLINK:
+
+* **Facebook:** [@LarvaLINK](https://www.facebook.com/61571603422059)
+* **Sitio Web:** [larvalink.mx](https://larvalink.mx)
+
+Próximamente agregaremos más videos y podcasts generados con NotebookLM.`
         }
     ]
 };
@@ -914,6 +946,213 @@ export const ESG_REPORT_CONTENT: DocumentContent = {
 };
 
 // =============================================================================
+// DOCUMENT 21: ROADMAP 2025-2027
+// =============================================================================
+
+export const ROADMAP_CONTENT: DocumentContent = {
+    id: '21',
+    title: 'Roadmap de Ejecución 2025-2027',
+    subtitle: 'Hoja de Ruta de Escalabilidad',
+    lastUpdated: '14 Enero 2026',
+    confidential: false,
+    sections: [
+        {
+            title: '🚀 VISIÓN GENERAL',
+            content: `## Nuestro camino es claro. El momento es ahora.
+
+LarvaLINK tiene un plan de ejecución definido para escalar desde nuestra planta piloto actual hasta un ecosistema de 360 toneladas/día de capacidad de procesamiento.
+
+[TIMELINE:START]`
+        },
+        {
+            title: '📅 DICIEMBRE 2025',
+            content: `## Cierre de Ronda Seed VIP
+
+✅ **Venta de los últimos 45 RPUs Seed VIP**
+* Completar la ronda de financiamiento inicial
+* Capital objetivo: ~$500,000 USD adicionales
+
+✅ **Plantas CIDI y ALFA financiadas y asignadas**
+* Infraestructura asegurada
+* Equipos principales adquiridos
+* Terrenos y permisos en orden`
+        },
+        {
+            title: '📅 ENERO 2026',
+            content: `## Inicio de Operaciones
+
+🔄 **Inicio de ciclos de ecosistema de Planta ALFA**
+* Capacidad: 1 a 5 ton/día
+* Primeras colonias reproductoras establecidas
+* Ciclos de bioconversión iniciados
+* Equipo operativo completo contratado`
+        },
+        {
+            title: '📅 FEBRERO - MARZO 2026',
+            content: `## Primera Producción Comercial
+
+🏭 **Inicio de operación de la planta piloto Alfa 1 (4T)**
+* Procesamiento sostenido de 4 toneladas/día
+* Primera producción comercial de ProLINK y TerraLINK
+
+📊 **Producción, trazabilidad y datos en tiempo real validados**
+* Sistema TrackLINK operativo
+* IoT integrado y transmitiendo
+* Primeros BatchNFT en blockchain`
+        },
+        {
+            title: '📅 MAYO - JUNIO 2026',
+            content: `## Preparación para Escala
+
+💰 **Inicio de búsqueda para financiamiento institucional**
+* Target: Planta T30 (30 toneladas/día)
+* Preparación de pitch para fondos VC/PE
+* Due diligence documentación lista
+
+🎯 **Capitalización para escalar a 30T/día**
+* Meta de levantamiento: Serie A
+* Valoración objetivo basada en métricas operativas reales`
+        },
+        {
+            title: '📅 2026 - 2027',
+            content: `## Escalamiento Masivo
+
+🏗️ **Escalamiento a 360 Toneladas/día**
+* Despliegue de múltiples plantas modulares
+* Red distribuida de procesamiento
+* Optimización continua con METAFEED IA
+
+🌟 **Ecosistema 1 Completado**
+* Ciclo cerrado de economía circular
+* Impacto ambiental medible y verificado
+* Créditos de carbono en producción`
+        },
+        {
+            title: '📅 A PARTIR DE 2027',
+            content: `## Expansión Global
+
+🌎 **Expansión internacional**
+* Primeros mercados objetivo: LATAM, Europa
+* Modelo de licenciamiento definido
+* Partners estratégicos identificados
+
+📜 **Primeras licencias o ecosistemas fuera de México**
+* Réplica del modelo probado
+* Tecnología exportable
+* BaaS (Bioconversion as a Service) activo`
+        },
+        {
+            title: '📈 RESUMEN DE MILESTONES',
+            content: `| Fecha | Milestone | Capacidad |
+|-------|-----------|-----------|
+| Dic 2025 | Cierre Seed VIP | - |
+| Ene 2026 | Inicio ciclos ALFA | 1-5 T/día |
+| Feb-Mar 2026 | Primera producción | 4 T/día |
+| May-Jun 2026 | Búsqueda Serie A | - |
+| 2026-2027 | Ecosistema 1 | 360 T/día |
+| 2027+ | Expansión Internacional | Ilimitada |
+
+**El futuro de la bioconversión comienza aquí.**`
+        }
+    ]
+};
+
+// =============================================================================
+// DOCUMENT 22: FUTURE RISKS REPORT 2025
+// =============================================================================
+
+export const FUTURE_RISKS_REPORT_CONTENT: DocumentContent = {
+    id: '22',
+    title: 'AXA Future Risks Report 2025',
+    subtitle: 'Análisis Global de Riesgos para Inversores',
+    lastUpdated: '14 Enero 2026',
+    confidential: false,
+    sections: [
+        {
+            title: '📊 FUTURE RISKS REPORT 2025',
+            content: `## Análisis Global de Riesgos Futuros
+
+El **AXA Future Risks Report 2025** es uno de los estudios más completos sobre riesgos globales, basado en encuestas a más de 3,500 expertos en gestión de riesgos de 57 países.
+
+Este análisis es fundamental para entender el contexto en el que opera LarvaLINK y cómo nuestras soluciones abordan varios de los riesgos identificados.
+
+[LINK:https://www.axa.com/en/news/future-risks-report-2025|Ver Reporte Completo AXA|Future Risks Report 2025 - Análisis oficial]`
+        },
+        {
+            title: '🌡️ CAMBIO CLIMÁTICO: RIESGO #1',
+            content: `## El Cambio Climático permanece como el principal riesgo global
+
+El cambio climático se mantiene como el **riesgo número 1** tanto para expertos como para la población general. México ocupa el **#2** en países más preocupados.
+
+**LarvaLINK es parte de la solución:**
+* Reducción de emisiones de metano de residuos orgánicos
+* Captura y verificación de créditos de carbono
+* Economía circular que desplaza producción intensiva
+
+[IMG:/images/future-risks/climate-change.png]`
+        },
+        {
+            title: '📈 TOP 10 RIESGOS GLOBALES 2020-2025',
+            content: `## Evolución de los principales riesgos mundiales
+
+La siguiente visualización muestra cómo han evolucionado los 10 principales riesgos globales en los últimos 5 años:
+
+[IMG:/images/future-risks/global-risks-timeline.jpg]
+
+**Tendencias clave:**
+* Cambio climático consistentemente en #1 desde 2021
+* Ciberseguridad subiendo rápidamente
+* Inestabilidad geopolítica en aumento
+* IA y Big Data emergiendo como nuevo riesgo`
+        },
+        {
+            title: '🌎 RIESGOS POR REGIÓN GEOGRÁFICA',
+            content: `## Perspectiva regional de riesgos 2025
+
+Los riesgos varían significativamente según la región geográfica:
+
+[IMG:/images/future-risks/risks-by-geography.png]
+
+**Américas:**
+1. Cambio climático
+2. Ciberseguridad  
+3. IA y Big Data
+
+**Relevancia para LarvaLINK:** Nuestras operaciones en México están en una región donde el cambio climático es la preocupación #1.`
+        },
+        {
+            title: '📋 COMPARATIVA: EXPERTOS VS POBLACIÓN',
+            content: `## ¿Qué piensan los expertos vs la población general?
+
+El reporte compara las percepciones de expertos en gestión de riesgos con la población general:
+
+[IMG:/images/future-risks/axa-top10-comparison.png]
+
+**Insights clave:**
+* Los expertos priorizan la inestabilidad geopolítica (#2)
+* La población general se preocupa más por amenazas de seguridad (#2)
+* Ambos grupos coinciden en que el cambio climático es el riesgo #1
+* Las mujeres dan mayor prioridad a los riesgos de salud`
+        },
+        {
+            title: '🔗 RELEVANCIA PARA LARVALINK',
+            content: `## Cómo LarvaLINK mitiga riesgos globales
+
+Nuestra solución aborda directamente varios de los principales riesgos identificados:
+
+| Riesgo Global | Cómo LarvaLINK Contribuye |
+|---------------|---------------------------|
+| **Cambio Climático** | Reducción de GEI, créditos de carbono verificados |
+| **Recursos Naturales** | Economía circular, valorización de residuos |
+| **Seguridad Alimentaria** | Producción sostenible de proteína animal |
+| **Pandemias** | Eliminación de vectores en residuos orgánicos |
+
+[LINK:https://www.axa.com/en/news/future-risks-report-2025|Descargar Reporte Completo|PDF oficial del AXA Future Risks Report 2025]`
+        }
+    ]
+};
+
+// =============================================================================
 // DOCUMENT CONTENT REGISTRY
 // =============================================================================
 
@@ -938,6 +1177,8 @@ export const DOCUMENT_CONTENTS: Record<string, DocumentContent> = {
     '18': TECH_FAQ_CONTENT,
     '19': REGULATORY_FAQ_CONTENT,
     '20': ESG_REPORT_CONTENT,
+    '21': ROADMAP_CONTENT,
+    '22': FUTURE_RISKS_REPORT_CONTENT,
 };
 
 // Helper function to get document content by ID
