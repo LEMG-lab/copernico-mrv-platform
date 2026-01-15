@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navigation } from '../../components/Navigation';
 import {
     FileText,
@@ -12,8 +13,15 @@ import {
     Clock,
     ChevronRight,
     FolderOpen,
-    Search
+    Search,
+    Sparkles,
+    ArrowRight
 } from 'lucide-react';
+import { AIAssistantModal } from './components/AIAssistantModal';
+import AnimatedBackground from './components/AnimatedBackground';
+import AIAssistantPanel from './components/AIAssistantPanel';
+import { getDocumentPrompt, MASTER_PROMPT, DocumentPrompt, CategoryPrompt } from './data/dataRoomPrompts';
+import { hasDocumentContent } from './data/documentContents';
 
 // Types
 interface Document {
@@ -62,24 +70,31 @@ const MOCK_DOCUMENTS: Document[] = [
 ];
 
 const CATEGORIES = [
-    { id: 'pitch', label: 'Pitch & Summary', icon: FileText, color: 'blue' },
-    { id: 'financial', label: 'Financial Documents', icon: TrendingUp, color: 'green' },
-    { id: 'legal', label: 'Legal & Compliance', icon: Shield, color: 'purple' },
-    { id: 'technical', label: 'Technical Documentation', icon: Cpu, color: 'orange' },
-    { id: 'qa', label: 'Due Diligence Q&A', icon: HelpCircle, color: 'cyan' },
+    { id: 'pitch', label: 'Pitch & Summary', icon: FileText, gradient: 'from-blue-500 to-cyan-500' },
+    { id: 'financial', label: 'Financial', icon: TrendingUp, gradient: 'from-emerald-500 to-teal-500' },
+    { id: 'legal', label: 'Legal', icon: Shield, gradient: 'from-purple-500 to-violet-500' },
+    { id: 'technical', label: 'Technical', icon: Cpu, gradient: 'from-orange-500 to-amber-500' },
+    { id: 'qa', label: 'Q&A', icon: HelpCircle, gradient: 'from-cyan-500 to-blue-500' },
 ] as const;
+
+const SUGGESTED_QUESTIONS = [
+    '¿Cuál es la propuesta de valor única de LarvaLINK?',
+    '¿Cuáles son las proyecciones financieras a 5 años?',
+    '¿Cómo funciona la estructura de inversión con RPUs?',
+    '¿Qué certificaciones ambientales tiene el proyecto?',
+];
 
 const FileTypeIcon: React.FC<{ type: Document['type'] }> = ({ type }) => {
     const colors: Record<Document['type'], string> = {
-        pdf: 'text-red-500 bg-red-50',
-        xlsx: 'text-green-600 bg-green-50',
-        pptx: 'text-orange-500 bg-orange-50',
-        docx: 'text-blue-500 bg-blue-50',
-        video: 'text-purple-500 bg-purple-50',
+        pdf: 'text-red-400 bg-red-500/20 border-red-500/30',
+        xlsx: 'text-emerald-400 bg-emerald-500/20 border-emerald-500/30',
+        pptx: 'text-orange-400 bg-orange-500/20 border-orange-500/30',
+        docx: 'text-blue-400 bg-blue-500/20 border-blue-500/30',
+        video: 'text-purple-400 bg-purple-500/20 border-purple-500/30',
     };
 
     return (
-        <span className={`${colors[type]} text-[10px] font-bold px-2 py-1 rounded uppercase`}>
+        <span className={`${colors[type]} text-[10px] font-bold px-2.5 py-1 rounded-full uppercase border backdrop-blur-sm`}>
             {type}
         </span>
     );
@@ -88,7 +103,12 @@ const FileTypeIcon: React.FC<{ type: Document['type'] }> = ({ type }) => {
 export const DataRoomPage: React.FC = () => {
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchQuery, setSearchQuery] = useState('');
-    const [accessGranted] = useState(true); // Mock: In real app, check auth
+    const navigate = useNavigate();
+
+    // AI Assistant state
+    const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+    const [activePrompt, setActivePrompt] = useState<DocumentPrompt | CategoryPrompt | null>(null);
+    const [activeDocumentName, setActiveDocumentName] = useState<string>('');
 
     const filteredDocs = MOCK_DOCUMENTS.filter(doc => {
         const matchesCategory = activeCategory === 'all' || doc.category === activeCategory;
@@ -97,181 +117,328 @@ export const DataRoomPage: React.FC = () => {
     });
 
     const getCategoryStats = (catId: string) => {
-        const docs = MOCK_DOCUMENTS.filter(d => d.category === catId);
-        return {
-            count: docs.length,
-            restricted: docs.filter(d => d.restricted).length
-        };
+        return MOCK_DOCUMENTS.filter(d => d.category === catId).length;
+    };
+
+    const handleDocumentClick = (doc: Document) => {
+        if (hasDocumentContent(doc.id)) {
+            navigate(`/data-room/doc/${doc.id}`);
+        }
+    };
+
+    const openMasterAI = () => {
+        setActivePrompt(MASTER_PROMPT);
+        setActiveDocumentName('');
+        setIsAIModalOpen(true);
+    };
+
+    const handleQuestionClick = (question: string) => {
+        setActivePrompt(MASTER_PROMPT);
+        setActiveDocumentName('');
+        setIsAIModalOpen(true);
+        // Note: In a real implementation, you'd pass the question to the modal
+    };
+
+    const closeAIModal = () => {
+        setIsAIModalOpen(false);
+        setActivePrompt(null);
+        setActiveDocumentName('');
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-            <Navigation />
+        <div className="min-h-screen relative overflow-hidden">
+            {/* Animated Background */}
+            <AnimatedBackground />
 
-            <main className="max-w-7xl mx-auto px-4 py-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-2 rounded-xl">
-                            <FolderOpen className="w-6 h-6 text-white" />
-                        </div>
-                        <h1 className="text-3xl font-black text-white">Investor Data Room</h1>
-                    </div>
-                    <p className="text-slate-400">
-                        Secure access to LarvaLINK documentation for due diligence. Last updated Dec 15, 2025.
-                    </p>
-                </div>
+            {/* Content Layer */}
+            <div className="relative z-10">
+                <Navigation />
 
-                {/* Access Status Banner */}
-                {accessGranted ? (
-                    <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-4 mb-8 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Lock className="w-5 h-5 text-green-400" />
-                            <div>
-                                <p className="font-bold text-green-300">Full Access Granted</p>
-                                <p className="text-xs text-green-400/70">You have access to restricted documents. NDA signed on Dec 1, 2025.</p>
-                            </div>
-                        </div>
-                        <button className="text-xs font-bold text-green-300 hover:text-green-200 underline">
-                            View NDA
-                        </button>
-                    </div>
-                ) : (
-                    <div className="bg-amber-900/30 border border-amber-500/30 rounded-xl p-4 mb-8 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Lock className="w-5 h-5 text-amber-400" />
-                            <div>
-                                <p className="font-bold text-amber-300">Limited Access</p>
-                                <p className="text-xs text-amber-400/70">Sign NDA to access restricted documents.</p>
-                            </div>
-                        </div>
-                        <button className="bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs px-4 py-2 rounded-lg">
-                            Request Full Access
-                        </button>
-                    </div>
-                )}
-
-                {/* Search Bar */}
-                <div className="relative mb-6">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                    <input
-                        type="text"
-                        placeholder="Search documents..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-
-                {/* Category Pills */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                    <button
-                        onClick={() => setActiveCategory('all')}
-                        className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${activeCategory === 'all'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                            }`}
-                    >
-                        All Documents ({MOCK_DOCUMENTS.length})
-                    </button>
-                    {CATEGORIES.map(cat => {
-                        const stats = getCategoryStats(cat.id);
-                        return (
-                            <button
-                                key={cat.id}
-                                onClick={() => setActiveCategory(cat.id)}
-                                className={`px-4 py-2 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${activeCategory === cat.id
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                                    }`}
-                            >
-                                <cat.icon className="w-4 h-4" />
-                                {cat.label} ({stats.count})
-                            </button>
-                        );
-                    })}
-                </div>
-
-                {/* Documents Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredDocs.map(doc => (
-                        <div
-                            key={doc.id}
-                            className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 hover:border-blue-500/50 transition-all group cursor-pointer"
-                        >
-                            <div className="flex justify-between items-start mb-3">
-                                <FileTypeIcon type={doc.type} />
-                                {doc.restricted && (
-                                    <span className="flex items-center gap-1 text-[10px] text-amber-400 bg-amber-900/30 px-2 py-0.5 rounded">
-                                        <Lock className="w-3 h-3" /> NDA
-                                    </span>
-                                )}
-                            </div>
-
-                            <h3 className="font-bold text-white mb-1 group-hover:text-blue-400 transition-colors line-clamp-2">
-                                {doc.name}
-                            </h3>
-
-                            {doc.description && (
-                                <p className="text-xs text-slate-400 mb-3 line-clamp-2">{doc.description}</p>
-                            )}
-
-                            <div className="flex items-center justify-between text-xs text-slate-500 mt-auto pt-3 border-t border-slate-700/50">
-                                <div className="flex items-center gap-3">
-                                    <span className="flex items-center gap-1">
-                                        <Clock className="w-3 h-3" />
-                                        {new Date(doc.uploadedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                                    </span>
-                                    <span>{doc.size}</span>
+                <main className="max-w-[1600px] mx-auto px-6 py-8">
+                    <div className="flex gap-8">
+                        {/* Main Content Area */}
+                        <div className="flex-1 min-w-0">
+                            {/* Premium Header */}
+                            <div className="mb-10">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="relative">
+                                        <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/25">
+                                            <FolderOpen className="w-7 h-7 text-white" />
+                                        </div>
+                                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center border-2 border-slate-900">
+                                            <Lock className="w-3 h-3 text-white" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h1 className="text-4xl font-black text-white tracking-tight">
+                                            Investor Data Room
+                                        </h1>
+                                        <p className="text-slate-400 mt-1 flex items-center gap-2">
+                                            <Sparkles className="w-4 h-4 text-cyan-400" />
+                                            <span>Acceso completo a documentación para due diligence</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <span className="flex items-center gap-1">
-                                        <Eye className="w-3 h-3" />
-                                        {doc.views}
-                                    </span>
-                                    <button className="text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold">
-                                        <Download className="w-3 h-3" />
+
+                                {/* Access Banner */}
+                                <div className="glass-card p-4 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                                            <Lock className="w-5 h-5 text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-emerald-300">Acceso Completo Autorizado</p>
+                                            <p className="text-xs text-slate-400">NDA firmado el 1 de Diciembre, 2025</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                                        <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                                        20 documentos disponibles
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Search Bar */}
+                            <div className="relative mb-6">
+                                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-xl" />
+                                <div className="relative glass-card p-1">
+                                    <div className="relative">
+                                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                        <input
+                                            type="text"
+                                            placeholder="Buscar documentos..."
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            className="w-full pl-12 pr-4 py-3.5 bg-transparent text-white placeholder-slate-500 focus:outline-none text-lg"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Category Pills */}
+                            <div className="flex flex-wrap gap-2 mb-8">
+                                <button
+                                    onClick={() => setActiveCategory('all')}
+                                    className={`category-pill ${activeCategory === 'all' ? 'active' : ''}`}
+                                >
+                                    <span>Todos</span>
+                                    <span className="count">{MOCK_DOCUMENTS.length}</span>
+                                </button>
+                                {CATEGORIES.map(cat => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(cat.id)}
+                                        className={`category-pill ${activeCategory === cat.id ? 'active' : ''}`}
+                                    >
+                                        <cat.icon className="w-4 h-4" />
+                                        <span>{cat.label}</span>
+                                        <span className="count">{getCategoryStats(cat.id)}</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Documents Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                {filteredDocs.map(doc => (
+                                    <div
+                                        key={doc.id}
+                                        onClick={() => handleDocumentClick(doc)}
+                                        className={`document-card group ${hasDocumentContent(doc.id) ? 'clickable' : ''}`}
+                                    >
+                                        <div className="card-glow" />
+                                        <div className="card-content">
+                                            <div className="flex justify-between items-start mb-3">
+                                                <FileTypeIcon type={doc.type} />
+                                                {doc.restricted && (
+                                                    <span className="flex items-center gap-1 text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
+                                                        <Lock className="w-3 h-3" /> NDA
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            <h3 className="font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors line-clamp-2 flex items-center gap-2">
+                                                {doc.name}
+                                                {hasDocumentContent(doc.id) && (
+                                                    <ArrowRight className="w-4 h-4 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                )}
+                                            </h3>
+
+                                            {doc.description && (
+                                                <p className="text-xs text-slate-400 mb-3 line-clamp-2">{doc.description}</p>
+                                            )}
+
+                                            <div className="flex items-center justify-between text-xs text-slate-500 mt-auto pt-3 border-t border-white/5">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="flex items-center gap-1">
+                                                        <Clock className="w-3 h-3" />
+                                                        {new Date(doc.uploadedAt).toLocaleDateString('es-MX', { month: 'short', day: 'numeric' })}
+                                                    </span>
+                                                    <span>{doc.size}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="flex items-center gap-1">
+                                                        <Eye className="w-3 h-3" />
+                                                        {doc.views}
+                                                    </span>
+                                                    <button
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        className="p-1.5 hover:bg-white/5 rounded-lg transition-colors"
+                                                    >
+                                                        <Download className="w-3.5 h-3.5 text-slate-400 hover:text-white" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {filteredDocs.length === 0 && (
+                                <div className="text-center py-16">
+                                    <div className="glass-card inline-block p-8">
+                                        <FolderOpen className="w-12 h-12 mx-auto mb-4 text-slate-500" />
+                                        <p className="text-slate-400">No se encontraron documentos.</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* AI Assistant Sidebar */}
+                        <div className="hidden lg:block w-80 flex-shrink-0">
+                            <div className="sticky top-24">
+                                <AIAssistantPanel
+                                    suggestedQuestions={SUGGESTED_QUESTIONS}
+                                    onQuestionClick={handleQuestionClick}
+                                    onOpenChat={openMasterAI}
+                                />
+
+                                {/* Quick Actions */}
+                                <div className="mt-6 space-y-3">
+                                    <button className="w-full glass-card p-4 flex items-center gap-3 hover:border-cyan-500/30 transition-colors group">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl flex items-center justify-center">
+                                            <Download className="w-5 h-5 text-cyan-400" />
+                                        </div>
+                                        <div className="text-left flex-1">
+                                            <p className="text-white font-semibold text-sm">Descargar Todo</p>
+                                            <p className="text-xs text-slate-400">Paquete completo ZIP</p>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                                    </button>
+
+                                    <button className="w-full glass-card p-4 flex items-center gap-3 hover:border-cyan-500/30 transition-colors group">
+                                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-xl flex items-center justify-center">
+                                            <Sparkles className="w-5 h-5 text-purple-400" />
+                                        </div>
+                                        <div className="text-left flex-1">
+                                            <p className="text-white font-semibold text-sm">Agendar Llamada</p>
+                                            <p className="text-xs text-slate-400">Con el equipo fundador</p>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors" />
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    ))}
-                </div>
-
-                {filteredDocs.length === 0 && (
-                    <div className="text-center py-16 text-slate-400">
-                        <FolderOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                        <p>No documents found matching your criteria.</p>
                     </div>
-                )}
+                </main>
+            </div>
 
-                {/* Quick Actions */}
-                <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between group">
-                        <div className="text-left">
-                            <p className="text-sm opacity-80">Download All</p>
-                            <p className="text-lg">Complete Data Package</p>
-                        </div>
-                        <Download className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
-                    </button>
+            {/* AI Assistant Modal */}
+            <AIAssistantModal
+                isOpen={isAIModalOpen}
+                onClose={closeAIModal}
+                prompt={activePrompt}
+                documentName={activeDocumentName}
+            />
 
-                    <button className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between group">
-                        <div className="text-left">
-                            <p className="text-sm text-slate-400">Schedule</p>
-                            <p className="text-lg">Management Call</p>
-                        </div>
-                        <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                    </button>
-
-                    <button className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-between group">
-                        <div className="text-left">
-                            <p className="text-sm text-slate-400">Ask</p>
-                            <p className="text-lg">Due Diligence Questions</p>
-                        </div>
-                        <HelpCircle className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                    </button>
-                </div>
-            </main>
+            {/* Premium Styles */}
+            <style>{`
+                .glass-card {
+                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                }
+                
+                .category-pill {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 16px;
+                    border-radius: 12px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: #94A3B8;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    transition: all 0.2s ease;
+                }
+                
+                .category-pill:hover {
+                    background: rgba(255, 255, 255, 0.06);
+                    border-color: rgba(255, 255, 255, 0.1);
+                    color: white;
+                }
+                
+                .category-pill.active {
+                    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+                    border-color: rgba(6, 182, 212, 0.4);
+                    color: white;
+                    box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+                }
+                
+                .category-pill .count {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 2px 8px;
+                    border-radius: 20px;
+                    font-size: 11px;
+                }
+                
+                .category-pill.active .count {
+                    background: rgba(6, 182, 212, 0.3);
+                }
+                
+                .document-card {
+                    position: relative;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                }
+                
+                .document-card.clickable {
+                    cursor: pointer;
+                }
+                
+                .document-card .card-glow {
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                
+                .document-card:hover .card-glow {
+                    opacity: 1;
+                }
+                
+                .document-card .card-content {
+                    position: relative;
+                    padding: 20px;
+                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.7) 100%);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border-radius: 16px;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    transition: all 0.3s ease;
+                }
+                
+                .document-card:hover .card-content {
+                    border-color: rgba(6, 182, 212, 0.3);
+                    transform: translateY(-2px);
+                    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+                }
+            `}</style>
         </div>
     );
 };

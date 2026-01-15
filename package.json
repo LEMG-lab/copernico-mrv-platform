@@ -12,6 +12,7 @@
     "seed:partners": "npx vite-node scripts/seedCircularPartners.ts"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@googlemaps/js-api-loader": "^2.0.2",
     "@supabase/supabase-js": "^2.90.1",
     "@types/crypto-js": "^4.2.2",
