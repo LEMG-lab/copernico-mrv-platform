@@ -269,7 +269,32 @@ export const translations = {
             downloadAll: "Descargar Todo",
             downloadZip: "Paquete completo ZIP",
             scheduleCall: "Agendar Llamada",
-            withFounders: "Con el equipo fundador"
+            withFounders: "Con el equipo fundador",
+            // Document translations
+            documents: {
+                '1': { name: 'LarvaLINK Investor Deck Q4 2025', desc: 'Deck completo con modelo de negocio, análisis de mercado y proyecciones' },
+                '2': { name: 'One-Pager Resumen Ejecutivo', desc: 'Resumen ejecutivo de una página' },
+                '3': { name: 'Video Pitch (5 min)', desc: 'Presentación en video del proyecto' },
+                '4': { name: 'Modelo Financiero Proyecciones 5 Años', desc: 'Modelo DCF con análisis de sensibilidad y múltiples escenarios' },
+                '5': { name: 'Estado de Resultados YTD 2025', desc: 'Estado de pérdidas y ganancias año actual' },
+                '6': { name: 'Proyección Ingresos Créditos Carbono', desc: 'Forecast de ingresos por créditos de carbono' },
+                '7': { name: 'Desglose Uso de Fondos', desc: 'Distribución detallada del uso de fondos' },
+                '8': { name: 'Cap Table (Actual)', desc: 'Tabla de capitalización actual' },
+                '9': { name: 'Acta Constitutiva', desc: 'Documentos de incorporación de la empresa' },
+                '10': { name: 'Resumen Portafolio IP', desc: 'Resumen de propiedad intelectual' },
+                '11': { name: 'Template Contrato SAFE', desc: 'Plantilla de acuerdo SAFE' },
+                '12': { name: 'Permisos Ambientales (Todas las Plantas)', desc: 'Permisos ambientales vigentes' },
+                '13': { name: 'Certificación Créditos Carbono (Verra)', desc: 'Certificación de créditos de carbono' },
+                '14': { name: 'Technology Whitepaper v2.3', desc: 'Proceso de bioconversión BSF, optimización de rendimiento e integración IoT' },
+                '15': { name: 'Metodología Verificación Satelital', desc: 'Metodología de verificación con satélites' },
+                '16': { name: 'Blueprint Arquitectura IoT', desc: 'Diseño de arquitectura IoT' },
+                '17': { name: 'Auditoría Smart Contracts Blockchain', desc: 'Auditoría de contratos inteligentes' },
+                '18': { name: 'FAQ Due Diligence Técnico', desc: 'Preguntas frecuentes técnicas' },
+                '19': { name: 'FAQ Cumplimiento Regulatorio', desc: 'Preguntas frecuentes regulatorias' },
+                '20': { name: 'Reporte ESG & Métricas de Impacto', desc: 'Informe de impacto ambiental, social y gobernanza' },
+                '21': { name: 'Roadmap de Ejecución 2025-2027', desc: 'Hoja de ruta de escalabilidad y expansión' },
+                '22': { name: 'AXA Future Risks Report 2025', desc: 'Análisis global de riesgos futuros y relevancia para LarvaLINK' }
+            }
         },
         // Partners Hub
         partners: {
@@ -614,7 +639,32 @@ export const translations = {
             downloadAll: "Download All",
             downloadZip: "Complete ZIP package",
             scheduleCall: "Schedule Call",
-            withFounders: "With the founding team"
+            withFounders: "With the founding team",
+            // Document translations
+            documents: {
+                '1': { name: 'LarvaLINK Investor Deck Q4 2025', desc: 'Full investor deck with business model, market analysis, and projections' },
+                '2': { name: 'One-Pager Executive Summary', desc: 'One-page executive summary' },
+                '3': { name: 'Video Pitch (5 min)', desc: 'Video presentation of the project' },
+                '4': { name: 'Financial Model 5-Year Projections', desc: 'DCF model with sensitivity analysis and multiple scenarios' },
+                '5': { name: 'P&L Statement YTD 2025', desc: 'Profit and loss statement year to date' },
+                '6': { name: 'Carbon Credit Revenue Forecast', desc: 'Carbon credit revenue forecast' },
+                '7': { name: 'Use of Funds Breakdown', desc: 'Detailed breakdown of fund allocation' },
+                '8': { name: 'Cap Table (Current)', desc: 'Current capitalization table' },
+                '9': { name: 'Articles of Incorporation', desc: 'Company incorporation documents' },
+                '10': { name: 'IP Portfolio Summary', desc: 'Intellectual property summary' },
+                '11': { name: 'SAFE Agreement Template', desc: 'SAFE agreement template' },
+                '12': { name: 'Environmental Permits (All Plants)', desc: 'Active environmental permits' },
+                '13': { name: 'Carbon Credit Certification (Verra)', desc: 'Carbon credit certification' },
+                '14': { name: 'Technology Whitepaper v2.3', desc: 'BSF bioconversion process, yield optimization, and IoT integration' },
+                '15': { name: 'Satellite Verification Methodology', desc: 'Satellite verification methodology' },
+                '16': { name: 'IoT Architecture Blueprint', desc: 'IoT architecture design' },
+                '17': { name: 'Blockchain Smart Contract Audit', desc: 'Smart contract audit report' },
+                '18': { name: 'Technical Due Diligence FAQ', desc: 'Technical frequently asked questions' },
+                '19': { name: 'Regulatory Compliance FAQ', desc: 'Regulatory frequently asked questions' },
+                '20': { name: 'ESG & Impact Metrics Report', desc: 'Environmental, social, and governance impact report' },
+                '21': { name: 'Execution Roadmap 2025-2027', desc: 'Scalability and expansion roadmap' },
+                '22': { name: 'AXA Future Risks Report 2025', desc: 'Global future risks analysis and relevance for LarvaLINK' }
+            }
         },
         // Partners Hub
         partners: {

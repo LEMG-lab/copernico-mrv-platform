@@ -140,6 +140,12 @@ export const DataRoomPage: React.FC = () => {
         return MOCK_DOCUMENTS.filter(d => d.category === catId).length;
     };
 
+    // Get translated document name and description
+    const getDocTranslation = (docId: string, field: 'name' | 'desc') => {
+        const docs = t.dataRoom?.documents as Record<string, { name: string; desc: string }> | undefined;
+        return docs?.[docId]?.[field];
+    };
+
     const handleDocumentClick = (doc: Document) => {
         if (hasDocumentContent(doc.id)) {
             navigate(`/data-room/doc/${doc.id}`);
@@ -277,21 +283,21 @@ export const DataRoomPage: React.FC = () => {
                                             </div>
 
                                             <h3 className="font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors line-clamp-2 flex items-center gap-2">
-                                                {doc.name}
+                                                {getDocTranslation(doc.id, 'name') || doc.name}
                                                 {hasDocumentContent(doc.id) && (
                                                     <ArrowRight className="w-4 h-4 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                 )}
                                             </h3>
 
-                                            {doc.description && (
-                                                <p className="text-xs text-slate-400 mb-3 line-clamp-2">{doc.description}</p>
+                                            {(getDocTranslation(doc.id, 'desc') || doc.description) && (
+                                                <p className="text-xs text-slate-400 mb-3 line-clamp-2">{getDocTranslation(doc.id, 'desc') || doc.description}</p>
                                             )}
 
                                             <div className="flex items-center justify-between text-xs text-slate-500 mt-auto pt-3 border-t border-white/5">
                                                 <div className="flex items-center gap-3">
                                                     <span className="flex items-center gap-1">
                                                         <Clock className="w-3 h-3" />
-                                                        {new Date(doc.uploadedAt).toLocaleDateString('es-MX', { month: 'short', day: 'numeric' })}
+                                                        {new Date(doc.uploadedAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'es-MX', { month: 'short', day: 'numeric' })}
                                                     </span>
                                                     <span>{doc.size}</span>
                                                 </div>
@@ -317,7 +323,7 @@ export const DataRoomPage: React.FC = () => {
                                 <div className="text-center py-16">
                                     <div className="glass-card inline-block p-8">
                                         <FolderOpen className="w-12 h-12 mx-auto mb-4 text-slate-500" />
-                                        <p className="text-slate-400">No se encontraron documentos.</p>
+                                        <p className="text-slate-400">{t.dataRoom?.noResults || 'No se encontraron documentos.'}</p>
                                     </div>
                                 </div>
                             )}
@@ -339,8 +345,8 @@ export const DataRoomPage: React.FC = () => {
                                             <Download className="w-5 h-5 text-cyan-400" />
                                         </div>
                                         <div className="text-left flex-1">
-                                            <p className="text-white font-semibold text-sm">Descargar Todo</p>
-                                            <p className="text-xs text-slate-400">Paquete completo ZIP</p>
+                                            <p className="text-white font-semibold text-sm">{t.dataRoom?.downloadAll || 'Descargar Todo'}</p>
+                                            <p className="text-xs text-slate-400">{t.dataRoom?.downloadZip || 'Paquete completo ZIP'}</p>
                                         </div>
                                         <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
                                     </button>
@@ -350,8 +356,8 @@ export const DataRoomPage: React.FC = () => {
                                             <Sparkles className="w-5 h-5 text-purple-400" />
                                         </div>
                                         <div className="text-left flex-1">
-                                            <p className="text-white font-semibold text-sm">Agendar Llamada</p>
-                                            <p className="text-xs text-slate-400">Con el equipo fundador</p>
+                                            <p className="text-white font-semibold text-sm">{t.dataRoom?.scheduleCall || 'Agendar Llamada'}</p>
+                                            <p className="text-xs text-slate-400">{t.dataRoom?.withFounders || 'Con el equipo fundador'}</p>
                                         </div>
                                         <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors" />
                                     </button>
