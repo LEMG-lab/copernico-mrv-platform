@@ -294,6 +294,20 @@ export const translations = {
                 '20': { name: 'Reporte ESG & Métricas de Impacto', desc: 'Informe de impacto ambiental, social y gobernanza' },
                 '21': { name: 'Roadmap de Ejecución 2025-2027', desc: 'Hoja de ruta de escalabilidad y expansión' },
                 '22': { name: 'AXA Future Risks Report 2025', desc: 'Análisis global de riesgos futuros y relevancia para LarvaLINK' }
+            },
+            // Document Viewer UI
+            viewer: {
+                backToDataRoom: "Volver al Data Room",
+                section: "Sección",
+                sections: "Secciones",
+                aiAssisted: "Asistido",
+                confidential: "CONFIDENCIAL",
+                footer: "DOCUMENTO CONFIDENCIAL | NO CONSTITUYE OFERTA PÚBLICA DE VALORES",
+                facebookVideo: "Video de Facebook",
+                facebookPost: "Publicación de Facebook",
+                listenPodcast: "Escuchar Podcast Generado por IA",
+                openInNotebook: "Abre en NotebookLM para reproducir",
+                viewLink: "Ver Enlace"
             }
         },
         // Partners Hub
@@ -664,6 +678,20 @@ export const translations = {
                 '20': { name: 'ESG & Impact Metrics Report', desc: 'Environmental, social, and governance impact report' },
                 '21': { name: 'Execution Roadmap 2025-2027', desc: 'Scalability and expansion roadmap' },
                 '22': { name: 'AXA Future Risks Report 2025', desc: 'Global future risks analysis and relevance for LarvaLINK' }
+            },
+            // Document Viewer UI
+            viewer: {
+                backToDataRoom: "Back to Data Room",
+                section: "Section",
+                sections: "Sections",
+                aiAssisted: "Assisted",
+                confidential: "CONFIDENTIAL",
+                footer: "CONFIDENTIAL DOCUMENT | NOT A PUBLIC SECURITIES OFFERING",
+                facebookVideo: "Facebook Video",
+                facebookPost: "Facebook Post",
+                listenPodcast: "Listen to AI-Generated Podcast",
+                openInNotebook: "Open in NotebookLM to play",
+                viewLink: "View Link"
             }
         },
         // Partners Hub

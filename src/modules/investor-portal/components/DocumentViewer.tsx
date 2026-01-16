@@ -19,11 +19,14 @@ import {
     Zap
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { DocumentContent } from '../data/documentContents';
 import { getDocumentPrompt, MASTER_PROMPT } from '../data/dataRoomPrompts';
 import AIAssistantModal from './AIAssistantModal';
 import AnimatedBackground from './AnimatedBackground';
 import AIAssistantPanel from './AIAssistantPanel';
+import LanguageSwitcher from '../../../components/LanguageSwitcher';
+import { translations } from '../../../i18n/translations';
 
 interface DocumentViewerProps {
     document: DocumentContent;
@@ -400,10 +403,22 @@ const SUGGESTED_QUESTIONS_FOR_DOCUMENT = [
 
 const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
     const navigate = useNavigate();
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
     const [showAIModal, setShowAIModal] = useState(false);
     const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set(document.sections.map((_, i) => i)));
 
     const prompt = getDocumentPrompt(document.id) || MASTER_PROMPT;
+
+    // Get translated document name
+    const getDocTranslation = (docId: string, field: 'name' | 'desc') => {
+        const docs = t.dataRoom?.documents as Record<string, { name: string; desc: string }> | undefined;
+        return docs?.[docId]?.[field];
+    };
+
+    const translatedTitle = getDocTranslation(document.id, 'name') || document.title;
+    const translatedSubtitle = getDocTranslation(document.id, 'desc') || document.subtitle;
 
     const toggleSection = (index: number) => {
         const newExpanded = new Set(expandedSections);
@@ -436,10 +451,11 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                     className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
                                 >
                                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                                    <span className="font-medium">Volver al Data Room</span>
+                                    <span className="font-medium">{t.dataRoom?.viewer?.backToDataRoom || 'Volver al Data Room'}</span>
                                 </button>
 
                                 <div className="flex items-center gap-3">
+                                    <LanguageSwitcher />
                                     <button className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/10">
                                         <Bookmark className="w-4 h-4" />
                                     </button>
@@ -484,7 +500,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                             <div className="flex items-center gap-3 mb-2">
                                                 {document.confidential && (
                                                     <span className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
-                                                        <Lock className="w-3 h-3" /> CONFIDENCIAL
+                                                        <Lock className="w-3 h-3" /> {t.dataRoom?.viewer?.confidential || 'CONFIDENCIAL'}
                                                     </span>
                                                 )}
                                                 <span className="flex items-center gap-1.5 text-xs text-slate-400 bg-white/5 px-3 py-1 rounded-full">
@@ -492,9 +508,9 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                 </span>
                                             </div>
                                             <h1 className="text-3xl sm:text-4xl font-black text-white mb-3 tracking-tight leading-tight">
-                                                {document.title}
+                                                {translatedTitle}
                                             </h1>
-                                            <p className="text-lg text-slate-400">{document.subtitle}</p>
+                                            <p className="text-lg text-slate-400">{translatedSubtitle}</p>
 
                                             {/* Document Stats */}
                                             <div className="flex items-center gap-6 mt-6 pt-6 border-t border-white/10">
@@ -504,7 +520,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-2xl font-bold text-white">{document.sections.length}</p>
-                                                        <p className="text-xs text-slate-500">Secciones</p>
+                                                        <p className="text-xs text-slate-500">{t.dataRoom?.viewer?.sections || 'Secciones'}</p>
                                                     </div>
                                                 </div>
                                                 <div className="w-px h-12 bg-white/10" />
@@ -514,7 +530,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                     </div>
                                                     <div>
                                                         <p className="text-2xl font-bold text-white">AI</p>
-                                                        <p className="text-xs text-slate-500">Asistido</p>
+                                                        <p className="text-xs text-slate-500">{t.dataRoom?.viewer?.aiAssisted || 'Asistido'}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -543,7 +559,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2 mb-1">
                                                         <span className={`text-xs font-bold ${accent.text} uppercase tracking-wider`}>
-                                                            Sección {index + 1}
+                                                            {t.dataRoom?.viewer?.section || 'Sección'} {index + 1}
                                                         </span>
                                                     </div>
                                                     <h2 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
@@ -579,7 +595,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                     © 2025 Rendón Agroenlace S.A. de C.V.
                                 </p>
                                 <p className="text-slate-500 text-sm">
-                                    DOCUMENTO CONFIDENCIAL | NO CONSTITUYE OFERTA PÚBLICA DE VALORES
+                                    {t.dataRoom?.viewer?.footer || 'DOCUMENTO CONFIDENCIAL | NO CONSTITUYE OFERTA PÚBLICA DE VALORES'}
                                 </p>
                             </div>
                         </div>
