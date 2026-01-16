@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     Home,
     Globe,
@@ -12,6 +13,8 @@ import {
     X,
     ChevronDown
 } from 'lucide-react';
+import LanguageSwitcher from '../LanguageSwitcher';
+import { translations } from '../../i18n/translations';
 import './GlobalNav.css';
 
 interface NavItem {
@@ -21,19 +24,22 @@ interface NavItem {
     children?: NavItem[];
 }
 
-const navItems: NavItem[] = [
-    { label: 'Dashboard', path: '/', icon: <Home className="w-4 h-4" /> },
-    { label: 'Network', path: '/network', icon: <Globe className="w-4 h-4" /> },
-    { label: 'MRV', path: '/mrv', icon: <Satellite className="w-4 h-4" /> },
-    { label: 'TerraLINK', path: '/terralink', icon: <Leaf className="w-4 h-4" /> },
-    { label: 'CircularLINK', path: '/partners', icon: <Recycle className="w-4 h-4" /> },
-    { label: 'Data Room', path: '/data-room', icon: <FileText className="w-4 h-4" /> },
-    { label: 'Marketplace', path: '/marketplace', icon: <ShoppingBag className="w-4 h-4" /> },
-];
-
 const GlobalNav: React.FC = () => {
     const location = useLocation();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
+
+    const navItems: NavItem[] = [
+        { label: t.nav?.dashboard || 'Dashboard', path: '/', icon: <Home className="w-4 h-4" /> },
+        { label: t.nav?.network || 'Network', path: '/network', icon: <Globe className="w-4 h-4" /> },
+        { label: t.nav?.mrv || 'MRV', path: '/mrv', icon: <Satellite className="w-4 h-4" /> },
+        { label: t.nav?.terralink || 'TerraLINK', path: '/terralink', icon: <Leaf className="w-4 h-4" /> },
+        { label: t.nav?.circularlink || 'CircularLINK', path: '/partners', icon: <Recycle className="w-4 h-4" /> },
+        { label: t.nav?.dataRoom || 'Data Room', path: '/data-room', icon: <FileText className="w-4 h-4" /> },
+        { label: t.nav?.marketplace || 'Marketplace', path: '/marketplace', icon: <ShoppingBag className="w-4 h-4" /> },
+    ];
 
     const isActive = (path: string) => {
         if (path === '/') return location.pathname === '/';
@@ -71,6 +77,9 @@ const GlobalNav: React.FC = () => {
                         ))}
                     </div>
 
+                    {/* Language Switcher */}
+                    <LanguageSwitcher />
+
                     {/* Mobile Menu Button */}
                     <button
                         className="global-nav-mobile-toggle"
@@ -93,6 +102,7 @@ const GlobalNav: React.FC = () => {
                                 className="global-nav-mobile-logo"
                             />
                             <span className="global-nav-mobile-title">LarvaLINK</span>
+                            <LanguageSwitcher />
                         </div>
                         <div className="global-nav-mobile-links">
                             {navItems.map((item) => (

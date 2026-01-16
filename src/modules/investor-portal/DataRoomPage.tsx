@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from '../../components/Navigation';
 import {
     FileText,
@@ -22,6 +23,7 @@ import AnimatedBackground from './components/AnimatedBackground';
 import AIAssistantPanel from './components/AIAssistantPanel';
 import { getDocumentPrompt, MASTER_PROMPT, DocumentPrompt, CategoryPrompt } from './data/dataRoomPrompts';
 import { hasDocumentContent } from './data/documentContents';
+import { translations } from '../../i18n/translations';
 
 // Types
 interface Document {
@@ -110,11 +112,23 @@ export const DataRoomPage: React.FC = () => {
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
 
     // AI Assistant state
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [activePrompt, setActivePrompt] = useState<DocumentPrompt | CategoryPrompt | null>(null);
     const [activeDocumentName, setActiveDocumentName] = useState<string>('');
+
+    // Dynamic categories based on current language
+    const CATEGORIES_TRANSLATED = [
+        { id: 'pitch', label: t.dataRoom?.categories?.pitch || 'Pitch & Summary', icon: FileText, gradient: 'from-blue-500 to-cyan-500' },
+        { id: 'financial', label: t.dataRoom?.categories?.financial || 'Financial', icon: TrendingUp, gradient: 'from-emerald-500 to-teal-500' },
+        { id: 'legal', label: t.dataRoom?.categories?.legal || 'Legal', icon: Shield, gradient: 'from-purple-500 to-violet-500' },
+        { id: 'technical', label: t.dataRoom?.categories?.technical || 'Technical', icon: Cpu, gradient: 'from-orange-500 to-amber-500' },
+        { id: 'qa', label: t.dataRoom?.categories?.qa || 'Q&A', icon: HelpCircle, gradient: 'from-cyan-500 to-blue-500' },
+    ];
 
     const filteredDocs = MOCK_DOCUMENTS.filter(doc => {
         const matchesCategory = activeCategory === 'all' || doc.category === activeCategory;
@@ -177,11 +191,11 @@ export const DataRoomPage: React.FC = () => {
                                     </div>
                                     <div>
                                         <h1 className="text-4xl font-black text-white tracking-tight">
-                                            Investor Data Room
+                                            {t.dataRoom?.title || 'Investor Data Room'}
                                         </h1>
                                         <p className="text-slate-400 mt-1 flex items-center gap-2">
                                             <Sparkles className="w-4 h-4 text-cyan-400" />
-                                            <span>Acceso completo a documentación para due diligence</span>
+                                            <span>{t.dataRoom?.subtitle || 'Acceso completo a documentación para due diligence'}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -193,13 +207,13 @@ export const DataRoomPage: React.FC = () => {
                                             <Lock className="w-5 h-5 text-emerald-400" />
                                         </div>
                                         <div>
-                                            <p className="font-semibold text-emerald-300">Acceso Completo Autorizado</p>
-                                            <p className="text-xs text-slate-400">NDA firmado el 1 de Diciembre, 2025</p>
+                                            <p className="font-semibold text-emerald-300">{t.dataRoom?.accessGranted || 'Acceso Completo Autorizado'}</p>
+                                            <p className="text-xs text-slate-400">{t.dataRoom?.ndaSigned || 'NDA firmado el 1 de Diciembre, 2025'}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2 text-xs text-slate-400">
                                         <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                                        22 documentos disponibles
+                                        22 {t.dataRoom?.docsAvailable || 'documentos disponibles'}
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +226,7 @@ export const DataRoomPage: React.FC = () => {
                                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                         <input
                                             type="text"
-                                            placeholder="Buscar documentos..."
+                                            placeholder={t.dataRoom?.searchPlaceholder || 'Buscar documentos...'}
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             className="w-full pl-12 pr-4 py-3.5 bg-transparent text-white placeholder-slate-500 focus:outline-none text-lg"
@@ -227,10 +241,10 @@ export const DataRoomPage: React.FC = () => {
                                     onClick={() => setActiveCategory('all')}
                                     className={`category-pill ${activeCategory === 'all' ? 'active' : ''}`}
                                 >
-                                    <span>Todos</span>
+                                    <span>{t.dataRoom?.all || 'Todos'}</span>
                                     <span className="count">{MOCK_DOCUMENTS.length}</span>
                                 </button>
-                                {CATEGORIES.map(cat => (
+                                {CATEGORIES_TRANSLATED.map(cat => (
                                     <button
                                         key={cat.id}
                                         onClick={() => setActiveCategory(cat.id)}

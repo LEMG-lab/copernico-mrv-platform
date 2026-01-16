@@ -1,9 +1,10 @@
 import React from 'react';
-import { useUIStore } from '../stores/uiStore';
+import { useTranslation } from 'react-i18next';
 import { translations } from '../i18n/translations';
 
 export const ExecutiveSummary: React.FC = () => {
-    const { language } = useUIStore();
+    const { i18n } = useTranslation();
+    const language = (i18n.language || 'es') as 'es' | 'en';
     const t = translations[language];
 
     const StatItem = ({ value, label, trend }: { value: string, label: string, trend?: string }) => (

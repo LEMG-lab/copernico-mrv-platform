@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PortfolioSummary } from './components/PortfolioSummary';
 import { MandateCompliance } from './components/MandateCompliance';
 import { ImpactMetrics } from './components/ImpactMetrics';
@@ -19,8 +20,12 @@ import {
     MOCK_REPORTS
 } from './data/mockInvestorData';
 import { Navigation } from '../../components/Navigation';
+import { translations } from '../../i18n/translations';
 
 export const InvestorPortalPage: React.FC = () => {
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
 
     return (
         <div className="min-h-screen bg-[#F8FAFC] font-sans text-slate-800 flex flex-col">
@@ -35,19 +40,19 @@ export const InvestorPortalPage: React.FC = () => {
                         <div className="flex items-center gap-4">
                             <img src={MOCK_INVESTOR.logo_url} alt="Fund Logo" className="h-10 w-10 rounded bg-slate-100 object-contain text-xs" />
                             <div>
-                                <h1 className="text-xl font-bold text-[#1E3A5F]">Portal de Inversionistas</h1>
+                                <h1 className="text-xl font-bold text-[#1E3A5F]">{t.investorPage?.title || 'Portal de Inversionistas'}</h1>
                                 <div className="text-xs text-slate-500 font-medium">
-                                    <span className="text-slate-400">Bienvenida,</span> {MOCK_INVESTOR.contacts[0].name}
+                                    <span className="text-slate-400">{t.investorPage?.welcome || 'Bienvenida,'}</span> {MOCK_INVESTOR.contacts[0].name}
                                 </div>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="text-right hidden md:block">
-                                <div className="text-xs font-bold text-slate-500 uppercase">Última actualización</div>
+                                <div className="text-xs font-bold text-slate-500 uppercase">{t.investorPage?.lastUpdate || 'Última actualización'}</div>
                                 <div className="text-sm font-bold text-slate-800">10 Ene 2026 • 14:30 GMT-6</div>
                             </div>
                             <Link to="/data-room" className="bg-[#1E3A5F] hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg shadow-blue-900/20">
-                                Ir al Data Room
+                                {t.investorPage?.goToDataRoom || 'Ir al Data Room'}
                             </Link>
                         </div>
                     </header>
@@ -70,7 +75,7 @@ export const InvestorPortalPage: React.FC = () => {
                         {/* 3. Impacto en Tiempo Real */}
                         <section>
                             <div className="flex items-center gap-3 mb-4">
-                                <h2 className="text-xl font-bold text-[#1E3A5F]">Impacto Verificado</h2>
+                                <h2 className="text-xl font-bold text-[#1E3A5F]">{t.investorPage?.verifiedImpact || 'Impacto Verificado'}</h2>
                                 <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100 flex items-center gap-1">
                                     🛰️ COPERNICUS APPROVED
                                 </span>
@@ -89,12 +94,12 @@ export const InvestorPortalPage: React.FC = () => {
                                     {/* Blockchain Verification Badge Card */}
                                     <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex-1 flex flex-col justify-center items-center text-center">
                                         <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-2xl mb-4">🔗</div>
-                                        <h3 className="font-bold text-slate-800 mb-2">Trazabilidad Blockchain</h3>
-                                        <p className="text-xs text-slate-500 mb-4 px-4">Cada tonelada de CO2 y residuo es tokenizada y registrada en Polygon.</p>
+                                        <h3 className="font-bold text-slate-800 mb-2">{t.investorPage?.blockchainTitle || 'Trazabilidad Blockchain'}</h3>
+                                        <p className="text-xs text-slate-500 mb-4 px-4">{t.investorPage?.blockchainDesc || 'Cada tonelada de CO2 y residuo es tokenizada y registrada en Polygon.'}</p>
                                         <div className="bg-slate-50 border border-slate-200 rounded p-2 text-[10px] font-mono text-slate-600 break-all w-full mb-4">
                                             {MOCK_IMPACT_CURRENT.blockchain_hash}
                                         </div>
-                                        <a href="#" className="text-blue-600 hover:underline text-xs font-bold">Ver en Explorador →</a>
+                                        <a href="#" className="text-blue-600 hover:underline text-xs font-bold">{t.investorPage?.viewExplorer || 'Ver en Explorador'} →</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +107,7 @@ export const InvestorPortalPage: React.FC = () => {
 
                         {/* 4. ODS */}
                         <section>
-                            <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">Contribución a Objetivos de Desarrollo Sostenible</h2>
+                            <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">{t.investorPage?.sdgTitle || 'Contribución a Objetivos de Desarrollo Sostenible'}</h2>
                             <SDGAlignment contributions={MOCK_SDG_CONTRIBUTIONS} />
                         </section>
 
@@ -127,9 +132,9 @@ export const InvestorPortalPage: React.FC = () => {
                                 © 2026 LarvaLINK Inc. Confidential.
                             </div>
                             <div className="flex gap-6 mt-4 md:mt-0">
-                                <a href="#" className="hover:text-slate-800">Soporte IR</a>
-                                <a href="#" className="hover:text-slate-800">Privacidad</a>
-                                <a href="#" className="hover:text-slate-800">Términos</a>
+                                <a href="#" className="hover:text-slate-800">{t.investorPage?.footer?.irSupport || 'Soporte IR'}</a>
+                                <a href="#" className="hover:text-slate-800">{t.investorPage?.footer?.privacy || 'Privacidad'}</a>
+                                <a href="#" className="hover:text-slate-800">{t.investorPage?.footer?.terms || 'Términos'}</a>
                             </div>
                         </div>
                     </footer>

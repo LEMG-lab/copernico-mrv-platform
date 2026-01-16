@@ -10,12 +10,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from '../../../components/Navigation';
 import {
     Map, Sprout, BarChart3, QrCode, Users, Recycle,
     Leaf, Heart, DollarSign, ChevronRight, Building2, Sparkles
 } from 'lucide-react';
 import { partnerService } from '../services/partnerService';
+import { translations } from '../../../i18n/translations';
 
 interface NetworkStats {
     total_partners: number;
@@ -77,6 +79,9 @@ const NavCard: React.FC<{
 export const PartnersHubPage: React.FC = () => {
     const [stats, setStats] = useState<NetworkStats | null>(null);
     const [loading, setLoading] = useState(true);
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -120,13 +125,13 @@ export const PartnersHubPage: React.FC = () => {
                 <header className="text-center mb-10">
                     <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 text-sm font-bold px-4 py-2 rounded-full mb-4">
                         <Recycle className="w-4 h-4" />
-                        Economía Circular
+                        {t.partners?.circularEconomy || 'Economía Circular'}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
                         CircularLINK <span className="text-green-400">Partners</span>
                     </h1>
                     <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-                        Ecosistema de comercios certificados y consumidores comprometidos con la economía circular
+                        {t.partners?.subtitle || 'Ecosistema de comercios certificados y consumidores comprometidos con la economía circular'}
                     </p>
                 </header>
 
@@ -136,31 +141,31 @@ export const PartnersHubPage: React.FC = () => {
                         <StatCard
                             icon={Building2}
                             value={loading ? '...' : stats?.total_partners.toString() || '127'}
-                            label="Partners activos"
+                            label={t.partners?.stats?.activePartners || 'Partners activos'}
                             color="text-blue-400"
                         />
                         <StatCard
                             icon={Recycle}
                             value={loading ? '...' : formatNumber(stats?.total_kg_collected || 0)}
-                            label="kg trazados"
+                            label={t.partners?.stats?.kgTraced || 'kg trazados'}
                             color="text-green-400"
                         />
                         <StatCard
                             icon={Leaf}
                             value={loading ? '...' : formatNumber(stats?.total_co2_avoided_kg || 0)}
-                            label="kg CO2 evitado"
+                            label={t.partners?.stats?.co2Avoided || 'kg CO2 evitado'}
                             color="text-emerald-400"
                         />
                         <StatCard
                             icon={Users}
                             value={loading ? '...' : formatNumber(stats?.total_consumers || 0)}
-                            label="Consumidores"
+                            label={t.partners?.stats?.consumers || 'Consumidores'}
                             color="text-purple-400"
                         />
                         <StatCard
                             icon={Heart}
                             value={loading ? '...' : `$${formatNumber(stats?.total_donations || 0)}`}
-                            label="Donado"
+                            label={t.partners?.stats?.donated || 'Donado'}
                             color="text-pink-400"
                         />
                     </div>
@@ -170,36 +175,36 @@ export const PartnersHubPage: React.FC = () => {
                 <section className="mb-10">
                     <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                         <Sparkles className="w-5 h-5 text-yellow-400" />
-                        Explora el Ecosistema
+                        {t.partners?.explore || 'Explora el Ecosistema'}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <NavCard
                             to="/partners/map"
                             icon={Map}
-                            title="Mapa de Partners"
-                            description="Explora 127+ comercios certificados en todo México"
+                            title={t.partners?.map?.title || 'Mapa de Partners'}
+                            description={t.partners?.map?.desc || 'Explora 127+ comercios certificados en todo México'}
                             color="bg-blue-500"
                             badge="127"
                         />
                         <NavCard
                             to="/partners/mi-impacto"
                             icon={Sprout}
-                            title="Mi Impacto"
-                            description="Semillas, logros y recompensas por tus compras sustentables"
+                            title={t.partners?.impact?.title || 'Mi Impacto'}
+                            description={t.partners?.impact?.desc || 'Semillas, logros y recompensas por tus compras sustentables'}
                             color="bg-green-500"
                         />
                         <NavCard
                             to="/partners/dashboard"
                             icon={BarChart3}
-                            title="Dashboard Partner"
-                            description="Métricas, entregas y acceso a tu código QR"
+                            title={t.partners?.dashboard?.title || 'Dashboard Partner'}
+                            description={t.partners?.dashboard?.desc || 'Métricas, entregas y acceso a tu código QR'}
                             color="bg-purple-500"
                         />
                         <NavCard
                             to="/partners/scan-demo"
                             icon={QrCode}
-                            title="Demo Escaneo QR"
-                            description="Prueba la experiencia del consumidor"
+                            title={t.partners?.scanDemo?.title || 'Demo Escaneo QR'}
+                            description={t.partners?.scanDemo?.desc || 'Prueba la experiencia del consumidor'}
                             color="bg-orange-500"
                             badge="Demo"
                         />
@@ -210,17 +215,17 @@ export const PartnersHubPage: React.FC = () => {
                 <section className="text-center">
                     <div className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8">
                         <h2 className="text-2xl font-bold text-white mb-2">
-                            ¿Tienes un negocio?
+                            {t.partners?.cta?.haveBusiness || '¿Tienes un negocio?'}
                         </h2>
                         <p className="text-slate-400 mb-6">
-                            Únete a la red de comercios comprometidos con la sustentabilidad
+                            {t.partners?.cta?.joinNetwork || 'Únete a la red de comercios comprometidos con la sustentabilidad'}
                         </p>
                         <Link
                             to="/plant-onboarding"
                             className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white font-bold px-6 py-3 rounded-xl transition-all"
                         >
                             <Building2 className="w-5 h-5" />
-                            Registrar mi negocio
+                            {t.partners?.cta?.register || 'Registrar mi negocio'}
                             <ChevronRight className="w-5 h-5" />
                         </Link>
                     </div>

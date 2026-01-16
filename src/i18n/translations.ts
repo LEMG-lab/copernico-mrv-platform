@@ -238,7 +238,111 @@ export const translations = {
             download: "Descargar Reporte PDF",
             contact: "Contactar Equipo IR"
         },
-        sources: "Fuentes de Datos e Integridad"
+        sources: "Fuentes de Datos e Integridad",
+        // Navigation
+        nav: {
+            dashboard: "Dashboard",
+            network: "Red Global",
+            mrv: "MRV",
+            terralink: "TerraLINK",
+            circularlink: "CircularLINK",
+            dataRoom: "Data Room",
+            marketplace: "Marketplace"
+        },
+        // Data Room
+        dataRoom: {
+            title: "Investor Data Room",
+            subtitle: "Acceso completo a documentación para due diligence",
+            accessGranted: "Acceso Completo Autorizado",
+            ndaSigned: "NDA firmado el 1 de Diciembre, 2025",
+            docsAvailable: "documentos disponibles",
+            searchPlaceholder: "Buscar documentos...",
+            all: "Todos",
+            categories: {
+                pitch: "Pitch & Resumen",
+                financial: "Financiero",
+                legal: "Legal",
+                technical: "Técnico",
+                qa: "Q&A"
+            },
+            noResults: "No se encontraron documentos.",
+            downloadAll: "Descargar Todo",
+            downloadZip: "Paquete completo ZIP",
+            scheduleCall: "Agendar Llamada",
+            withFounders: "Con el equipo fundador"
+        },
+        // Partners Hub
+        partners: {
+            circularEconomy: "Economía Circular",
+            title: "CircularLINK Partners",
+            subtitle: "Ecosistema de comercios certificados y consumidores comprometidos con la economía circular",
+            stats: {
+                activePartners: "Partners activos",
+                kgTraced: "kg trazados",
+                co2Avoided: "kg CO2 evitado",
+                consumers: "Consumidores",
+                donated: "Donado"
+            },
+            explore: "Explora el Ecosistema",
+            map: {
+                title: "Mapa de Partners",
+                desc: "Explora 127+ comercios certificados en todo México"
+            },
+            impact: {
+                title: "Mi Impacto",
+                desc: "Semillas, logros y recompensas por tus compras sustentables"
+            },
+            dashboard: {
+                title: "Dashboard Partner",
+                desc: "Métricas, entregas y acceso a tu código QR"
+            },
+            scanDemo: {
+                title: "Demo Escaneo QR",
+                desc: "Prueba la experiencia del consumidor"
+            },
+            cta: {
+                haveBusiness: "¿Tienes un negocio?",
+                joinNetwork: "Únete a la red de comercios comprometidos con la sustentabilidad",
+                register: "Registrar mi negocio"
+            }
+        },
+        // Marketplace
+        marketplace: {
+            title: "Marketplace de Impacto",
+            subtitle: "Adquiere activos ambientales verificados directamente de plantas de bioconversión.",
+            myPortfolio: "Mi Portafolio",
+            volume24h: "Volumen 24h",
+            avgPrice: "Precio Promedio (Carbon)",
+            availableCredits: "Créditos Disponibles",
+            activePlants: "Plantas Activas",
+            searchPlaceholder: "Buscar por planta, país o ID...",
+            sortBy: "Ordenar por:",
+            sortOptions: {
+                recommended: "Recomendados",
+                priceLow: "Precio: Menor a Mayor",
+                priceHigh: "Precio: Mayor a Menor",
+                ratingHigh: "Rating: Mayor a Menor",
+                recent: "Recientes"
+            }
+        },
+        // Investor Portal Page
+        investorPage: {
+            title: "Portal de Inversionistas",
+            welcome: "Bienvenida,",
+            lastUpdate: "Última actualización",
+            goToDataRoom: "Ir al Data Room",
+            verifiedImpact: "Impacto Verificado",
+            blockchainTitle: "Trazabilidad Blockchain",
+            blockchainDesc: "Cada tonelada de CO2 y residuo es tokenizada y registrada en Polygon.",
+            viewExplorer: "Ver en Explorador",
+            sdgTitle: "Contribución a Objetivos de Desarrollo Sostenible",
+            footer: {
+                confidential: "Confidential",
+                irSupport: "Soporte IR",
+                privacy: "Privacidad",
+                terms: "Términos"
+            }
+        }
     },
     en: {
         heroTitle: "MetaBioconversion 3.0",
@@ -479,6 +583,110 @@ export const translations = {
             download: "Download PDF Report",
             contact: "Contact IR Team"
         },
-        sources: "Data Sources & Integrity"
+        sources: "Data Sources & Integrity",
+        // Navigation
+        nav: {
+            dashboard: "Dashboard",
+            network: "Global Network",
+            mrv: "MRV",
+            terralink: "TerraLINK",
+            circularlink: "CircularLINK",
+            dataRoom: "Data Room",
+            marketplace: "Marketplace"
+        },
+        // Data Room
+        dataRoom: {
+            title: "Investor Data Room",
+            subtitle: "Full access to documentation for due diligence",
+            accessGranted: "Full Access Authorized",
+            ndaSigned: "NDA signed on December 1, 2025",
+            docsAvailable: "documents available",
+            searchPlaceholder: "Search documents...",
+            all: "All",
+            categories: {
+                pitch: "Pitch & Summary",
+                financial: "Financial",
+                legal: "Legal",
+                technical: "Technical",
+                qa: "Q&A"
+            },
+            noResults: "No documents found.",
+            downloadAll: "Download All",
+            downloadZip: "Complete ZIP package",
+            scheduleCall: "Schedule Call",
+            withFounders: "With the founding team"
+        },
+        // Partners Hub
+        partners: {
+            circularEconomy: "Circular Economy",
+            title: "CircularLINK Partners",
+            subtitle: "Ecosystem of certified businesses and consumers committed to circular economy",
+            stats: {
+                activePartners: "Active Partners",
+                kgTraced: "kg traced",
+                co2Avoided: "kg CO2 avoided",
+                consumers: "Consumers",
+                donated: "Donated"
+            },
+            explore: "Explore the Ecosystem",
+            map: {
+                title: "Partners Map",
+                desc: "Explore 127+ certified businesses across Mexico"
+            },
+            impact: {
+                title: "My Impact",
+                desc: "Seeds, achievements and rewards for your sustainable purchases"
+            },
+            dashboard: {
+                title: "Partner Dashboard",
+                desc: "Metrics, deliveries and access to your QR code"
+            },
+            scanDemo: {
+                title: "QR Scan Demo",
+                desc: "Try the consumer experience"
+            },
+            cta: {
+                haveBusiness: "Have a business?",
+                joinNetwork: "Join the network of businesses committed to sustainability",
+                register: "Register my business"
+            }
+        },
+        // Marketplace
+        marketplace: {
+            title: "Impact Marketplace",
+            subtitle: "Acquire verified environmental assets directly from bioconversion plants.",
+            myPortfolio: "My Portfolio",
+            volume24h: "24h Volume",
+            avgPrice: "Avg Price (Carbon)",
+            availableCredits: "Available Credits",
+            activePlants: "Active Plants",
+            searchPlaceholder: "Search by plant, country or ID...",
+            sortBy: "Sort by:",
+            sortOptions: {
+                recommended: "Recommended",
+                priceLow: "Price: Low to High",
+                priceHigh: "Price: High to Low",
+                ratingHigh: "Rating: High to Low",
+                recent: "Recent"
+            }
+        },
+        // Investor Portal Page
+        investorPage: {
+            title: "Investor Portal",
+            welcome: "Welcome,",
+            lastUpdate: "Last update",
+            goToDataRoom: "Go to Data Room",
+            verifiedImpact: "Verified Impact",
+            blockchainTitle: "Blockchain Traceability",
+            blockchainDesc: "Each ton of CO2 and waste is tokenized and recorded on Polygon.",
+            viewExplorer: "View in Explorer",
+            sdgTitle: "Contribution to Sustainable Development Goals",
+            footer: {
+                confidential: "Confidential",
+                irSupport: "IR Support",
+                privacy: "Privacy",
+                terms: "Terms"
+            }
+        }
     }
 };

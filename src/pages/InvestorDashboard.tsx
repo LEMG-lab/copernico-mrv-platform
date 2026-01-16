@@ -1,13 +1,14 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from '../components/Navigation';
 import { ExecutiveSummary } from '../components/ExecutiveSummary';
 import { ModuleCard } from '../components/ModuleCard';
-import { useUIStore } from '../stores/uiStore';
 import { translations } from '../i18n/translations';
 import { SynapticBackground } from '../components/SynapticBackground';
 
 const InvestorDashboard: React.FC = () => {
-    const { language } = useUIStore();
+    const { i18n } = useTranslation();
+    const language = (i18n.language || 'es') as 'es' | 'en';
     const t = translations[language];
 
     const handlePrint = () => {

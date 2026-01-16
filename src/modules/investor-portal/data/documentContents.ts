@@ -506,6 +506,18 @@ export const VIDEO_PITCH_CONTENT: DocumentContent = {
     confidential: false,
     sections: [
         {
+            title: '🎬 VIDEO: ENTREVISTA LARVALINK',
+            content: `Conoce más sobre el proyecto LarvaLINK en esta entrevista donde explicamos nuestra visión y tecnología.
+
+[VIDEO:https://www.youtube.com/embed/wzn90p886Wk]
+
+**Puntos destacados:**
+* Visión del proyecto y equipo fundador
+* Tecnología de bioconversión BSF
+* Impacto ambiental y social
+* Roadmap de crecimiento`
+        },
+        {
             title: 'VIDEO: GIRA DEMOSTRATIVA BIOCONVERSIÓN',
             content: `Nuestro municipio participó en una gira demostrativa sobre bioconversión de residuos orgánicos en la planta piloto LarvaLINK.
 
