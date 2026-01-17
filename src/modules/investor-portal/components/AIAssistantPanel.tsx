@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Bot, Sparkles, ChevronRight, MessageSquare, Send } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { translations } from '../../../i18n/translations';
 
 interface AIAssistantPanelProps {
     suggestedQuestions: string[];
@@ -19,6 +21,9 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({
     documentName
 }) => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const { i18n } = useTranslation();
+    const lang = (i18n.language || 'es') as 'es' | 'en';
+    const t = translations[lang];
 
     return (
         <div className="ai-panel-container">
@@ -29,10 +34,10 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({
                     <div className="ai-pulse" />
                 </div>
                 <div className="ai-panel-title">
-                    <span className="title-text">Asistente de IA</span>
+                    <span className="title-text">{t.dataRoom.aiAssistant?.title || 'AI Assistant'}</span>
                     <span className="status-badge">
                         <Sparkles className="w-3 h-3" />
-                        Gemini Activo
+                        {t.dataRoom.aiAssistant?.status || 'Gemini Active'}
                     </span>
                 </div>
             </div>
@@ -40,14 +45,14 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({
             {/* Context indicator */}
             {documentName && (
                 <div className="ai-context">
-                    <span>Contexto:</span>
+                    <span>{t.dataRoom.aiAssistant?.context || 'Context:'}</span>
                     <span className="context-name">{documentName}</span>
                 </div>
             )}
 
             {/* Suggested Questions */}
             <div className="ai-questions-container">
-                <p className="questions-label">Preguntas sugeridas</p>
+                <p className="questions-label">{t.dataRoom.aiAssistant?.suggestedQuestions || 'Suggested questions'}</p>
                 <div className="questions-list">
                     {suggestedQuestions.slice(0, 4).map((question, index) => (
                         <button
@@ -68,8 +73,9 @@ const AIAssistantPanel: React.FC<AIAssistantPanelProps> = ({
             {/* Custom question button */}
             <button className="ai-custom-btn" onClick={onOpenChat}>
                 <Send className="w-4 h-4" />
-                <span>Hacer otra pregunta</span>
+                <span>{t.dataRoom.aiAssistant?.askQuestion || 'Ask another question'}</span>
             </button>
+
 
             <style>{`
                 .ai-panel-container {

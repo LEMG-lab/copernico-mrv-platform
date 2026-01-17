@@ -25,7 +25,6 @@ import { getDocumentPrompt, MASTER_PROMPT } from '../data/dataRoomPrompts';
 import AIAssistantModal from './AIAssistantModal';
 import AnimatedBackground from './AnimatedBackground';
 import AIAssistantPanel from './AIAssistantPanel';
-import LanguageSwitcher from '../../../components/LanguageSwitcher';
 import { translations } from '../../../i18n/translations';
 
 interface DocumentViewerProps {
@@ -86,7 +85,7 @@ const renderContent = (content: string): JSX.Element => {
                             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">f</span>
                             </div>
-                            <span className="text-slate-400 text-sm">Video de Facebook</span>
+                            <span className="text-slate-400 text-sm" data-translate="facebookVideo">Facebook Video</span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +112,7 @@ const renderContent = (content: string): JSX.Element => {
                             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">f</span>
                             </div>
-                            <span className="text-slate-400 text-sm">Publicación de Facebook</span>
+                            <span className="text-slate-400 text-sm" data-translate="facebookPost">Facebook Post</span>
                         </div>
                     </div>
                 </div>
@@ -158,8 +157,8 @@ const renderContent = (content: string): JSX.Element => {
                                     <span className="text-xs font-bold text-purple-400 uppercase tracking-wider">NotebookLM Podcast</span>
                                     <span className="text-xs text-slate-500">by Google</span>
                                 </div>
-                                <p className="text-white font-semibold text-lg">Escuchar Podcast Generado por IA →</p>
-                                <p className="text-slate-400 text-sm mt-1">Abre en NotebookLM para reproducir</p>
+                                <p className="text-white font-semibold text-lg" data-translate="listenPodcast">Listen to AI-Generated Podcast →</p>
+                                <p className="text-slate-400 text-sm mt-1" data-translate="openInNotebook">Open in NotebookLM to play</p>
                             </div>
                             <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
                                 <svg className="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -208,7 +207,7 @@ const renderContent = (content: string): JSX.Element => {
         if (line.trim().startsWith('[LINK:') && line.trim().endsWith(']')) {
             const parts = line.trim().slice(6, -1).split('|');
             const url = parts[0];
-            const title = parts[1] || 'Ver Enlace';
+            const title = parts[1] || 'View Link';
             const description = parts[2] || '';
             return (
                 <div key={index} className="my-6">
@@ -394,12 +393,7 @@ const renderContent = (content: string): JSX.Element => {
     return <>{elements}</>;
 };
 
-const SUGGESTED_QUESTIONS_FOR_DOCUMENT = [
-    '¿Cuáles son los puntos clave de este documento?',
-    '¿Qué riesgos menciona este documento?',
-    '¿Puedes resumir las métricas principales?',
-    '¿Qué preguntas de due diligence aplican aquí?',
-];
+// Suggested questions will be provided dynamically based on language
 
 const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
     const navigate = useNavigate();
@@ -415,6 +409,46 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
     const getDocTranslation = (docId: string, field: 'name' | 'desc') => {
         const docs = t.dataRoom?.documents as Record<string, { name: string; desc: string }> | undefined;
         return docs?.[docId]?.[field];
+    };
+
+    // Get translated section content (title and content) for a document section
+    const getTranslatedSection = (docId: string, sectionIndex: number, originalSection: { title: string; content: string }) => {
+        // If Spanish, return original
+        if (lang === 'es') {
+            return originalSection;
+        }
+
+        // Try to get full translated section content
+        const sectionKey = `doc${docId}_section${sectionIndex + 1}` as keyof typeof t.dataRoom.sectionContent;
+        const sectionContent = (t.dataRoom?.sectionContent as Record<string, { title: string; content: string }> | undefined)?.[sectionKey];
+
+        if (sectionContent) {
+            return sectionContent;
+        }
+
+        // Fallback: Try to translate just the title
+        const sectionTitles = t.dataRoom?.sectionTitles as Record<string, string> | undefined;
+        if (sectionTitles) {
+            // Try exact match first
+            let translatedTitle = sectionTitles[originalSection.title];
+
+            // If no exact match, try partial match (for titles with numbers like "1. EL PROBLEMA")
+            if (!translatedTitle) {
+                for (const [spanishTitle, englishTitle] of Object.entries(sectionTitles)) {
+                    if (originalSection.title.includes(spanishTitle)) {
+                        translatedTitle = originalSection.title.replace(spanishTitle, englishTitle);
+                        break;
+                    }
+                }
+            }
+
+            if (translatedTitle) {
+                return { title: translatedTitle, content: originalSection.content };
+            }
+        }
+
+        // Return original if no translation found
+        return originalSection;
     };
 
     const translatedTitle = getDocTranslation(document.id, 'name') || document.title;
@@ -455,7 +489,6 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                 </button>
 
                                 <div className="flex items-center gap-3">
-                                    <LanguageSwitcher />
                                     <button className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/10">
                                         <Bookmark className="w-4 h-4" />
                                     </button>
@@ -542,8 +575,9 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                             {/* Sections */}
                             <div className="space-y-6">
                                 {document.sections.map((section, index) => {
+                                    const translatedSection = getTranslatedSection(document.id, index, section);
                                     const accent = getSectionAccent(index);
-                                    const SectionIcon = getSectionIcon(section.title);
+                                    const SectionIcon = getSectionIcon(translatedSection.title);
                                     const isExpanded = expandedSections.has(index);
 
                                     return (
@@ -563,7 +597,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                         </span>
                                                     </div>
                                                     <h2 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-                                                        {section.title}
+                                                        {translatedSection.title}
                                                     </h2>
                                                 </div>
                                                 <div className={`w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center ${accent.text} group-hover:bg-white/10 transition-all`}>
@@ -576,7 +610,7 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                                                 <div className="px-6 pb-6">
                                                     <div className={`p-6 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border ${accent.border} border-opacity-50`}>
                                                         <div className="prose prose-invert max-w-none">
-                                                            {renderContent(section.content)}
+                                                            {renderContent(translatedSection.content)}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -604,10 +638,15 @@ const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                         <div className="hidden lg:block w-80 flex-shrink-0">
                             <div className="sticky top-24">
                                 <AIAssistantPanel
-                                    suggestedQuestions={SUGGESTED_QUESTIONS_FOR_DOCUMENT}
+                                    suggestedQuestions={[
+                                        t.dataRoom?.aiAssistant?.questions?.keyPoints || '¿Cuáles son los puntos clave de este documento?',
+                                        t.dataRoom?.aiAssistant?.questions?.risks || '¿Qué riesgos menciona este documento?',
+                                        t.dataRoom?.aiAssistant?.questions?.metrics || '¿Puedes resumir las métricas principales?',
+                                        t.dataRoom?.aiAssistant?.questions?.dueDiligence || '¿Qué preguntas de due diligence aplican aquí?'
+                                    ]}
                                     onQuestionClick={handleQuestionClick}
                                     onOpenChat={() => setShowAIModal(true)}
-                                    documentName={document.title}
+                                    documentName={translatedTitle}
                                 />
                             </div>
                         </div>
