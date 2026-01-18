@@ -9,14 +9,14 @@ import { PlantStaffing } from './components/PlantStaffing';
 import { PlantGallery } from './components/PlantGallery';
 import { BlockchainVerification } from './components/BlockchainVerification';
 import { SDGSection } from './components/SDGSection';
-import { MOCK_PLANT_TEPETLOZTOC } from './data/mockPlantData';
+import { MOCK_PLANT_TEPETLAOXTOC } from './data/mockPlantData';
 
 const PlantDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
 
     // In a real app, usePlantData hook would fetch by ID
-    // For now we default to the Tepetloztoc mock data for any ID, or check if it matches
-    const plant = MOCK_PLANT_TEPETLOZTOC;
+    // For now we default to the Tepetlaoxtoc mock data for any ID, or check if it matches
+    const plant = MOCK_PLANT_TEPETLAOXTOC;
 
     useEffect(() => {
         window.scrollTo(0, 0);

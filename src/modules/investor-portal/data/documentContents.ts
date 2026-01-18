@@ -114,7 +114,7 @@ export const ONE_PAGER_CONTENT: DocumentContent = {
         {
             title: '9. ESTADO ACTUAL (Diciembre 2025)',
             content: `**PLANTA PILOTO ALFA**
-* Ubicación: Papalotla, Estado de México
+* Ubicación: Tepetlaoxtoc, Estado de México
 * Inicio operaciones: 11 octubre 2025
 * Capacidad: 1.5 ton/día
 * Fase: Desarrollo pie de cría
@@ -441,7 +441,7 @@ TrackLINK está diseñado para cumplir con los requerimientos de trazabilidad EU
 
 | Detalle | Valor |
 |---------|-------|
-| Ubicación | Papalotla/Tepetlaoxtoc, Estado de México |
+| Ubicación | Tepetlaoxtoc/Tepetlaoxtoc, Estado de México |
 | Inicio operaciones | 11 octubre 2025 |
 | Capacidad instalada | 1.5 ton/día |
 | Fase actual | Desarrollo pie de cría |

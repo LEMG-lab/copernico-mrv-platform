@@ -113,7 +113,7 @@ export const REDEEMABLE_ITEMS: RedeemableItem[] = [
     {
         id: "experience-plant-tour",
         name: "Tour a Planta BSF",
-        description: "Visita guiada a la planta de Papalotla",
+        description: "Visita guiada a la planta de Tepetlaoxtoc",
         image_url: "/rewards/plant-tour.png",
         category: "experience",
         seeds_cost: 2000,

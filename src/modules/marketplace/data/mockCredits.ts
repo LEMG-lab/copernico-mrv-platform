@@ -3,7 +3,7 @@ import { Credit, Plant } from '../types/marketplace.types';
 export const MOCK_PLANTS: Plant[] = [
     {
         id: "plant-001",
-        name: "LarvaLINK Papalotla",
+        name: "LarvaLINK Tepetlaoxtoc",
         country: "Mexico",
         region: "Tlaxcala",
         coordinates: { lat: 19.575, lng: -98.845 },
@@ -12,7 +12,7 @@ export const MOCK_PLANTS: Plant[] = [
         verification_level: "full",
         rating: 4.9,
         total_credits_sold: 2847,
-        avatar_url: "/plants/papalotla.jpg"
+        avatar_url: "/plants/tepetlaoxtoc.jpg"
     },
     {
         id: "plant-002",
@@ -94,9 +94,9 @@ export const MOCK_CREDITS: Credit[] = [
             sdg_alignment: [2, 8, 12, 13]
         },
         images: {
-            satellite_before: "/satellites/papalotla-before.jpg",
-            satellite_after: "/satellites/papalotla-after.jpg",
-            plant_photo: "/plants/papalotla-interior.jpg"
+            satellite_before: "/satellites/tepetlaoxtoc-before.jpg",
+            satellite_after: "/satellites/tepetlaoxtoc-after.jpg",
+            plant_photo: "/plants/tepetlaoxtoc-interior.jpg"
         }
     },
     {

@@ -302,7 +302,7 @@ export const GlobalNetworkDashboard: React.FC = () => {
                                 }}
                                 className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all font-bold flex items-center justify-center gap-2"
                             >
-                                <span>🚀</span> Simular Selección Tepetloztoc
+                                <span>🚀</span> Simular Selección Tepetlaoxtoc
                             </button>
                         </div>
 

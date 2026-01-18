@@ -3,7 +3,7 @@ import { LarvaLinkPlant } from '../types/network.types';
 export const LARVALINK_PLANTS: LarvaLinkPlant[] = [
     // --- AMERICAS (MEXICO) ---
     {
-        id: "ll-001", name: "Tepetloztoc", country: "Mexico", city: "Tepetloztoc",
+        id: "ll-001", name: "Tepetlaoxtoc", country: "Mexico", city: "Tepetlaoxtoc",
         coordinates: { lat: 19.575, lng: -98.845 },
         capacity_tons_day: 50, status: "operativa", start_date: "2025-01", co2eq_avoided_ytd: 2847, verified: true, blockchain_hash: "0x7f3a2c1...", type: "LarvaLINK"
     },

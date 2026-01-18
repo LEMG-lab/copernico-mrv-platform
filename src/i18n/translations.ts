@@ -468,7 +468,7 @@ export const translations = {
                 doc2_section10: {
                     title: '9. ESTADO ACTUAL (Diciembre 2025)',
                     content: `**PLANTA PILOTO ALFA**
-* Ubicación: Papalotla, Estado de México
+* Ubicación: Tepetlaoxtoc, Estado de México
 * Inicio operaciones: 11 octubre 2025
 * Capacidad: 1.5 ton/día
 * Fase: Desarrollo pie de cría
@@ -944,7 +944,7 @@ TrackLINK está diseñado para cumplir con los requerimientos de trazabilidad EU
 
 | Detalle | Valor |
 |---------|-------|
-| Ubicación | Papalotla/Tepetlaoxtoc, Estado de México |
+| Ubicación | Tepetlaoxtoc/Tepetlaoxtoc, Estado de México |
 | Inicio operaciones | 11 octubre 2025 |
 | Capacidad instalada | 1.5 ton/día |
 | Fase actual | Desarrollo pie de cría |
@@ -1763,7 +1763,7 @@ Nuestra solución aborda directamente varios de los principales riesgos identifi
                 doc2_section10: {
                     title: '9. CURRENT STATUS (December 2025)',
                     content: `**ALFA PILOT PLANT**
-* Location: Papalotla, State of Mexico
+* Location: Tepetlaoxtoc, State of Mexico
 * Operations start: October 11, 2025
 * Capacity: 1.5 tons/day
 * Phase: Breeding stock development
@@ -2239,7 +2239,7 @@ TrackLINK is designed to comply with EUDR traceability requirements:
 
 | Detail | Value |
 |--------|-------|
-| Location | Papalotla/Tepetlaoxtoc, State of Mexico |
+| Location | Tepetlaoxtoc/Tepetlaoxtoc, State of Mexico |
 | Operations start | October 11, 2025 |
 | Installed capacity | 1.5 tons/day |
 | Current phase | Breeding stock development |

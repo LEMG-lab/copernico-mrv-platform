@@ -830,7 +830,7 @@ PARTE V: IMPLEMENTACIÓN
 ═══════════════════════════════════════════
 
 PLANTA PILOTO ALFA:
-* Ubicación: Papalotla/Tepetlaoxtoc, Estado de México
+* Ubicación: Tepetlaoxtoc/Tepetlaoxtoc, Estado de México
 * Inicio: 11 octubre 2025
 * Capacidad instalada: 1.5 ton/día
 * Fase: Desarrollo pie de cría

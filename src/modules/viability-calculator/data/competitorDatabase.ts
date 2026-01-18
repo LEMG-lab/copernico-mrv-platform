@@ -8,5 +8,5 @@ export const KNOWN_BSF_PLANTS: Partial<Competitor>[] = [
     { name: "AgriProtein", location: { lat: -33.93, lng: 18.42, country: "South Africa", city: "Cape Town", region: "Western Cape" } as any, capacity_tons_day: 100 },
     { name: "Nutrition Technologies", location: { lat: 1.55, lng: 103.64, country: "Malaysia", city: "Iskandar Puteri", region: "Johor" } as any, capacity_tons_day: 60 },
     { name: "Grubbly Farms", location: { lat: 33.75, lng: -84.39, country: "USA", city: "Atlanta", region: "GA" } as any, capacity_tons_day: 30 },
-    { name: "LarvaLINK Tepetloztoc", location: { lat: 19.575, lng: -98.845, country: "Mexico", city: "Tepetloztoc", region: "Tlaxcala" } as any, capacity_tons_day: 18 },
+    { name: "LarvaLINK Tepetlaoxtoc", location: { lat: 19.575, lng: -98.845, country: "Mexico", city: "Tepetlaoxtoc", region: "Tlaxcala" } as any, capacity_tons_day: 18 },
 ];

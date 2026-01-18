@@ -25,8 +25,8 @@ export const EmissionsCalculatorDashboard: React.FC = () => {
             try {
                 const data = await emissionsService.getPlants();
                 setPlants(data);
-                // Predeseleccionar Tepetloztoc
-                const defaultPlant = data.find(p => p.name.includes('Tepetloztoc')) || data[0];
+                // Predeseleccionar Tepetlaoxtoc
+                const defaultPlant = data.find(p => p.name.includes('Tepetlaoxtoc')) || data[0];
                 setSelectedPlant(defaultPlant);
             } catch (err) {
                 console.error("Failed to load plants", err);

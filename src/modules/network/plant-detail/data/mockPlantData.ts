@@ -1,9 +1,9 @@
 import { PlantDetail } from "../types/plantDetail.types";
 import { LARVALINK_SDG_CONTRIBUTIONS } from "./sdgData";
 
-export const MOCK_PLANT_TEPETLOZTOC: PlantDetail = {
+export const MOCK_PLANT_TEPETLAOXTOC: PlantDetail = {
     id: "ll-100",
-    name: "LarvaLINK Tepetloztoc",
+    name: "LarvaLINK Tepetlaoxtoc",
     company: "LarvaLINK MetaBioconversion S.A. de C.V.",
     status: "operational",
 
@@ -23,12 +23,12 @@ export const MOCK_PLANT_TEPETLOZTOC: PlantDetail = {
 
     location: {
         address: "Carretera Federal 117 Km 5.5",
-        city: "Tepetloztoc de Hidalgo",
+        city: "Tepetlaoxtoc de Hidalgo",
         state: "Estado de México",
         country: "Mexico",
         postal_code: "56070",
         coordinates: {
-            lat: 19.5701, // Updated to Tepetloztoc approx (or keep specific mock coords if needed, but this is safer)
+            lat: 19.5701, // Updated to Tepetlaoxtoc approx (or keep specific mock coords if needed, but this is safer)
             lng: -98.8217
         },
         timezone: "America/Mexico_City",
@@ -184,14 +184,14 @@ export const MOCK_PLANT_TEPETLOZTOC: PlantDetail = {
     sdg_contributions: LARVALINK_SDG_CONTRIBUTIONS,
 
     images: {
-        main: "/plants/papalotla-main.jpg", // Keeping filenames as they might exist or be placeholders
+        main: "/plants/tepetlaoxtoc-main.jpg", // Keeping filenames as they might exist or be placeholders
         gallery: [
-            "/plants/papalotla-exterior.jpg",
-            "/plants/papalotla-cria.jpg",
-            "/plants/papalotla-procesamiento.jpg",
-            "/plants/papalotla-producto.jpg"
+            "/plants/tepetlaoxtoc-exterior.jpg",
+            "/plants/tepetlaoxtoc-cria.jpg",
+            "/plants/tepetlaoxtoc-procesamiento.jpg",
+            "/plants/tepetlaoxtoc-producto.jpg"
         ],
-        satellite: "/satellites/papalotla-sentinel.jpg"
+        satellite: "/satellites/tepetlaoxtoc-sentinel.jpg"
     },
 
     contacts: [

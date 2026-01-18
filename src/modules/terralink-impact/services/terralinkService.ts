@@ -29,9 +29,9 @@ export const terralinkService = {
 
                 // Coordinates: In a real app we would parse the PostGIS WKB or use a DB View/One-to-one mapping
                 // For this milestone, we will use the ID to check if it matches our seed data knowledge 
-                // or just provide offsets so they are visible on map near Tepetloztoc.
+                // or just provide offsets so they are visible on map near Tepetlaoxtoc.
                 coordinates: {
-                    // Tepetloztoc default area
+                    // Tepetlaoxtoc default area
                     center: [
                         -98.845 + (index * 0.005),
                         19.575 + (index * 0.005)
